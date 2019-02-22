@@ -1,0 +1,978 @@
+/* gradient background color css start */
+
+.gradeint-background{
+  background-color: #F9FAFB;
+}
+
+#grad1 {
+    background: red; /* For browsers that do not support gradients */
+    background: linear-gradient(#ffffff, 	#FAFCFE); /* Standard syntax (must be last) */
+}
+
+
+
+/* gradient background color css end */
+
+
+      /* admin new user form start */
+      .form-horizontal{
+        padding-top: 10px;
+        padding-bottom: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+        box-shadow: 1px 1px 1px 1px #ddd;
+      }
+
+      #address .form-control{
+        border-color: #6E79BA;
+      }
+
+
+
+
+      /* admin new user form end */
+
+
+
+        /* Admin Employees Css start */
+          #employeeProfile .text-muted{
+            font-size: 14px;
+          }
+
+        /* Admin Employees Css end */
+
+
+
+
+
+/* cart bucket list table css start */
+#cart-item-bucket-table .item{
+  border-bottom:1px solid #6E79BA;
+  padding-left: 15px;
+}
+#cartTotal ul.order-menu li{
+  border-bottom:1px solid #6E79BA;
+}
+#chechOUtBtn a{
+  color: #000 !important;
+}
+#continuShopingBtn btn{
+  background-color: #ffffff;
+  border-color: 1px solid #6E79BA;
+}
+#continuShopingBtn .btn-template-outlined{
+  border-color: 1px solid #6E79BA;
+}
+#continuShopingBtn .btn-template-outlined:hover{
+  background-color: #4CAED9;
+  border-color: 1px solid #6E79BA
+  color:#fff ;
+}
+/* cart bucket list table css end */
+
+
+
+/* service categories page Card design start */
+
+#serviceCategoriesCard .card{
+  padding: 1.75em 3em 2em 2em;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #DCE0E6;
+  box-shadow: 0px 2px 2px 0px rgba(36,42,48,0.15);
+}
+#serviceCategoriesCard .card-body{
+  padding: 0;
+}
+#serviceCategoriesCard .card-title a{
+  color: #4CAED9;
+}
+#serviceCategoriesCard .btn-template{
+  background-color:#ffffff ;
+  color: #000000 !important;
+  border-color:#4CAED9;
+}
+
+#serviceCategoriesCard .btn-template:hover{
+  background-color: #4CAED9;
+  color: #ffffff;
+}
+/* service categories page Card design end */
+.sidebar .sidebar-wrapper{
+  background-color: #4CAED9;
+}
+.sidebar .nav li:hover > a{
+  background-color: #6E79BA;
+  color: #000000;
+}
+/* footer Design CSS start*/
+
+footer.main-footer .main-block{
+  background-color: #4CAED9;
+  color: #fff;
+}
+footer.main-footer .newsletter input{
+  border: 1px solid #fff;
+}
+footer.main-footer .newsletter button{
+  color: #fff;
+}
+
+footer.main-footer .newsletter button:hover{
+  color: #6E79BA;
+}
+
+
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: #fff;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: #fff;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: #fff;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: #fff;
+    }
+/* footer Design CSS end*/
+
+
+/* your styles go here */
+.smart-logo{
+  height: auto;
+  max-width: 130px;
+}
+
+#heroBody{
+
+}
+    /* All Srvice Card start */
+#allServiceCard .card-img-top{
+  width: auto;
+  max-height: 280px;
+}
+#allServiceCard .card:hover{
+  box-shadow: 1px 1px 12px 0px #6E79BA;
+}
+/* admin setting page css start */
+#adminSettingForm label{
+ font-size: 13px;
+}
+
+
+/* admin setting page css start */
+.form-control {
+    border-radius: 5px;
+}
+/* admin setting page css end */
+   /* All Srvice Card star */
+.hero-banner{
+  background: url(../../img/smartfix-banner-main-img.png);
+  background-position: center center;
+  padding: 0;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 630px;
+}
+
+.hero-text{
+  font-family: 'Roboto', sans-serif !important;
+  position: absolute;
+  top: 35%;
+  width: 100%;
+  position: relative;
+}
+
+.custom_class_for_banner_header{
+  font-family: 'Roboto', sans-serif !important;
+  color: #011C0D;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: 2px;
+  font-weight: 300;
+  text-shadow: none !important;
+}
+.divider:after {
+  border-right: 1px solid #cf5d33;
+  height: 6em;
+  position: absolute;
+  content: '';
+  top: 25%;
+  right: 0;
+  box-shadow: 2px 1px 0 0 #ddd;
+}
+.custom_class_for_header_button{
+  width: 100%;
+  /*height: 75px;*/
+  font-size: 42px;
+  /*margin-top: -18px;*/
+}
+
+.popular-services .card{
+  margin: 5px 0;
+}
+
+.popular-services .card-body{
+  height: 190px;
+}
+
+.custom_see_all_button .custom_class_for_header_button{
+  font-size: 20px;
+}
+
+.custom_class_for_header{
+  font-family: 'Roboto', sans-serif;
+  color: #011C0D;
+}
+
+
+#tabsJustified .card{
+  border: none;
+}
+
+#services .nav-item.show .nav-link,
+#services .nav-link.active,
+#services .nav-link,
+#services .nav-link:focus,
+#services .nav-link:hover{
+  background: transparent !important;
+  border: none !important;
+}
+
+.card-tab{
+  border: 2px solid #a4eda7;
+  height: 145px;
+  width:520px;
+}
+
+#headingOne .card,
+#headingTwo .card{
+  width:450px;
+}
+
+
+.custom_color_for_{
+  color: #D65603;
+}
+
+h2{
+  font-weight: 300 !important;
+  font-size: 30px;
+}
+
+h5{48px
+  font-weight: 300 !important;
+  font-size: 18px;
+}
+/* .products{
+  height: auto;
+  border: 1px solid black;
+  background-color: rgb(221, 222, 222);
+} */
+ .container-fluid{
+  padding-left: 0;
+  padding-right: 0;
+}
+.img-fluid-one {
+    max-width: 100%;
+    height: 100px;
+    width: 190px;
+}
+
+.img-fluid-for-tab {
+    max-width: 100%;
+    height: 50px;
+    width: 100px;
+    margin-right: 3;
+}
+
+
+.services{
+    height: auto;
+}
+
+.pt-4, .py-4 {
+    padding-top: 0.5rem!important;
+}
+/* Navbar Dropdown Menu start */
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    margin-top: -10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-bottom: 5px;
+    display: none;
+    position: absolute;
+    background-color: #4CAED9;
+    min-width: 250px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+  padding-left: 15px;
+  padding: 6px;
+  line-height: 1.4;
+}
+
+.dropdown-content a:hover {
+  background-color: #4caed9;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* Navbar Dropdown Menu end */
+
+
+/* Notification View cart css start*/
+
+#notificatioCartBtn .btn{
+  color: #000 !important;
+}
+
+#notificatioCartBtn .btn:hover{
+  background-color: #4CAED9;
+  color: #fff !important;
+}
+#notificatioCartBtn .total-price{
+  border-top: 1px solid #6E79BA;
+  border-bottom: 1px solid #6E79BA;
+}
+#notificatioCartBtn .text-primary{
+  color:#4CAED9 !important;
+}
+/* Notification View cart css end*/
+
+
+/* --------------------card overly text------------------------- */
+#popularService .card{
+    position: relative;
+}
+
+#popularService .card-body{
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+
+#popularService .middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+ #popularService .card:hover {
+  background-color: #D4511E;
+
+}
+
+#popularService .card-body:hover .middle {
+  opacity: 1;
+}
+
+#popularService .text {
+  color: white;
+  font-size: 10px;
+  font-align: justify;
+  background-color: #D4511E;
+  height: 125px;
+}
+#bannerButton .btn{
+  margin: 10px;
+  border-radius: 4px;
+  color: #000;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+#bannerTopText .button-top-text-1{
+  font-size: 30px;
+  font-weight: 600;
+  opacity: 0.7;
+  line-height: 0.9;
+}
+#bannerTopText .button-top-text-2{
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 0.9;
+  opacity: 0.7;
+}
+#corporateServices .owl-nav{
+  font-size: 30px !important;
+}
+
+#homeAppliance .owl-nav{
+  font-size: 30px !important;
+}
+/* offers portion start */
+
+#demoDiscount .btn{
+  border-radius: 4px;
+}
+
+/* offers portion end */
+
+/* How It Works css start */
+.how-it-works__step-label {
+    color: #86919D;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid #86919D;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.how-it-works__separator {
+    border: 1px solid transparent;
+    border-top-color: #86919D;
+    width: 7.5rem;
+    margin: 3rem auto 4rem;
+}
+.how-it-works-img{
+  height: auto;
+  max-width: 170px;
+}
+
+.how-it-works-img-matchad{
+  height: auto;
+  max-width: 110px;
+}
+}
+.taskRabbit-happiness-img{
+  height: auto;
+  max-width: 70px;
+}
+.get-helf-today-img{
+  width: auto;
+  max-height: 230px;
+  margin-top: 30px;
+}
+#howItWork h2{
+  opacity: 0.7;
+  font-size: 34px;
+}
+#howItWork h3{
+  opacity: 0.7;
+}
+
+#howItWork a{
+  color: #6E79BA;
+
+}
+#howItWork a:hover{
+  color: #4CAED9;
+}
+/* How It Works css end */
+.gethelftoday{
+  margin-top: 100px;
+}
+
+#scrollTop .fa{
+  margin-top: 14px;
+}
+/* ---------------------Corporate & home applianece image css start------------------------------- */
+#corporateServices .card{
+  border: 0;
+  background-color: #F9FAFB;
+}
+#homeAppliance .card{
+  border: 0;
+  background-color: #F9FAFB;
+}
+
+#corporateServices a{
+  color: #000;
+  opacity:0.7;
+}
+#corporateServices a:hover{
+  color: #4CAED9;
+}
+#homeAppliance a{
+  color: #000;
+  opacity:0.7;
+}
+#homeAppliance a:hover{
+  color: #4CAED9;
+}
+
+.corporet-img{
+height: auto;
+max-width: 70px
+  }
+.card-body{
+  background-color: #F9FAFB;
+  color: #000;
+  }
+/* #corporateServices .owl-nav{
+  margin-top: -10px;
+  }
+#homeAppliance .owl-theme .owl-nav{
+    margin-top: 0px;
+  } */
+  /* .owl-buttons {
+    display: none;
+  }
+  .owl-carousel:hover .owl-buttons {
+    display: block;
+  } */
+/* owl carousel css start */
+  .owl-item {
+    text-align: center;
+  }
+
+  .owl-carousel .owl-nav div {
+    background: transparent;
+    color: #869791;
+    font-size: 40px;
+    line-height: 300px;
+    margin: 0;
+    padding: 0 60px;
+    position: absolute;
+    top: 15%;
+  }
+  .owl-carousel .owl-nav .owl-prev {
+    left: 0;
+    padding-left: 20px;
+  }
+  .owl-carousel .owl-nav .owl-next {
+    right: 0;
+    padding-right: 20px;
+  }
+  .owl-dots{
+    display: none;
+  }
+/* owl carousel css end */
+
+/* ---------------------Corporate & home applianece image css end------------------------------- */
+
+/* ---------------------service page css start------------------------------- */
+
+
+
+.mktg-template-item--img {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 100%;
+    vertical-align: text-top;
+}
+
+.service-card-img{
+  height: auto;
+  max-width: 182px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+#serviCecardSection .card{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#serviCecardSection .card-body{
+  padding-top: 0;
+}
+#serviCecardSection .card-title{
+  font-size: 20px;
+  color: #438E29;
+  text-align: center;
+  margin-top: 30px;
+}
+#serviCecardSection .card-text{
+  font-size: 12px;
+  text-align: center;
+}
+
+.page-item.active .page-link{
+  background-color:#4CAED9;
+  border-color: #6E79BA;
+
+}
+.page-link{
+  color: #000;
+  border-color: #6E79BA;
+}
+/* ---------------------service page css end------------------------------- */
+
+/* ---------------------contact page css start------------------------------- */
+
+#contactPage .contact-padding{
+  padding-left: 100px;
+}
+#contactPage .get-in-touch-h5{
+  margin-bottom: 35px;
+}
+#contactPage .mobile-h4{
+    font-size: 18px;
+}
+
+#contactPage .text-golden {
+	color: #a79344;
+}
+#contactPage .cf-text-size{
+    font-family: 'Proza Libre',sans-serif;
+    font-weight: 500;
+    margin-top: 46px;
+    line-height: 1.7;
+    margin-left: 28px;
+}
+
+#contactPage .form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-bottom: 1px solid  #6E79BA;
+    border-top: 0;
+    border-left: 0;
+    border-right:0;
+    border-radius: 0;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+#contactPage .form-control-textarea {
+	font-size: 12px
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid  #6E79BA;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#contactPage .btn-primary {
+	font-family:'Cormorant Garamond', serif;
+	font-weight: 700;
+	font-size: 16px;
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #000000;
+}
+#contactPage .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #6E79BA;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#contactPage .btn-primary:hover {
+    color: #fff;
+    background-color: #4CAED9;
+    border-color: #6E79BA;
+}
+#contactPage .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    outline: 0;
+    border-color: #4CAED9;
+    box-shadow: none;
+}
+
+
+/* ---------------------contact page css end------------------------------- */
+
+
+/* ---------------------search box css start------------------------------- */
+
+.main {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+    border-radius: 4px;
+    border: 1px solid #6E79BA;
+
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.4rem;
+    text-align: center;
+    pointer-events: none;
+    color: #6E79BA;
+}
+
+/* ---------------------search box css start------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 320px) {
+  .hero-banner {
+    height: 150px;
+  }
+
+  #headingOne .card,
+  #headingTwo .card{
+    width: 200px;
+  }
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 575px) {
+
+    .custom_class_for_header_button{
+      width: 25% !important;
+      font-size: 8px !important;
+      padding-left: 25px !important;
+      padding-right: 40px !important;
+    }
+
+    .hero-banner{
+      height: 200px;
+    }
+    #headingOne .card,
+    #headingTwo .card{
+      width: 375px;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (max-width: 767px) {
+h2{
+  font-size: 20px;
+}
+
+  .banner-title{
+    font-size: 15px !important;
+  }
+
+  .custom_class_for_banner_header {
+    font-size: 15px !important;
+  }
+
+  .custom_class_for_header_button{
+    width: 25% !important;
+    font-size: 12px !important;
+    padding-left: 25px !important;
+    padding-right: 40px !important;
+  }
+
+  .hero-banner{
+    height: 225px;
+  }
+  #headingOne .card,
+  #headingTwo .card{
+    width: auto;
+  }
+
+  .img-fluid {
+    max-width: 70%;
+    height: auto;
+  }
+
+}
+
+@media (min-width: 768px){
+  .hero-banner{
+    height: 400px;
+  }
+
+}
+/*Large devices (desktops, 992px and up)*/
+@media (max-width: 991px) {
+  .custom_class_for_banner_header {
+    font-size: 25px;
+  }
+
+  .custom_class_for_header_button{
+    width: 25%;
+    /*height: 20px;*/
+    font-size: 15px;
+    margin-top: -5px;
+    padding-left: 21px;
+  }
+
+  .divider:after {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  .custom_class_for_header_button{
+    width: 100%;
+    font-size: 20px;
+    display: inline;
+  }
+  .custom_class_for_banner_header {
+    font-size: 32px;
+  }
+  .hero-banner{
+    height: 100vh;
+  }
+  .popular-services .card h5{
+    overflow-wrap: initial;
+    display: inline-block;
+  }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .custom_class_for_header_button{
+    width: 100%;
+    font-size: 23px;
+    display: inline;
+  }
+  .popular-services .card h5{
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1350px;
+    }
+}
+
+ @media (min-width: 1400px) {
+   .custom_class_for_header_button{
+     width: 100%;
+     font-size: 23px;
+     display: inline;
+     padding-left: 75px !important;
+     padding-right: 50px !important;
+   }
+   .hero-banner{
+     height: 630px;
+   }
+
+   .custom_class_for_banner_header {
+     font-size: 40px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .custom_class_for_header_button{
+      width: 100%;
+      font-size: 23px;
+      display: inline;
+    }
+    .custom_class_for_banner_header {
+      font-size: 40px;
+    }
+
+    .hero-banner{
+      height: 766px;
+      /* height: 630px; */
+    }
+  }
+/* saddam css insert start */
+  /* .nav-tabs .nav-link.active{
+    border-bottom: 1px solid #dee2e6;
+  } */
+  .banner-title{
+    font-size: 32px;
+  }
+  .popular-service-img{
+    height: 120px;
+    width: auto;
+  }
+
+  .home-offer-box-text{
+    text-align: justify;
+  }
+  .products{
+    height: auto;
+    background-color: #f1f2f2;
+  }
+  .nav-tabs .nav-link.active .card{
+    background-color:#f1f2f2;
+  }
+.nav-tabs .nav-link.active {
+    background-color:#f1f2f2;
+    border-color: transparent;
+  }
+
+  .nav-tabs .nav-item {
+    margin-bottom: 0px;
+  }
+
+  .nav-tabs{
+    border-bottom: 0px;
+  }
+  .offers-img{
+    height: 300px;
+    width: auto;
+  }
+
+
+
+  /* Overridding the dropdown-menu from light-bootstrap  */
+
+  .typaheadPurpose .dropdown-menu{
+    visibility: visible!important;
+    opacity: inherit!important;
+  }
