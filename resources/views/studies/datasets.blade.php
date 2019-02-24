@@ -45,6 +45,10 @@
   	@endforeach
       </tbody>
     </table>
+
+    <div align="center" class="container">
+      {{ $my_datasets->links('vendor.pagination.bootstrap-4') }}
+    </div>
   </div>
 
   <!-- Modal -->

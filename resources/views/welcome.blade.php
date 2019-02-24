@@ -103,7 +103,7 @@ input[name=search] {
   background-image: url("/img/serchicon.png");
   background-position: 10px 10px;
   background-repeat: no-repeat;
-  padding: 12px 20px 12px 40px;
+  padding: 5px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
 }

@@ -67,6 +67,10 @@
     @endforeach
       </tbody>
     </table>
+
+    <div align="center" class="container">
+      {{ $contents->links('vendor.pagination.bootstrap-4') }}
+    </div>
   </div>
 
 

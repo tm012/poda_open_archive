@@ -36,7 +36,14 @@
 	@endforeach
     </tbody>
   </table>
+
+
 </div>
+
+<div align="center" class="container">
+  {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
+</div>
+
 @endsection
 
 

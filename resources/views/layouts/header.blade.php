@@ -1,29 +1,34 @@
 <div class="header">
-  <a href="/" class="logo">PODA</a>
+  <input type="image" src="/img/logo_transparent.png" class="go_home_btn" alt="Submit" width="70" height="70">
   <div class="header-right">
     @if (Auth::check())
-        <a href="{{ url('studies/create_study') }}">Create Study</a>
-        <a href="{{ url('studies/my_studies') }}">My Studies</a>
-        <a href="{{ route('logout') }}"
-            onclick="event.preventDefault();
-                     document.getElementById('logout-form').submit();">
-            Logout
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                         {{ csrf_field() }}
-                                     </form>
-        </a>
+      <div class="style_header_contents">
+          <a href="{{ url('studies/create_study') }}">Create Study</a>
+          <a href="{{ url('studies/my_studies') }}">My Studies</a>
+          <a href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+              Logout
+
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                           {{ csrf_field() }}
+                                       </form>
+          </a>
+        </div>
 
     @else
-        <a href="{{ url('/login') }}">Login</a>
-        <a href="{{ url('/register') }}">Register</a>
+        <div class="style_header_contents">
+          <a href="{{ url('/login') }}">Login</a>
+          <a href="{{ url('/register') }}">Register</a>
+        </div>
     @endif
   </div>
 
 </div>
   <hr  style="height:1px;border:none;color:#333;background-color:#333;">
   <style>
-  
+
 
 
   .header {
@@ -52,7 +57,7 @@
   }
 
   .header a:hover {
-    background-color: #FFA07A;
+    background-color: #00adb5;
     color: black;
   }
 
@@ -76,4 +81,20 @@
       float: none;
     }
   }
+
+  .style_header_contents {
+
+    margin-top: 10px;
+  }
+
+
   </style>
+
+
+  <script>
+
+$( ".go_home_btn" ).click(function() {
+
+   window.location.href = "/";
+});
+  </script>

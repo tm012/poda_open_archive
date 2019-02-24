@@ -34,8 +34,9 @@ class StudyController extends Controller
 
         //return response()->json(['success'=>$imageName]);
 
-        $my_studies = Studies::where('user_id', Auth::user()->id)->get();
+        $my_studies = Studies::where('user_id', Auth::user()->id)->paginate(10);
         return view('studies/my_studies', ["my_studies"=>$my_studies]);
+
 
     }
 
@@ -89,7 +90,7 @@ class StudyController extends Controller
             //dd(Session::get("current_study_id"));
             Session::put("current_dataset_name","");
             Session::put("current_path","");
-            $my_datasets = Datasets::where('study_id',  Session::get("current_study_id"))->get();
+            $my_datasets = Datasets::where('study_id',  Session::get("current_study_id"))->paginate(10);
 
 
             return view('studies/datasets', ["my_datasets"=>$my_datasets]);
@@ -174,7 +175,7 @@ class StudyController extends Controller
         //dd( Session::get("current_study_id") . " " . Session::get("current_dataset_name") . " ". Session::get("current_path"));
 
       }
-      $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->get();
+      $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->paginate(10);
 
 
       return view('studies/contents', ["contents"=>$contents]);
