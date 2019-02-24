@@ -98,7 +98,15 @@ $('#resultTable tr').click(function (event) {
      //alert($(cls).find("td:nth-child(3)").text());
      var study_id = $(cls).find("td:nth-child(3)").text();
 
-     ajax_call_go_to_dataset(study_id);
+     // ajax_call_go_to_dataset(study_id);
+     if (study_id === "") {
+          //...
+
+      }
+      else{
+        ajax_call_go_to_dataset(study_id);
+      }
+
 
 
 });

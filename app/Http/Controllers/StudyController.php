@@ -40,6 +40,18 @@ class StudyController extends Controller
 
     }
 
+    public function welcome()
+    {
+
+        //return response()->json(['success'=>$imageName]);
+
+        $my_studies = Studies::paginate(10);
+        return view('/welcome', ["my_studies"=>$my_studies]);
+
+
+    }
+
+
      public function post_study(Request $request)
     {
 

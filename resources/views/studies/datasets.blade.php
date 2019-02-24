@@ -13,6 +13,8 @@
     </div>
   </div>
 
+  <input type="hidden" id="auth_check" class="form-control" name="auth_check" value="{{Auth::check()}}">
+
 
   <div  class="container">
 
@@ -81,6 +83,34 @@
     </div>
   </div>
 
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal_1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Notice</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <button type="button" id ="go_home" class="btn btn-default" data-dismiss="modal">Go Home</button>
+          <button type="button" id ="go_my_studies" class="btn btn-default" data-dismiss="modal">Go to My Studies</button>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>
 @endsection
 
@@ -89,6 +119,15 @@
 @section('page-script')
 
 <script type="text/javascript">
+
+$("#go_home").click(function(){
+  $('#myModal_1').modal('hide');
+   window.location.href = "/";
+});
+$("#go_my_studies").click(function(){
+  $('#myModal_1').modal('hide');
+   window.location.href = "/studies/my_studies";
+});
 function ajax_call_to_add_new_dataset(dataset_name,task_name) {
 
 
@@ -218,11 +257,21 @@ $( ".back_button" ).click(function() {
 
           async:false,
           success: function(msg){
-            // alert(msg);
+             // alert(msg);
              msg_tm = msg;
 
              if(msg == ''){
-               window.location.href = "/studies/my_studies";
+
+               var auth_checks = $( "#auth_check" ).val();
+               if(auth_checks == "1"){
+
+                 $('#myModal_1').modal('show');
+               }
+               else{
+                  window.location.href = "/";
+               }
+
+
              }
              else{
                window.location.href = "/datesets";

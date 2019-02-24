@@ -35,7 +35,7 @@
               <th></th>
         <th>Study ID</th>
         <th>Study Name</th>
-        <th>Author Name</th>
+
         <th>Access Status</th>
         <th>Created At</th>
 
@@ -43,46 +43,166 @@
       </tr>
     </thead>
     <tbody>
+	@foreach($my_studies as $my_study=>$value)
 
-      <tr id="ClickableRow{{"1"}}">
-        <td><i class="fa fa-folder" aria-hidden="true"></i><td/>
-        <td>StudyID1</td>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-        <td>john@example.com</td>
+
+  @if(Auth::check())
+
+    @if($value->access_status == "1")
+      <tr id="ClickableRow{{$value->id}}">
+        <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+        <td>{{$value->study_id}}</td>
+        <td>{{$value->study_name}}</td>
+
+        @if($value->access_status == "1")
+         <td>public</td>
+       @else
+           <td>private</td>
+       @endif
+
+
+        <td>{{$value->created_date}}</td>
       </tr>
-      <tr id="ClickableRow{{"2"}}">
-<td><i class="fa fa-folder" aria-hidden="true"></i><td/>
-      <td>StudyID2</td>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-        <td>john@example.com</td>
+    @else
+
+      @if($value->user_id == Auth::user()->id)
+        <tr id="ClickableRow{{$value->id}}">
+          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+          <td>{{$value->study_id}}</td>
+          <td>{{$value->study_name}}</td>
+
+          @if($value->access_status == "1")
+           <td>public</td>
+         @else
+             <td>private</td>
+         @endif
+
+
+          <td>{{$value->created_date}}</td>
+        </tr>
+
+      @else
+        <tr>
+          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+          <td>{{$value->study_id}}</td>
+          <td>{{$value->study_name}}</td>
+
+          @if($value->access_status == "1")
+           <td>public</td>
+         @else
+             <td>private</td>
+         @endif
+
+
+          <td>{{$value->created_date}}</td>
+        </tr>
+
+      @endif
+
+    @endif
+
+  @else
+    @if($value->access_status == "1")
+      <tr id="ClickableRow{{$value->id}}">
+        <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+        <td>{{$value->study_id}}</td>
+        <td>{{$value->study_name}}</td>
+
+        @if($value->access_status == "1")
+         <td>public</td>
+       @else
+           <td>private</td>
+       @endif
+
+
+        <td>{{$value->created_date}}</td>
       </tr>
-      <tr id="ClickableRow{{"3"}}">
-        <td><i class="fa fa-folder" aria-hidden="true"></i><td/>
-        <td>StudyID3</td>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-        <td>john@example.com</td>
-      </tr>
+    @else
+        <tr >
+          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+          <td>{{$value->study_id}}</td>
+          <td>{{$value->study_name}}</td>
+
+          @if($value->access_status == "1")
+           <td>public</td>
+         @else
+             <td>private</td>
+         @endif
+
+
+          <td>{{$value->created_date}}</td>
+        </tr>
+    @endif
+  @endif
+
+	@endforeach
     </tbody>
   </table>
+
+
+</div>
+
+<div align="center" class="container">
+  {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection
 @section('page-script')
 
 <script>
+
+function ajax_call_go_to_dataset(study_id) {
+  var study_id = study_id;
+  console.log(study_id);
+
+
+
+
+
+  $.ajax({
+    url: "/go_to_study_page",
+    data: {
+      study_id: study_id,
+      submit_check_1: "submit_check_1"
+
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      console.log(data);
+      window.location.href = "/datesets";
+
+
+    //
+    //  $("#sub_category_admin").html(html);
+
+
+    }
+  })
+
+
+
+
+}
 $('#resultTable tr').click(function (event) {
      // alert($(this).attr('id')); //trying to alert id of the clicked row
      var cls = "#" + $(this).attr('id') ;
      // alert($("#resultTable").find(cls).html());
      // $(cls).find("td:first").css('color', 'green');
-     alert($(cls).find("td:nth-child(3)").text());
-      var study_id = $(cls).find("td:nth-child(3)").text();
+     //alert($(cls).find("td:nth-child(3)").text());
+     var study_id = $(cls).find("td:nth-child(3)").text();
+     if (study_id === "") {
+          //...
+
+      }
+      else{
+
+        ajax_call_go_to_dataset(study_id);
+      }
+
+
 
 
 });
