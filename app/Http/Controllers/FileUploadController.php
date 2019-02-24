@@ -12,6 +12,10 @@ use Session;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
 use Carbon\Carbon;
+
+
+use League\Flysystem\Filesystem;
+use League\Flysystem\ZipArchive\ZipArchiveAdapter;
 class FileUploadController extends Controller
 {
     //
@@ -21,6 +25,33 @@ class FileUploadController extends Controller
     	$folder_name = "folder 1";
         return view('file_upload/fileupload', ["folder_name"=>$folder_name]);
     }
+
+    public function zipcreate_test()
+    {
+      // see laravel's config/filesystem.php for the source disk
+       $source_disk = 's3';
+       $source_path = Session::get("current_path");
+
+       $file_names = Storage::disk($source_disk)->allfiles($source_path);
+
+       $zip = new Filesystem(new ZipArchiveAdapter(public_path('archive.zip')));
+
+       foreach($file_names as $file_name){
+           $file_content = Storage::disk($source_disk)->get($file_name);
+           $zip->put($file_name, $file_content);
+       }
+
+       $zip->getAdapter()->getArchive()->close();
+
+
+
+
+
+       return redirect('archive.zip');
+
+    }
+
+
 
     public function check_for_filename(Request $request)
     {

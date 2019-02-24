@@ -26,6 +26,7 @@ Route::get('file_upload/file/upload','FileUploadController@fileCreate');
 Route::post('file_upload/file/upload/store','FileUploadController@fileStore');
 Route::post('file_upload/file/delete','FileUploadController@fileDestroy');
 Route::get('/zipcreate','FileUploadController@zipcreate');
+Route::get('/zipcreate','FileUploadController@zipcreate_test');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::post('file_upload/file/upload/add_video','FileUploadController@add_video');

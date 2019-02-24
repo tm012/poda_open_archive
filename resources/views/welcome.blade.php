@@ -4,6 +4,8 @@
 
 @section('content')
 
+
+
 <div align="center"  class="container">
   <div class="row">
     <div class="col-sm-6">

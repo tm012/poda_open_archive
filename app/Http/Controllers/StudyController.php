@@ -44,6 +44,12 @@ class StudyController extends Controller
     {
 
         //return response()->json(['success'=>$imageName]);
+        $path=public_path().'/archive.zip';
+
+        //dd($path);
+        if (file_exists($path)) {
+            unlink($path);
+        }
 
         $my_studies = Studies::paginate(10);
         return view('/welcome', ["my_studies"=>$my_studies]);
