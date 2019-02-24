@@ -159,14 +159,7 @@ class FileUploadController extends Controller
         return $filename;
     }
 
-     public function add_video(Request $request)
-    {
-        //dd($request->srt);
-              $temp=Storage::disk('public')->put("TIM", file_get_contents($request->srt));
 
-              $contnets = Storage::disk('public')->get('TIM');
-          dd($contnets);
-    }
 
     public function zipcreate(Request $request)
     {

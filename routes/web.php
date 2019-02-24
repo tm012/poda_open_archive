@@ -29,7 +29,7 @@ Route::get('/zipcreate','FileUploadController@zipcreate');
 Route::get('/zipcreate','FileUploadController@zipcreate_test');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::post('file_upload/file/upload/add_video','FileUploadController@add_video');
+
 
 Route::get('studies/create_study', 'StudyController@create_study')->name('create study')->middleware('login_check');
 Route::post('studies/post_study', 'StudyController@post_study')->name('post study')->middleware('login_check');

@@ -24,7 +24,7 @@
 	  <div class="row">
 	    <div class="col-md-4"></div>
 	   <div align="center" class="col-md-4">
-	   	<!-- <a href="{{ action('FileUploadController@zipcreate', ['folder_name' => $folder_name]) }}"> <button    type="button" class="done_btn btn btn-success">Done</button></a> -->
+
       <button type="button" class="btn btn-success done_btn">DONE</button>
 	   </div>
 	   <div class="col-md-4"></div>
@@ -39,33 +39,7 @@
 </form>
 </div>
 
-<!--     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ action('FileUploadController@add_video') }}">
-                  <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-              <label for="title">Video URL</label>
 
-
-                <input type="text" name="video_url" class="form-control"  placeholder="Video URL">
-
-                <label for="title">SRT URL</label>
-
-
-                <input type="text" name="srt_url" class="form-control"  placeholder="SRT URL">
-OR
-               <label for="title">SRT file</label>
-                      <input type="file" name="srt" />
-
-
-                <label>Video Type</label>
-                <input type="text"  name='video_type'  value="video/" class=" form-control">
-
-<label>Subtitle Type</label>
-                <input type="text"  name='sub_type'  value="srt" class=" form-control">
-
-
-
-                 <button type="submit" class="btn btn-primary">Submit</button>
-   </form>
- -->
 
 
 @endsection

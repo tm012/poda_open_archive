@@ -122,12 +122,14 @@ class StudyController extends Controller
     }
     public function back_pressed()
     {
+      if(Auth::check()){
 
-      $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
-      //bytes
+        $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
+        //bytes
 
-      if (file_exists($path)) {
-          unlink($path);
+        if (file_exists($path)) {
+            unlink($path);
+        }
       }
 
       if (substr(rtrim(Session::get("current_path")), -1) == "/") {
