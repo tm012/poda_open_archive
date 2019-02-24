@@ -34,7 +34,7 @@ class FileUploadController extends Controller
 
        $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
-       $zip = new Filesystem(new ZipArchiveAdapter(public_path('archive.zip')));
+       $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
 
        foreach($file_names as $file_name){
            $file_content = Storage::disk($source_disk)->get($file_name);
@@ -43,11 +43,19 @@ class FileUploadController extends Controller
 
        $zip->getAdapter()->getArchive()->close();
 
+       $path=public_path().'/archive.zip';
+
+       //dd($path);
 
 
 
 
-       return redirect('archive.zip');
+
+
+      // return redirect('archive.zip');
+       return response()->download(public_path('/files/archive_'.Auth::user()->id.'.zip'));
+
+
 
     }
 

@@ -14,7 +14,7 @@
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
 
-        <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Downlaod as Zip</button></a>
+        <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
 
 
     </div>

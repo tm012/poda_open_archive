@@ -44,11 +44,14 @@ class StudyController extends Controller
     {
 
         //return response()->json(['success'=>$imageName]);
-        $path=public_path().'/archive.zip';
 
-        //dd($path);
-        if (file_exists($path)) {
-            unlink($path);
+        if(Auth::check()){
+          $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
+          //bytes
+
+          if (file_exists($path)) {
+              unlink($path);
+          }
         }
 
         $my_studies = Studies::paginate(10);
@@ -119,6 +122,13 @@ class StudyController extends Controller
     }
     public function back_pressed()
     {
+
+      $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
+      //bytes
+
+      if (file_exists($path)) {
+          unlink($path);
+      }
 
       if (substr(rtrim(Session::get("current_path")), -1) == "/") {
           // Do stuff
