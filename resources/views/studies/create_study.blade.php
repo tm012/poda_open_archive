@@ -17,8 +17,10 @@
       <label for="l_authorname">Author:</label>
       <input type="text" class="form-control" id="author_name" name="authorname" placeholder="Enter Author Name">
     </div> -->
+    <div align="center" class="container">
 
-    <button type="submit"  class="btn btn-success">Submit</button>
+      <button type="submit"  class="btn btn-outline-success">Submit</button>
+    </div>
   </form>
 </div>
 @endsection

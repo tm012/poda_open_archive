@@ -9,13 +9,14 @@
     </div>
     <div align="right" class="col-sm-4">
 
-
-      	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
+        @if(Auth::check())
+      	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
+        
 
-        <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
-
+          <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
+        @endif
 
     </div>
   </div>
@@ -56,7 +57,12 @@
 
       <tr>
         <td><i class="fa fa-file" aria-hidden="true"></i><td/>
-        <td><a  target="_blank" href="{{$value->file_url}}">{{$value->filename}}</a></td>
+
+        @if(Auth::check())
+          <td><a  target="_blank" href="{{$value->file_url}}">{{$value->filename}}</a></td>
+        @else
+           <td>{{$value->filename}}</td>
+        @endif
         <td>{{$value->created_at}}</td>
 
 
@@ -97,8 +103,9 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Add Folder</button>
+        <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Add Folder</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+          
         </div>
       </div>
 

@@ -31,6 +31,11 @@ class FileUploadController extends Controller
       // see laravel's config/filesystem.php for the source disk
        $source_disk = 's3';
        $source_path = Session::get("current_path");
+       if ($source_path == "") {
+         # code...
+        $source_path = 'dump/'. Session::get("current_study_id");
+       }
+       
 
        $file_names = Storage::disk($source_disk)->allfiles($source_path);
 

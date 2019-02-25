@@ -25,7 +25,7 @@
 	    <div class="col-md-4"></div>
 	   <div align="center" class="col-md-4">
 
-      <button type="button" class="btn btn-success done_btn">DONE</button>
+      <button type="button" class="btn btn-outline-success done_btn">DONE</button>
 	   </div>
 	   <div class="col-md-4"></div>
 	  </div>

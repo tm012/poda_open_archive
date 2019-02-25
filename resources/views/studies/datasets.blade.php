@@ -3,13 +3,16 @@
 
 <div align="center" class="container">
   <div class="row">
-    <div align="left" class="col-sm-10">
+    <div align="left" class="col-sm-9">
   <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
 
-
-    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button>
+      @if(Auth::check())
+    	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button>
+      
+        <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
+      @endif
     </div>
   </div>
 
@@ -75,8 +78,9 @@
 		    </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Create Dataset</button>
+        <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Create Dataset</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+          
         </div>
       </div>
 
@@ -104,7 +108,7 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
         </div>
 
       </div>
