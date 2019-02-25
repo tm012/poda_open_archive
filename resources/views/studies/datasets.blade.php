@@ -79,7 +79,7 @@
         </div>
         <div class="modal-footer">
         <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Create Dataset</button>
-          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           
         </div>
       </div>
@@ -108,7 +108,7 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
         </div>
 
       </div>
@@ -223,8 +223,11 @@ $('#resultTable tr').click(function (event) {
      // $(cls).find("td:first").css('color', 'green');
      //alert($(cls).find("td:nth-child(3)").text());
      var dataset_name = $(cls).find("td:nth-child(3)").text();
+     if (dataset_name != ""){
+      ajax_call_go_to_files(dataset_name);
+     }
 
-    ajax_call_go_to_files(dataset_name);
+    
 
 
 });
