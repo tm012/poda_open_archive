@@ -129,7 +129,9 @@ class StudyController extends Controller
     {
 
         //return response()->json(['success'=>$imageName]);
-
+        // $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
+        // $filename_tm = pathinfo('filename.md.txt', PATHINFO_FILENAME);
+      
         if(Auth::check()){
           $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
           //bytes
