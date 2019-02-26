@@ -35,7 +35,7 @@ class FileUploadController extends Controller
          # code...
         $source_path = 'dump/'. Session::get("current_study_id");
        }
-       
+
 
        $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
@@ -134,7 +134,7 @@ class FileUploadController extends Controller
 
         $imageUpload = new FileUpload();
         $imageUpload->filename = $imageName;
-        $imageUpload->data_id = $request->data_id;
+        // $imageUpload->data_id = $request->data_id;
         $imageUpload->path = $request->path;
         $imageUpload->dateset_id = Session::get("current_dataset_name");
         $imageUpload->study_id = Session::get("current_study_id");

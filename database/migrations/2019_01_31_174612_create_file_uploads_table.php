@@ -12,12 +12,12 @@ class CreateFileUploadsTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::defaultStringLength(191);
         Schema::create('file_uploads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('filename')->nullable($value = true);
-            $table->string('data_id')->nullable($value = true);
+            // $table->string('data_id')->nullable($value = true);
             $table->string('file_url')->nullable($value = true);
             $table->string('path')->nullable($value = true);
             $table->string('type')->nullable($value = true);
@@ -27,7 +27,7 @@ class CreateFileUploadsTable extends Migration
             $table->timestamps();
         });
 
-        
+
     }
 
     /**
