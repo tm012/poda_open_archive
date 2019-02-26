@@ -84,7 +84,7 @@ class FileUploadController extends Controller
 
             $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
             $filename_tm = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_FILENAME);
-            $filename_check = $filename_tm . "_" .(string) $i .'.'.$ext;
+            $filename_check = $filename_tm . "(" .(string) $i .').'.$ext;
             $exists = Storage::disk('s3')->exists(Session::get("current_path") .'/'.$filename_check);
             if($exists){}
             else{
