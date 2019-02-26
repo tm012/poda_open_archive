@@ -51,7 +51,7 @@
       <tr>
           <th></th>
               <th></th>
-        <th>Study ID</th>
+       <!--  <th>Study ID</th> -->
         <th>Study Name</th>
 
         <th>Access Status</th>
@@ -69,7 +69,7 @@
     @if($value->access_status == "1")
       <tr id="ClickableRow{{$value->id}}">
         <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-        <td>{{$value->study_id}}</td>
+        <td style="display:none;">{{$value->study_id}}</td>
         <td>{{$value->study_name}}</td>
 
         @if($value->access_status == "1")

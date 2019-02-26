@@ -160,7 +160,7 @@ class StudyController extends Controller
             $bike_save ->study_id = $request->study_id;
             $bike_save ->study_name = $request->study_name;
             $bike_save ->access_status = "1";
-            $bike_save ->created_date = $date->format("Y-d-m");
+            $bike_save ->created_date = $date->format("Y-m-d");
 
             $bike_save ->user_id = Auth::user()->id;
             $bike_save ->study_path = 'dump/'.$request->study_id;
@@ -360,7 +360,7 @@ class StudyController extends Controller
             $bike_save ->study_id = Session::get("current_study_id");
             $bike_save ->dataset_name = $request->dataset_name;
             $bike_save ->task_related = $request->task_name;
-            $bike_save ->created_date = $date->format("Y-d-m");
+            $bike_save ->created_date = $date->format("Y-m-d");
 
             $bike_save ->user_id = Auth::user()->id;
             $bike_save ->dateset_path = 'dump/' . Session::get("current_study_id") ;
