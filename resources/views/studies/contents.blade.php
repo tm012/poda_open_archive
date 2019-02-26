@@ -21,9 +21,16 @@
     </div>
   </div>
 
-
+<br><br>
   <div  class="container">
+<div class="row">
+    <div class="col-sm-6"></div>
+    <div align="right" class="col-sm-6">
+      
 
+      <input id="myInput" type="text" placeholder="Search..">
+    </div>
+  </div>
     <table id="resultTable" class="table table-striped">
       <thead>
         <tr>
@@ -37,7 +44,7 @@
 
         </tr>
       </thead>
-      <tbody>
+      <tbody id="myTable">
 
     @foreach($contents as $my_study=>$value)
 

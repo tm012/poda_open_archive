@@ -18,9 +18,16 @@
 
   <input type="hidden" id="auth_check" class="form-control" name="auth_check" value="{{Auth::check()}}">
 
-
+<br><br>
   <div  class="container">
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div align="right" class="col-sm-6">
+          
 
+          <input id="myInput" type="text" placeholder="Search..">
+        </div>
+      </div>
     <table id="resultTable" class="table table-striped">
       <thead>
         <tr>
@@ -35,7 +42,7 @@
 
         </tr>
       </thead>
-      <tbody>
+      <tbody id="myTable">
   	@foreach($my_datasets as $my_study=>$value)
         <tr id="ClickableRow{{$value->id}}">
           <td><i class="fa fa-database" aria-hidden="true"></i><td/>

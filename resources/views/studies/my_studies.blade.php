@@ -2,6 +2,15 @@
 @section('content')
 
 <div class="container">
+<div class="row">
+    <div class="col-sm-6"></div>
+    <div align="right" class="col-sm-6">
+      
+
+      <input id="myInput" type="text" placeholder="Search..">
+    </div>
+  </div>
+
 
   <table id="resultTable" class="table table-striped">
     <thead>
@@ -17,7 +26,7 @@
 
       </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
 	@foreach($my_studies as $my_study=>$value)
       <tr id="ClickableRow{{$value->id}}">
         <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
@@ -54,6 +63,15 @@
 
 
 <script>
+
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+
+$('#table_id').DataTable( {
+    
+} );
 
 function ajax_call_go_to_dataset(study_id) {
   var study_id = study_id;
