@@ -8,7 +8,7 @@
 
 <div align="center"  class="container">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
 
       <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
         <input autocomplete="off" data-id='study' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search By Study Name" class="form-control search_by_study">
@@ -19,12 +19,22 @@
 
     </div>
 
-
-    <div class="col-sm-6">
+    <div class="col-sm-4">
 
 
       <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_task">
+        <input autocomplete="off" data-id='dataset' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_dataset">
+      </form>
+
+
+    </div>
+
+
+    <div class="col-sm-4">
+
+
+      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+        <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Task Name" class="form-control search_by_task">
       </form>
 
 
@@ -256,12 +266,23 @@ function getEmployeeName(search_type){
     } );
   }
 
-  if(search_type == "task"){
+
+  if(search_type == "dataset"){
 
     $.each( jsonData, function ( index, product )
     {
       console.log("Name" + product.dataset_name);
       productNames.push( product.dataset_name );
+
+    } );
+  }
+
+  if(search_type == "task"){
+
+    $.each( jsonData, function ( index, product )
+    {
+      console.log("Name" + product.task_related);
+      productNames.push( product.task_related );
 
     } );
   }
@@ -286,6 +307,33 @@ $(function() {
 
 
     var productNames = getEmployeeName("study");
+      // var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
+    // getproblemName();
+
+
+    $(this).typeahead({
+
+
+      source: productNames,
+    });
+
+
+  })
+
+
+
+  $('form').on('focus','.search_by_dataset',function(){
+
+
+
+    // var user_id = $('.search_by_study').val();
+
+    //console.log(user_id);
+
+
+
+
+    var productNames = getEmployeeName("dataset");
       // var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
     // getproblemName();
 

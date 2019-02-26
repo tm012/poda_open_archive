@@ -39,6 +39,23 @@ class StudyController extends Controller
 
           $services = DB::table('studies')
               ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              ->select('datasets.task_related')
+              ->distinct()->get();
+
+           return  $services;
+
+
+
+        }
+
+
+        if($search_type == "dataset"){
+
+          // $services = DB::table('studies')->distinct()->get();
+
+
+          $services = DB::table('studies')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
               ->select('datasets.dataset_name')
               ->distinct()->get();
 
@@ -56,19 +73,28 @@ class StudyController extends Controller
     {
         //dd($request->search);
         $search_param = $request->search;
-        if (Datasets::where('dataset_name', '=', $search_param)->exists()) {
+        if (Datasets::where('task_related', '=', $search_param)->exists()) {
            // user found
 
            $my_studies = DB::table('studies')
                ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
                ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
-               ->where('datasets.dataset_name', $search_param)
+               ->where('datasets.task_related', $search_param)
                ->paginate(10);
                return view('/welcome', ["my_studies"=>$my_studies]);
         }
         else if (Studies::where('study_name', '=', $search_param)->exists()) {
           $my_studies = Studies::where('study_name', $search_param) ->paginate(10);
           return view('/welcome', ["my_studies"=>$my_studies]);
+
+        }
+        else if (Datasets::where('dataset_name', '=', $search_param)->exists()) {
+          $my_studies = DB::table('studies')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
+              ->where('datasets.dataset_name', $search_param)
+              ->paginate(10);
+              return view('/welcome', ["my_studies"=>$my_studies]);
 
         }
         else{
