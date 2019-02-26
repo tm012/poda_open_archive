@@ -86,7 +86,7 @@
        @endif
 
 
-        <td>{{$value->created_date}}</td>
+        <td>{{$value->created_at}}</td>
       </tr>
     @else
 
@@ -103,7 +103,7 @@
          @endif
 
 
-          <td>{{$value->created_date}}</td>
+          <td>{{$value->created_at}}</td>
         </tr>
 
       @else
@@ -119,7 +119,7 @@
          @endif
 
 
-          <td>{{$value->created_date}}</td>
+          <td>{{$value->created_at}}</td>
         </tr>
 
       @endif
@@ -140,7 +140,7 @@
        @endif
 
 
-        <td>{{$value->created_date}}</td>
+        <td>{{$value->created_at}}</td>
       </tr>
     @else
         <tr >
@@ -155,7 +155,7 @@
          @endif
 
 
-          <td>{{$value->created_date}}</td>
+          <td>{{$value->created_at}}</td>
         </tr>
     @endif
   @endif

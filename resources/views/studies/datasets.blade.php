@@ -52,7 +52,7 @@
 
 
 
-          <td>{{$value->created_date}}</td>
+          <td>{{$value->created_at}}</td>
         </tr>
   	@endforeach
       </tbody>
