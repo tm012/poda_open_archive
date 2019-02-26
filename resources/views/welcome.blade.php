@@ -10,18 +10,24 @@
   <div class="row">
     <div class="col-sm-6">
 
-      <form action="/">
-        Search By Study Name <input type="text" name="search" placeholder="Search By Task Name">
+      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+        <input autocomplete="off" data-id='study' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search By Study Name" class="form-control search_by_study">
       </form>
+
+
+
 
     </div>
 
 
     <div class="col-sm-6">
 
-      <form action="/">
-        Search By Task Name <input type="text" name="search" placeholder="Search By Study Name">
+
+      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+        <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_task">
       </form>
+
+
     </div>
   </div>
 
@@ -209,6 +215,118 @@ $('#resultTable tr').click(function (event) {
 
 });
 
+function getEmployeeName(search_type){
+
+  result ="";
+  $.ajax({
+
+
+    url: "/search_home",
+    data: {
+
+      search_type: search_type,
+      submit_check_1: "submit_check_1"
+
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      console.log(data);
+      result = data;
+
+    }
+  })
+
+
+  var jsonData=  result;
+  console.log("TM");
+  console.log(jsonData);
+  //ajaxToPass("/job_cards/get_problem_name.json", "" , "get");
+
+  var productNames = new Array();
+  if(search_type == "study"){
+
+    $.each( jsonData, function ( index, product )
+    {
+      console.log("Name" + product.study_name);
+      productNames.push( product.study_name );
+
+    } );
+  }
+
+  if(search_type == "task"){
+
+    $.each( jsonData, function ( index, product )
+    {
+      console.log("Name" + product.dataset_name);
+      productNames.push( product.dataset_name );
+
+    } );
+  }
+
+  return productNames;
+}
+
+
+
+$(function() {
+
+
+  $('form').on('focus','.search_by_study',function(){
+
+
+
+    // var user_id = $('.search_by_study').val();
+
+    //console.log(user_id);
+
+
+
+
+    var productNames = getEmployeeName("study");
+      // var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
+    // getproblemName();
+
+
+    $(this).typeahead({
+
+
+      source: productNames,
+    });
+
+
+  })
+
+  $('form').on('focus','.search_by_task',function(){
+
+
+
+    //var user_id = $('.search_by_task').val();
+
+    //console.log(user_id);
+
+
+
+
+    var productNames = getEmployeeName("task");
+      //var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
+    // getproblemName();
+
+
+    $(this).typeahead({
+
+
+      source: productNames,
+    });
+
+
+  })
+
+
+});
+
 
 </script>
 
@@ -223,9 +341,11 @@ input[name=search] {
   font-size: 16px;
   background-color: white;
   background-image: url("/img/serchicon.png");
-  background-position: 10px 10px;
+  background-position: 10px 5px;
   background-repeat: no-repeat;
-  padding: 5px 20px 12px 40px;
+  /* padding: 1px 20px 12px 40px; */
+  padding-left: 40px;
+
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
 }

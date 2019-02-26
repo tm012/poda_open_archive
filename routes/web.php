@@ -28,7 +28,8 @@ Route::post('file_upload/file/delete','FileUploadController@fileDestroy');
 Route::get('/zipcreate','FileUploadController@zipcreate');
 Route::get('/zipcreate','FileUploadController@zipcreate_test');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
-
+Route::get('/search_home', 'StudyController@search_home');
+Route::get('/search_home_with_param', 'StudyController@search_home_with_param');
 
 
 Route::get('studies/create_study', 'StudyController@create_study')->name('create study')->middleware('login_check');
