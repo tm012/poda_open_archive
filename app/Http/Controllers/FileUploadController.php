@@ -7,6 +7,7 @@ use App\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 use Cookie;
+use Zipper;
 use DateTime;
 use Session;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +27,83 @@ class FileUploadController extends Controller
         return view('file_upload/fileupload', ["folder_name"=>$folder_name]);
     }
 
+
+    public function test_tm(Request $request)
+    {  $image = $request->file('zipfile');
+      $imageName = $image->getClientOriginalName() ;
+
+
+
+      //Storage::disk('public')->put($imageName, $image );
+
+        $image->move(public_path('files'),$imageName);
+
+        $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+        $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
+        // dd(  $filename_tm);
+        if($ext == "zip"){
+
+
+
+
+          Zipper::make(public_path('/files'.'/'.$imageName))->extractTo(public_path('/files'));
+        //  dd("tm");
+          $source_disk = 'public';
+          $source_path =  $filename_tm;
+
+          $file_names = Storage::disk($source_disk)->allfiles($source_path);
+    
+          $dataset_path_tm = 'dump/'. Session::get("current_study_id") .'/' .$source_path;
+          $exists = Storage::disk('s3')->exists($dataset_path_tm);
+
+          if($exists){
+
+
+          }
+          else{
+          // $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
+
+            foreach($file_names as $file_name){
+                $file_content = Storage::disk($source_disk)->get($file_name);
+                //$zip->put($file_name, $file_content);
+                // dd( $file_name);
+                $source_path = 'dump/'. Session::get("current_study_id") .'/' ;
+                $source_path =  $source_path .$file_name;
+                //echo $source_path . '<br>';
+
+              $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
+
+            }
+          }
+
+          $path=public_path().'/files/'.$imageName;
+          //bytes
+
+          if (file_exists($path)) {
+              unlink($path);
+              Storage::disk('public')->deleteDirectory($filename_tm);
+          }
+
+          // $path=public_path().'/files/'.$filename_tm;
+          // //bytes
+          //
+          // if (file_exists($path)) {
+          //     unlink($path);
+          // }
+        }
+
+    }
+
     public function zipcreate_test()
     {
+        if(Auth::check()){
+          $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
+          //bytes
+
+          if (file_exists($path)) {
+              unlink($path);
+          }
+        }
       // see laravel's config/filesystem.php for the source disk
        $source_disk = 's3';
        $source_path = Session::get("current_path");
@@ -44,6 +120,8 @@ class FileUploadController extends Controller
        foreach($file_names as $file_name){
            $file_content = Storage::disk($source_disk)->get($file_name);
            $zip->put($file_name, $file_content);
+
+
        }
 
        $zip->getAdapter()->getArchive()->close();

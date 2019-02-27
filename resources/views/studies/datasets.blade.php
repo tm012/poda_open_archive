@@ -3,15 +3,16 @@
 
 <div align="center" class="container">
   <div class="row">
-    <div align="left" class="col-sm-9">
+    <div align="left" class="col-sm-7">
   <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
     </div>
-    <div class="col-sm-3">
+    <div align="right" class="col-sm-5">
 
       @if(Auth::check())
     	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button>
-      
+
         <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
+        <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
       @endif
     </div>
   </div>
@@ -23,7 +24,7 @@
     <div class="row">
         <div class="col-sm-6"></div>
         <div align="right" class="col-sm-6">
-          
+
 
           <input id="myInput" type="text" placeholder="Search..">
         </div>
@@ -87,7 +88,7 @@
         <div class="modal-footer">
         <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Create Dataset</button>
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-          
+
         </div>
       </div>
 
@@ -111,6 +112,51 @@
           <button type="button" id ="go_home" class="btn btn-default" data-dismiss="modal">Go Home</button>
           <button type="button" id ="go_my_studies" class="btn btn-default" data-dismiss="modal">Go to My Studies</button>
 
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal_2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload file as zip</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form method="post" action="{{url('test_tm')}}" enctype="multipart/form-data"
+                      >
+             <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+
+             <input name="data_id" type="hidden" value="0"/>
+
+              <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
+
+              <!-- <div class="form-group">
+                <label for="l_dataset_name_m">DataSet Name</label>
+                <input type="text" class="form-control" name="dataset_name_m" id="dataset_name_m" required>
+              </div> -->
+              <div align="center" class="form-group">
+                <label for="l_zip_file">Zip file</label>
+                <input type="file" required  class="form-control" name="zipfile" id="zipfile">
+              </div>
+
+              <button type="submit" class="btn btn-default">Submit</button>
+
+             </form>
         </div>
 
         <!-- Modal footer -->
@@ -234,7 +280,7 @@ $('#resultTable tr').click(function (event) {
       ajax_call_go_to_files(dataset_name);
      }
 
-    
+
 
 
 });

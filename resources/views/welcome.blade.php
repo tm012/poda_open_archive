@@ -4,7 +4,7 @@
 
 @section('content')
 
-
+<!-- <button type="button" onclick="window.location='{{ url("test_tm") }}'">Button</button -->
 
 <div align="center"  class="container">
   <div class="row">
@@ -48,7 +48,7 @@
 <div class="row">
     <div class="col-sm-6"></div>
     <div align="right" class="col-sm-6">
-      
+
 
       <input id="myInput" type="text" placeholder="Search..">
     </div>
