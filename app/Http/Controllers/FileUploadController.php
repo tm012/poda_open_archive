@@ -52,7 +52,7 @@ class FileUploadController extends Controller
           $source_path =  $filename_tm;
 
           $file_names = Storage::disk($source_disk)->allfiles($source_path);
-    
+
           $dataset_path_tm = 'dump/'. Session::get("current_study_id") .'/' .$source_path;
           $exists = Storage::disk('s3')->exists($dataset_path_tm);
 
@@ -69,9 +69,9 @@ class FileUploadController extends Controller
                 // dd( $file_name);
                 $source_path = 'dump/'. Session::get("current_study_id") .'/' ;
                 $source_path =  $source_path .$file_name;
-                //echo $source_path . '<br>';
+                echo $source_path . '<br>';
 
-              $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
+            //  $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
 
             }
           }
