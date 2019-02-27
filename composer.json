@@ -30,10 +30,6 @@
             "App\\": "app/"
         }
     },
-
-    "files": {
-        "custom_php.ini" // new file
-    },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
