@@ -72,10 +72,10 @@ return [
 
           // Optional FTP Settings...
           'port'     => 21,
-          'root'     => 'dump/files',
+          // 'root'     => 'dump',
           'passive'  => true,
           'ssl'      => true,
-          'timeout'  => 300,
+          // 'timeout'  => 300,
         ],
 
     ],

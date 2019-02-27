@@ -131,7 +131,7 @@ class StudyController extends Controller
         //return response()->json(['success'=>$imageName]);
         // $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
         // $filename_tm = pathinfo('filename.md.txt', PATHINFO_FILENAME);
-      
+
         if(Auth::check()){
           $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
           //bytes
@@ -168,7 +168,7 @@ class StudyController extends Controller
             $bike_save -> save();
             $fileContents= 'TM';
 
-            Storage::disk('s3')->put('dump/'.$request->study_id.'/1', $fileContents);
+            Storage::disk('ftp')->put('dump/'.$request->study_id.'/1', $fileContents);
             //Storage::disk('s3')->delete('dump/'.$request->study_id.'/1');
             return Redirect::to('studies/my_studies');
     }
@@ -342,7 +342,7 @@ class StudyController extends Controller
             $dataset_name  = $request->dataset_name;
             $path = 'dump/' . Session::get("current_study_id") .'/'.$dataset_name ;
 
-            $exists = Storage::disk('s3')->exists($path);
+            $exists = Storage::disk('ftp')->exists($path);
 
             if($exists){
 
@@ -352,7 +352,7 @@ class StudyController extends Controller
 
             $date = Carbon::now();// will get you the current date, time
             $fileContents= 'TM';
-            Storage::disk('s3')->put($path .'/1', $fileContents);
+            Storage::disk('ftp')->put($path .'/1', $fileContents);
 
 
 
@@ -388,7 +388,7 @@ class StudyController extends Controller
 
            $path = Session::get("current_path") .'/'. $folder_name ;
 
-           $exists = Storage::disk('s3')->exists($path);
+           $exists = Storage::disk('ftp')->exists($path);
 
            if($exists){
 
@@ -398,7 +398,7 @@ class StudyController extends Controller
 
            $date = Carbon::now();// will get you the current date, time
            $fileContents= 'TM';
-           Storage::disk('s3')->put($path .'/1', $fileContents);
+           Storage::disk('ftp')->put($path .'/1', $fileContents);
 
 
 

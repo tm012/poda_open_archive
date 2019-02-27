@@ -31,19 +31,19 @@ class FileUploadController extends Controller
     public function test_tm(Request $request)
     {
 
-      $fileContents= 'TM';
-
-   Storage::disk('ftp')->put('1', $fileContents, 'public');
-
-
-// http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/files/1
-      // $path = $fileContents->storeAs(
-      //   'dump', #$path
-      //   "tm", #$fileName
-      //   ['disk'=>'ftp', 'visibility'=>'public'] #$options
-      // );
-
-      dd("d");
+//       $fileContents= 'TM';
+//
+//    Storage::disk('ftp')->put('1', $fileContents, 'public');
+//
+//
+// // http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/files/1
+//       // $path = $fileContents->storeAs(
+//       //   'dump', #$path
+//       //   "tm", #$fileName
+//       //   ['disk'=>'ftp', 'visibility'=>'public'] #$options
+//       // );
+//
+//       dd("d");
 
 
       $image = $request->file('zipfile');
@@ -71,7 +71,7 @@ class FileUploadController extends Controller
           $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
           $dataset_path_tm = 'dump/'. Session::get("current_study_id") .'/' .$source_path;
-          $exists = Storage::disk('s3')->exists($dataset_path_tm);
+          $exists = Storage::disk('ftp')->exists($dataset_path_tm);
 
           if($exists){
 
@@ -86,9 +86,10 @@ class FileUploadController extends Controller
                 // dd( $file_name);
                 $source_path = 'dump/'. Session::get("current_study_id") .'/' ;
                 $source_path =  $source_path .$file_name;
-                echo $source_path . '<br>';
 
-                $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
+
+                $storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+                echo $source_path . '<br>';
 
             }
           }
@@ -122,7 +123,7 @@ class FileUploadController extends Controller
           }
         }
       // see laravel's config/filesystem.php for the source disk
-       $source_disk = 's3';
+       $source_disk = 'ftp';
        $source_path = Session::get("current_path");
        if ($source_path == "") {
          # code...
@@ -164,7 +165,7 @@ class FileUploadController extends Controller
     public function check_for_filename(Request $request)
     {
       $imageName = $request->file_name;
-      $exists = Storage::disk('s3')->exists(Session::get("current_path") .'/'.$imageName);
+      $exists = Storage::disk('ftp')->exists(Session::get("current_path") .'/'.$imageName);
       if($exists){
 
         $i = 1;
@@ -180,7 +181,7 @@ class FileUploadController extends Controller
             $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
             $filename_tm = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_FILENAME);
             $filename_check = $filename_tm . "(" .(string) $i .').'.$ext;
-            $exists = Storage::disk('s3')->exists(Session::get("current_path") .'/'.$filename_check);
+            $exists = Storage::disk('ftp')->exists(Session::get("current_path") .'/'.$filename_check);
             if($exists){}
             else{
                 $imageName = $filename_check ;
@@ -218,7 +219,7 @@ class FileUploadController extends Controller
 
         $path = $request->path .'/';
 
-        $storagePath = Storage::disk('s3')->put($path .$imageName, $contnets, 'public');
+        $storagePath = Storage::disk('ftp')->put($path .$imageName, $contnets, 'public');
 
 
         $path=public_path().'/files/'.$imageName;
@@ -233,7 +234,7 @@ class FileUploadController extends Controller
 
 
 
-
+// http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/files/1
 
         $imageUpload = new FileUpload();
         $imageUpload->filename = $imageName;
@@ -241,7 +242,7 @@ class FileUploadController extends Controller
         $imageUpload->path = $request->path;
         $imageUpload->dateset_id = Session::get("current_dataset_name");
         $imageUpload->study_id = Session::get("current_study_id");
-        $imageUpload->file_url = "https://s3.us-east-2.amazonaws.com/canaphem/" .$request->path . "/". $imageName;
+        $imageUpload->file_url = "http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$request->path . "/". $imageName;
         $imageUpload->file_size = $size;
 
         $imageUpload->type = "file";
@@ -261,7 +262,7 @@ class FileUploadController extends Controller
 
         $path = Session::get("current_path") .'/'.$filename;
 
-        Storage::disk('s3')->delete($path);
+        Storage::disk('ftp')->delete($path);
 
         FileUpload::where('filename',$filename)->where('user_id',  Auth::user()->id)->where('study_id',  Session::get("current_study_id"))->where('dateset_id',  Session::get("current_dataset_name"))->delete();
         return $filename;
