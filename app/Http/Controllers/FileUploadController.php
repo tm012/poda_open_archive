@@ -52,6 +52,9 @@ class FileUploadController extends Controller
       $image = $request->file('zipfile');
       $imageName = $image->getClientOriginalName() ;
 
+      $tm = Storage::disk('ftp')->put('dump/'.Session::get("current_study_id").'/'.$imageName, $image, 'public');
+     
+
 
 
       //Storage::disk('public')->put($imageName, $image );
@@ -87,6 +90,7 @@ class FileUploadController extends Controller
             $bike_save ->dataset_name = $filename_tm;
             $bike_save ->task_related = $request->task_name_m;
             $bike_save ->created_date = $date->format("Y-m-d");
+            $bike_save ->dataset_url = "http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" . $tm ;
 
             $bike_save ->user_id = Auth::user()->id;
             $bike_save ->dateset_path = 'dump/' . Session::get("current_study_id") ;

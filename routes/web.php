@@ -36,6 +36,8 @@ Route::get('/search_home_with_param', 'StudyController@search_home_with_param');
 Route::get('studies/create_study', 'StudyController@create_study')->name('create study')->middleware('login_check');
 Route::post('studies/post_study', 'StudyController@post_study')->name('post study')->middleware('login_check');
 
+
+
 Route::get('studies/my_studies', 'StudyController@my_studies')->name('my studies')->middleware('login_check');
 
 Route::get('/datesets', 'StudyController@datasets')->name('my studies');

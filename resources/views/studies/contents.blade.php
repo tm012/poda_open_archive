@@ -10,12 +10,26 @@
     <div align="right" class="col-sm-4">
 
         @if(Auth::check())
-      	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
+      	 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
         
 
-          <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
+          <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
+        @endif
+         
+
+        @if(Session::get("current_path") == 'dump/'. Session::get("current_study_id").'/'. Session::get("current_dataset_name"))
+
+     <!--     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
+
+        <button type="button" class="btn btn-primary upload_files">Upload Files</button>
+         -->
+
+
+         <a href=' {{ $total = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('dataset_url')}}'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a>
+
+        <!--   <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
         @endif
 
     </div>

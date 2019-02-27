@@ -9,9 +9,9 @@
     <div align="right" class="col-sm-5">
 
       @if(Auth::check())
-    	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button>
+    	<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button> -->
 
-        <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
+       <!--  <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
         <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
       @endif
     </div>
