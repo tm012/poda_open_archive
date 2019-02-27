@@ -13,7 +13,9 @@ use Session;
 use Illuminate\Support\Facades\Auth;
 use Redirect;
 use Carbon\Carbon;
-
+use App\Studies;
+use App\Datasets;
+use DB;
 
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter;
@@ -44,6 +46,7 @@ class FileUploadController extends Controller
 //       // );
 //
 //       dd("d");
+      $date = Carbon::now();
 
 
       $image = $request->file('zipfile');
@@ -79,17 +82,148 @@ class FileUploadController extends Controller
           }
           else{
           // $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
+            $bike_save = New Datasets;
+            $bike_save ->study_id = Session::get("current_study_id");
+            $bike_save ->dataset_name = $filename_tm;
+            $bike_save ->task_related = $request->task_name_m;
+            $bike_save ->created_date = $date->format("Y-m-d");
 
+            $bike_save ->user_id = Auth::user()->id;
+            $bike_save ->dateset_path = 'dump/' . Session::get("current_study_id") ;
+
+            // $bike_save -> save();
             foreach($file_names as $file_name){
                 $file_content = Storage::disk($source_disk)->get($file_name);
                 //$zip->put($file_name, $file_content);
                 // dd( $file_name);
                 $source_path = 'dump/'. Session::get("current_study_id") .'/' ;
                 $source_path =  $source_path .$file_name;
+                //$storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+
+                $current_path_check = $source_path;
+                $c_file_name = basename($current_path_check).PHP_EOL;
 
 
-                $storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
-                echo $source_path . '<br>';
+
+              //  if (substr(rtrim($current_path_check), -1) == "/") {
+                    // Do stuff
+              $modified_path = $current_path_check;
+
+              if (substr(rtrim(Session::get("current_path")), -1) == "/") {
+                  // Do stuff
+
+                    $modified_path = substr($current_path_check, 0, strlen($current_path_check)-1);
+
+
+                }
+
+
+              $modified_path = dirname($modified_path);
+              $size = 0;
+              try{
+
+                $size = Storage::disk('public')->size($file_name);
+
+
+                $size = (float) $size;
+                $size = ((float)(1/125000) * $size);
+                if(is_float ( $size )){
+
+
+                }else{
+                  $size = 0;
+                }
+              }
+              catch(Exception $e){
+
+
+              }
+
+              $imageUpload = new FileUpload();
+              $imageUpload->filename = $c_file_name;
+              // $imageUpload->data_id = $request->data_id;
+              $imageUpload->path = $modified_path;
+              $imageUpload->dateset_id = $filename_tm;
+              $imageUpload->study_id = Session::get("current_study_id");
+              $imageUpload->file_url = "http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$source_path;
+              $imageUpload->file_size = $size;
+
+              $imageUpload->type = "file";
+              $imageUpload ->user_id = Auth::user()->id;
+              //$imageUpload->save();
+              $break_loop = 0;
+              $check_path_folder = $modified_path;
+                 echo '<br>' .'<br>'. '-------------S-------------';
+              echo '<br>' .'<br>' .$modified_path .'<br>' .'<br>';
+              while($break_loop < 1) {
+                $c_file_name_folder = basename($check_path_folder).PHP_EOL;
+                $c_file_name_folder = trim(preg_replace('/\s+/', ' ', $c_file_name_folder));
+              //  dd($c_file_name_folder);
+                if($c_file_name_folder == $filename_tm){
+                  echo "dataset found".'<br>';
+                  $break_loop = 1;
+                }
+                else{
+
+                  //$exists = Storage::disk('ftp')->exists($check_path_folder);
+
+                //  if (FileUpload::where('study_id', Session::get("current_study_id"))->where('type', 'folder')->where('path', $check_path_folder)->where('user_id', Auth::user()->id)->where('filename', $c_file_name_folder)->where('dateset_id', $filename_tm)->exists()){
+                  $row_count =FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->count();
+echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
+                  $user = FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->first();
+                  if ($row_count < 1) {
+                     // user doesn't exist
+
+
+                     echo "folder found ".$c_file_name_folder .'   <br>' .$check_path_folder. '<br>';
+                     $check_path_folder = dirname($check_path_folder);
+                     echo "db_path ".$check_path_folder. '<br>';
+
+
+                     $bike_save = New FileUpload;
+                     $bike_save ->study_id = Session::get("current_study_id");
+                     $bike_save ->dateset_id = $filename_tm;
+                     $bike_save ->type ="folder";
+                     $bike_save ->filename =$c_file_name_folder;
+
+
+
+                     $bike_save ->user_id = Auth::user()->id;
+                     $bike_save ->path =  $check_path_folder;
+
+                     $bike_save -> save();
+
+  //                    $deleteDuplicates = DB::table('file_uploads as n1')
+  // ->join('file_uploads as n2', 'n1.id', '<', 'n2.id')
+  //   ->where('n1.path', '=', 'n2.path') ->where('n1.filename', '=', 'n2.filename')->delete();
+
+                      $row_count =FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->count();
+// echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
+
+                     // $m = DB:delete('delete from file_uploads where path = ? type = ? filename = ? limit ?', array($check_path_folder, 'folder'.$c_file_name_folder, ($row_count - 1)));
+                  }
+
+
+
+
+
+                }
+              //  $check_path_folder = dirname($check_path_folder);
+              }
+
+
+
+
+              $deleteDuplicates =
+
+                                  DB::table('file_uploads as n1')
+                                  ->join('file_uploads as n2', 'n1.id', '<', 'n2.id')
+                                    ->where('n1.path', '=', 'n2.path') ->delete();
+
+   echo '<br>' .'<br>'. '--------------------------';
+                //$storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+               echo '<br>' .'<br>' .$source_path . '<br>' . $c_file_name . '<br>'.$modified_path. '<br>'.$size. '<br>'. '<br>';
+   echo '<br>' .'<br>'. '--------------E------------';
 
             }
           }

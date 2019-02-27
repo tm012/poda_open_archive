@@ -145,10 +145,10 @@
 
               <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
 
-              <!-- <div class="form-group">
-                <label for="l_dataset_name_m">DataSet Name</label>
-                <input type="text" class="form-control" name="dataset_name_m" id="dataset_name_m" required>
-              </div> -->
+              <div class="form-group">
+                <label for="l_task_name_m">DataSet Name</label>
+                <input type="text" class="form-control" name="task_name_m" id="task_name_m" required>
+              </div>
               <div align="center" class="form-group">
                 <label for="l_zip_file">Zip file</label>
                 <input type="file" required  class="form-control" name="zipfile" id="zipfile">
