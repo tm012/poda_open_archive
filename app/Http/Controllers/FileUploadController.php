@@ -29,7 +29,24 @@ class FileUploadController extends Controller
 
 
     public function test_tm(Request $request)
-    {  $image = $request->file('zipfile');
+    {
+
+      $fileContents= 'TM';
+
+   Storage::disk('ftp')->put('1', $fileContents, 'public');
+
+
+// http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/files/1
+      // $path = $fileContents->storeAs(
+      //   'dump', #$path
+      //   "tm", #$fileName
+      //   ['disk'=>'ftp', 'visibility'=>'public'] #$options
+      // );
+
+      dd("d");
+
+
+      $image = $request->file('zipfile');
       $imageName = $image->getClientOriginalName() ;
 
 
@@ -71,7 +88,7 @@ class FileUploadController extends Controller
                 $source_path =  $source_path .$file_name;
                 echo $source_path . '<br>';
 
-            //  $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
+                $storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
 
             }
           }
