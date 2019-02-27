@@ -91,7 +91,7 @@ class FileUploadController extends Controller
             $bike_save ->user_id = Auth::user()->id;
             $bike_save ->dateset_path = 'dump/' . Session::get("current_study_id") ;
 
-            // $bike_save -> save();
+            $bike_save -> save();
             foreach($file_names as $file_name){
                 $file_content = Storage::disk($source_disk)->get($file_name);
                 //$zip->put($file_name, $file_content);
@@ -139,6 +139,10 @@ class FileUploadController extends Controller
 
               }
 
+
+
+              $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
+
               $imageUpload = new FileUpload();
               $imageUpload->filename = $c_file_name;
               // $imageUpload->data_id = $request->data_id;
@@ -150,7 +154,7 @@ class FileUploadController extends Controller
 
               $imageUpload->type = "file";
               $imageUpload ->user_id = Auth::user()->id;
-              //$imageUpload->save();
+              $imageUpload->save();
               $break_loop = 0;
               $check_path_folder = $modified_path;
                  echo '<br>' .'<br>'. '-------------S-------------';
@@ -169,7 +173,7 @@ class FileUploadController extends Controller
 
                 //  if (FileUpload::where('study_id', Session::get("current_study_id"))->where('type', 'folder')->where('path', $check_path_folder)->where('user_id', Auth::user()->id)->where('filename', $c_file_name_folder)->where('dateset_id', $filename_tm)->exists()){
                   $row_count =FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->count();
-echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
+// echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
                   $user = FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->first();
                   if ($row_count < 1) {
                      // user doesn't exist
@@ -196,9 +200,17 @@ echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
   //                    $deleteDuplicates = DB::table('file_uploads as n1')
   // ->join('file_uploads as n2', 'n1.id', '<', 'n2.id')
   //   ->where('n1.path', '=', 'n2.path') ->where('n1.filename', '=', 'n2.filename')->delete();
+                      $array_same  = FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->where('type', 'folder')->get();
+
+                      for ($x = 1; $x <sizeof($array_same); $x++) {
+                        echo '<br>' .'<br>' .'row counts  '.$array_same[$x]["id"] . '<br>';
+
+                        DB::delete('delete from file_uploads where id = ?',[$array_same[$x]["id"]]);
+
+                      }
 
                       $row_count =FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->count();
-// echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
+
 
                      // $m = DB:delete('delete from file_uploads where path = ? type = ? filename = ? limit ?', array($check_path_folder, 'folder'.$c_file_name_folder, ($row_count - 1)));
                   }
@@ -221,7 +233,7 @@ echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
                                     ->where('n1.path', '=', 'n2.path') ->delete();
 
    echo '<br>' .'<br>'. '--------------------------';
-                //$storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+                $storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
                echo '<br>' .'<br>' .$source_path . '<br>' . $c_file_name . '<br>'.$modified_path. '<br>'.$size. '<br>'. '<br>';
    echo '<br>' .'<br>'. '--------------E------------';
 
@@ -243,6 +255,8 @@ echo '<br>' .'<br>' .'row counts  '.$row_count . '<br>';
           //     unlink($path);
           // }
         }
+
+        return Redirect::to('/datesets');
 
     }
 

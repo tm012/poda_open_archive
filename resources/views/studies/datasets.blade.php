@@ -12,7 +12,7 @@
     	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button>
 
         <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a>
-        <button  class="btn btn-primary" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
+        <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
       @endif
     </div>
   </div>
@@ -130,7 +130,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Upload file as zip</h4>
+          <h4 class="modal-title">Upload dataset folder as zip</h4>
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -146,7 +146,7 @@
               <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
 
               <div class="form-group">
-                <label for="l_task_name_m">DataSet Name</label>
+                <label for="l_task_name_m">Task Related to The Dataset</label>
                 <input type="text" class="form-control" name="task_name_m" id="task_name_m" required>
               </div>
               <div align="center" class="form-group">
@@ -154,7 +154,7 @@
                 <input type="file" required  class="form-control" name="zipfile" id="zipfile">
               </div>
 
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="btn btn-outline-success">Submit</button>
 
              </form>
         </div>
