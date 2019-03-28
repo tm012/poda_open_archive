@@ -13,11 +13,11 @@
       	 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
-        
+
 
           <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
         @endif
-         
+
 
         @if(Session::get("current_path") == 'dump/'. Session::get("current_study_id").'/'. Session::get("current_dataset_name"))
 
@@ -40,7 +40,7 @@
 <div class="row">
     <div class="col-sm-6"></div>
     <div align="right" class="col-sm-6">
-      
+
 
       <input id="myInput" type="text" placeholder="Search..">
     </div>
@@ -126,7 +126,7 @@
         <div class="modal-footer">
         <button type="button" id ="submit_task" class="btn btn-default" data-dismiss="modal">Add Folder</button>
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-          
+
         </div>
       </div>
 

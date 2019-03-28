@@ -136,27 +136,29 @@
         </div>
 
         <!-- Modal body -->
-        <div class="modal-body">
-          <form method="post" action="{{url('test_tm')}}" enctype="multipart/form-data"
-                      >
-             <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+        <div class="upload_portion">
+          <div class="modal-body">
+            <form method="post" action="{{url('test_tm')}}" enctype="multipart/form-data"
+                        >
+               <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
 
-             <input name="data_id" type="hidden" value="0"/>
+               <input name="data_id" type="hidden" value="0"/>
 
-              <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
+                <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
 
-              <div class="form-group">
-                <label for="l_task_name_m">Task Related to The Dataset</label>
-                <input type="text" class="form-control" name="task_name_m" id="task_name_m" required>
-              </div>
-              <div align="center" class="form-group">
-                <label for="l_zip_file">Zip file</label>
-                <input type="file" required  class="form-control" name="zipfile" id="zipfile">
-              </div>
+                <div class="form-group">
+                  <label for="l_task_name_m">Task Related to The Dataset</label>
+                  <input type="text" class="form-control" name="task_name_m" id="task_name_m" required>
+                </div>
+                <div align="center" class="form-group">
+                  <label for="l_zip_file">Zip file</label>
+                  <input type="file" required  class="form-control" name="zipfile" id="zipfile">
+                </div>
 
-              <button type="submit" class="btn btn-outline-success">Submit</button>
+                <button type="submit" class="btn btn-outline-success">Submit</button>
 
-             </form>
+               </form>
+          </div>
         </div>
 
         <!-- Modal footer -->
