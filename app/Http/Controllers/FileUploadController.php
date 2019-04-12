@@ -17,6 +17,8 @@ use App\Studies;
 use App\Datasets;
 use DB;
 use File;
+use App\col_names_key;
+use App\col_row_key;
 
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter;
@@ -29,6 +31,162 @@ class FileUploadController extends Controller
     	$folder_name = "folder 1";
         return view('file_upload/fileupload', ["folder_name"=>$folder_name]);
     }
+
+    public function upload_key_file(Request $request)
+    {
+
+      
+
+      $image = $request->file('zipfile');
+      $imageName = $image->getClientOriginalName() ;
+      $image->move(public_path('files'),$imageName);
+      $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+      $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
+      // dd(  $filename_tm);
+
+      $data_id=Datasets::where('study_id',  Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('id');
+      if (col_names_key::where('data_id', '=', $data_id)->exists()) {
+         // user found
+      }
+      else{
+
+        if($ext == "csv"){
+
+        $file_n = Storage::disk('public')->path($imageName);
+
+        $file = fopen($file_n, "r");
+         $all_data = array();
+
+         //dd( count(fgetcsv($file, 200, ",")));
+         $no_of_columns = count(fgetcsv($file, 200, ","));
+         $file = fopen($file_n, "r");
+         $got_col_names = 0;
+         $row_no =0;
+
+
+        
+
+
+         while ( ($data = fgetcsv($file, 200, ",")) !==FALSE ){
+           $start_point  = 0;
+
+           if($got_col_names<1){
+
+
+              for ($x = 0; $x < $no_of_columns; $x++) {
+                    if($x == $start_point){
+                       echo $data[$x] . " - col_names" . " - col_no ".$x. " - row_no 0";
+                       echo '<br>';
+                       $c_column_name = $data[$x];
+
+
+                      $imageUpload = new col_names_key();
+                      $imageUpload->col_name = $c_column_name ;
+                      // $imageUpload->data_id = $request->data_id;
+                     
+                      $imageUpload->data_id = $data_id;
+                      $imageUpload->col_no = $x;
+                      $imageUpload->row_no = 0;
+     
+
+                      $imageUpload->save();                    
+                    }
+
+                    else{
+                      echo $data[$x];
+
+                    }
+                    $start_point = $start_point +1;
+                    $got_col_names = 1;
+
+                     
+              } 
+            }
+
+            else{
+
+                  for ($x = 0; $x < $no_of_columns; $x++) {
+                    if($x == $start_point){
+                       echo $data[$x] . " - col_no ".$start_point. " - row_no ".$row_no;
+                       echo '<br>';
+                       $c_column_name = $data[$x];
+                      $imageUpload = new col_row_key();
+                      $imageUpload->name = $c_column_name ;
+                      // $imageUpload->data_id = $request->data_id;
+                     
+                      $imageUpload->data_id = $data_id;
+                      $imageUpload->col_no = $start_point;
+                      $imageUpload->row_no = $row_no;
+     
+
+                      $imageUpload->save();                       
+                    }
+
+                    else{
+                      echo $data[$x];
+
+                    }
+                    $start_point = $start_point +1;
+
+                     
+              } 
+
+
+            }
+            echo '<br>';
+            echo '<br>';
+            $row_no =$row_no+1;
+
+          
+             // $all_data = $name. " ".$city;
+
+             // array_push($array, $all_data);
+                  }
+          
+          fclose($file);
+
+          $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.Session::get("current_study_id").'/'.Session::get("current_dataset_name").'/'.$imageName ;
+
+
+          $imageUpload = new FileUpload();
+          $imageUpload->filename = $imageName;
+          // $imageUpload->data_id = $request->data_id;
+          $imageUpload->path = $request->path;
+          $imageUpload->dateset_id = Session::get("current_dataset_name");
+          $imageUpload->study_id = Session::get("current_study_id");
+          $imageUpload->file_url = $file_ul_tm;
+          //"http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$source_path;
+          // $imageUpload->file_size = (float) zip_entry_filesize($zip_entry);
+
+          $imageUpload->type = "key";
+          $imageUpload ->user_id = Auth::user()->id;
+          $imageUpload->save();
+
+          $localFile = File::get(public_path().'/files/'.$imageName);
+                    //  dump/S-1551306856758-LEGIip/DataSet2/folder5
+
+          $modified_path = $request->path;
+
+          $tm = Storage::disk('ftp')->put($modified_path.'/'.$imageName,$localFile, 'public');
+
+
+            $path=public_path().'/files/'.$imageName;
+            //bytes
+
+            if (file_exists($path)) {
+                unlink($path);
+
+            }
+          } 
+      } 
+      // dd($image. ' '. $imageName );
+      return Redirect::to('/datesets');
+    }
+
+  
+
+   
+    
 
 
     public function test_tm(Request $request)

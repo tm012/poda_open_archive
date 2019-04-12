@@ -28,6 +28,7 @@ Route::post('file_upload/file/delete','FileUploadController@fileDestroy');
 Route::get('/zipcreate','FileUploadController@zipcreate');
 Route::get('/zipcreate','FileUploadController@zipcreate_test');
 Route::post('/test_tm','FileUploadController@test_tm');
+Route::post('/upload_key_file','FileUploadController@upload_key_file');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/search_home', 'StudyController@search_home');
 Route::get('/search_home_with_param', 'StudyController@search_home_with_param');

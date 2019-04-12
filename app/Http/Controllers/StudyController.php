@@ -132,6 +132,27 @@ class StudyController extends Controller
         // $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
         // $filename_tm = pathinfo('filename.md.txt', PATHINFO_FILENAME);
 
+      // $file_n = Storage::disk('public')->path('sample_csv_test.csv');
+
+      // $file = fopen($file_n, "r");
+      //  $all_data = array();
+
+      //  //dd( count(fgetcsv($file, 200, ",")));
+
+      //  while ( ($data = fgetcsv($file, 200, ",")) !==FALSE ){
+
+      //      echo $name = $data[0];
+      //      echo '<br>';
+      //      echo $city = $data[1];
+      //      echo '<br>';
+      //      // $all_data = $name. " ".$city;
+
+      //      // array_push($array, $all_data);
+      //   }
+      //   fclose($file);
+
+      
+
         if(Auth::check()){
           $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
           //bytes

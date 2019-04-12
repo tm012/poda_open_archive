@@ -25,6 +25,10 @@
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
          -->
+         @if(Auth::check())
+
+          <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+         @endif
 
 
          <a href=' {{ $total = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('dataset_url')}}'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a>
@@ -100,6 +104,49 @@
 
     <div align="center" class="container">
       {{ $contents->links('vendor.pagination.bootstrap-4') }}
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal_2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload Key File as CSV</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body">
+            <form method="post" action="{{url('upload_key_file')}}" enctype="multipart/form-data"
+                        >
+               <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+
+               <input name="data_id" type="hidden" value="0"/>
+
+                <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
+
+              
+                <div align="center" class="form-group">
+                  <label for="l_zip_file">Key file</label>
+                  <input type="file" required  class="form-control" name="zipfile" id="zipfile">
+                </div>
+
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+
+               </form>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
     </div>
   </div>
 
