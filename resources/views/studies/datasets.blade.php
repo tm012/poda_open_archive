@@ -3,16 +3,28 @@
 
 <div align="center" class="container">
   <div class="row">
-    <div align="left" class="col-sm-7">
-  <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
-    </div>
-    <div align="right" class="col-sm-5">
+    <div align="left" class="col-sm-5">
+      <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
 
-      @if(Auth::check())
+
+      @if((Auth::user()->admin_status == "1") and ($study_content[0]["admin_approved"]=="0"))
+
+        <button style="margin-left: 15px;" type="button" class="btn btn-outline-success approve_study">Approve</button>
+        <button type="button" class="btn btn-outline-danger reject_study">Decline</button>
+      @endif
+       
+    </div>
+    <div align="right" class="col-sm-7">
+
+      @if($data_mine == "1" )
     	<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button> -->
 
        <!--  <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
+       <button  class=" btn btn-outline-warning" onclick="window.location='{{ url("studies/edit_study") }}'" type="button" >Edit Study</button>
+       <button  class=" btn btn-outline-danger" data-toggle="modal" data-target="#myModal_3" type="button" >Delete Study</button>
         <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
+      @else
+        <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Study info</button>
       @endif
     </div>
   </div>
@@ -170,6 +182,154 @@
     </div>
   </div>
 
+
+    <!-- The Modal -->
+  <div class="modal fade" id="myModal_3">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure?</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body">
+
+
+            <button type="button" onclick="window.location='{{ url("studies/study_archived") }}'" class="btn btn-danger">Delete</button>
+            
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    <!-- The Modal -->
+  <div class="modal fade" id="myModal_4">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Study Details</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body">
+
+          <div align="left" class="form-group">
+          <label for="l_studyname">Study Name</label>
+          <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" disabled placeholder="Enter Study Name" value="{{$study_content[0]['study_name']}}">
+        </div>
+        <div align="left"class="form-group">
+          <label for="l_authorname">Study Description</label>
+          
+        </div>
+   
+        <div align="left" class="form-group">
+          <textarea disabled class="form-control" onkeyup="countChar(this)" maxlength="502" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
+          <div id="charNum"> </div>
+       
+        </div>
+        <div align="left" class="form-group">
+          <label for="l_studyname">Study Licence</label>
+          <input disabled type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" value="{{$study_content[0]['study_licence']}}" placeholder="Enter Study Licence">
+        </div>
+
+         <div align="left" class="form-group">
+          <label for="l_studyname">Author(s)</label>
+       
+        </div>
+   
+
+ 
+
+        <div align="left" class="form-group">
+
+          <input disabled type="text" class="form-control style_width authors" autocomplete="off" id="authors" name="authors_input" value="{{$study_content[0]['authors']}}" data-role="tagsinput"  >
+        </div>
+
+        <div align="left" class="form-group">
+          <label for="l_studyname">Access Type</label>
+       
+        </div>
+
+        <div align="left" class="form-group">
+
+
+          <div class="row">
+            <div align="left" class="col-xs-3">
+
+              
+              <input type="checkbox" name="public_data" value="1" disabled checked> Public<br>
+            </div>
+            <div align="left" class="col-xs-9">
+              
+              <input type="checkbox" name="private_data" value="0" disabled> Private<br>
+            </div>
+          </div>
+        
+
+        </div>
+
+        <div align="left" class="form-group">
+          <label for="l_studyname">Publication Name</label>
+          <input disabled type="text" class="form-control style_width" autocomplete="off" id="publication" name="publication_name" value="{{$study_content[0]['publication_name']}}" placeholder="Enter Publication Name">
+        </div>
+
+        <div align="left" class="form-group">
+          
+        <label for="l_studyname">Publication Time</label>
+        </div>
+         <div align="left" class="form-group">
+         
+          <input disabled id="datetimepicker" placeholder="Enter Publication Time" class="form-control style_width" type="text" autocomplete="off" value="{{$study_content[0]['publication_time']}}"  name="publication_time" />
+        </div>
+
+        <div align="left" class="form-group">
+          <label for="l_studyname">Contact Info</label>
+          <input disabled type="text" class="form-control style_width" autocomplete="off" id="contact_info" name="contact_info" value="{{$study_content[0]['contact_info']}}"  placeholder="Enter Contact Info">
+        </div>
+
+
+        <div align="left" class="form-group">
+          <label for="l_studyname">Search Tag(s)</label>
+       
+        </div>
+
+
+
+        <div align="left" class="form-group">
+
+          <input disabled type="text" class="form-control style_width search_tags" autocomplete="off" id="search_tags" name="search_tags" value="{{$study_content[0]['search_tags']}}"  data-role="tagsinput"  >
+        </div>
+
+
+            
+            
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 
@@ -179,6 +339,17 @@
 
 <script type="text/javascript">
 
+
+$( ".approve_study" ).click(function() {
+  
+  ajax_study_approve_reject("1");
+});
+
+$( ".reject_study" ).click(function() {
+  
+  ajax_study_approve_reject("0");
+});
+
 $("#go_home").click(function(){
   $('#myModal_1').modal('hide');
    window.location.href = "/";
@@ -187,6 +358,46 @@ $("#go_my_studies").click(function(){
   $('#myModal_1').modal('hide');
    window.location.href = "/studies/my_studies";
 });
+
+
+function ajax_study_approve_reject(status) {
+
+
+
+
+
+
+  $.ajax({
+    url: "/approval_rejection_study",
+    data: {
+      
+      status: status,
+      submit_check_1: "submit_check_1"
+
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      console.log(data);
+
+
+
+      window.location.href = "studies/approval_requests";
+
+
+    //
+    //  $("#sub_category_admin").html(html);
+
+
+    }
+  })
+
+
+
+
+}
 function ajax_call_to_add_new_dataset(dataset_name,task_name) {
 
 
@@ -347,6 +558,13 @@ $( ".back_button" ).click(function() {
 
 
 </script>
+
+<style type="text/css">
+  
+
+  
+}
+</style>
 
 
 

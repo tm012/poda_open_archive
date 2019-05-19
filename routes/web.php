@@ -35,11 +35,22 @@ Route::get('/search_home_with_param', 'StudyController@search_home_with_param');
 
 
 Route::get('studies/create_study', 'StudyController@create_study')->name('create study')->middleware('login_check');
+
+Route::get('studies/edit_study', 'StudyController@edit_study')->name('edit study')->middleware('login_check');
+Route::get('studies/study_archived', 'StudyController@study_archived')->name('archived study')->middleware('login_check');
+
+
+
 Route::post('studies/post_study', 'StudyController@post_study')->name('post study')->middleware('login_check');
+
+Route::post('studies/post_edit_study', 'StudyController@post_edit_study')->name('post edit study')->middleware('login_check');
+
+Route::get('/approval_rejection_study', 'StudyController@approval_rejection_study')->name('approval rejection study')->middleware('login_check');
 
 
 
 Route::get('studies/my_studies', 'StudyController@my_studies')->name('my studies')->middleware('login_check');
+Route::get('studies/approval_requests', 'StudyController@approval_requests')->name('Approval requests')->middleware('login_check');
 
 Route::get('/datesets', 'StudyController@datasets')->name('my studies');
 Route::get('/go_to_study_page', 'StudyController@go_to_study_page')->name('ajax call study page');
@@ -51,3 +62,6 @@ Route::get('/contents', 'StudyController@contents')->name('contents');
 Route::get('/back_pressed', 'StudyController@back_pressed')->name('back pressed');
 
 Route::get('/check_for_filename', 'FileUploadController@check_for_filename')->name('ajax call to check file name');
+Route::get('/reg_result', 'StudyController@reg_result')->name('reg_result');
+
+

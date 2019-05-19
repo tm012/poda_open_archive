@@ -1,11 +1,14 @@
 <div class="header">
-  <input type="image" src="/img/logo_transparent.png" class="go_home_btn" alt="Submit" width="70" height="70">
+  <input type="image" src="/img/logo_transparent.png" class="go_home_btn" alt="Submit" width="70" height="70"  onclick="window.location='{{ url("/") }}'">
   <div class="header-right">
     @if (Auth::check())
 
       <div class="style_header_contents">
           <a href="{{ url('studies/create_study') }}">Create Study</a>
           <a href="{{ url('studies/my_studies') }}">My Studies</a>
+          @if(Auth::user()->admin_status =='1') 
+            <a href="{{ url('studies/approval_requests') }}">Approval Requests</a>
+          @endif
           <a href="{{ route('logout') }}"
               onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">

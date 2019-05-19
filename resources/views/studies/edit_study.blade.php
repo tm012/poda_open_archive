@@ -5,38 +5,40 @@
 
 
  <div class="container">
-  <h2>Create Study</h2>
-   <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ action('StudyController@post_study') }}">
+  <h2>Edit Study</h2>
+   <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ action('StudyController@post_edit_study') }}">
     <input name="study_id"  type="hidden" value="{{ $studyid }}"/>
      <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
     <div class="form-group">
-      <label for="l_studyname">Study Name *</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" required="true" placeholder="Enter Study Name">
+      <label for="l_studyname">Study Name</label>
+      <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" placeholder="Enter Study Name" value="{{$study_content[0]['study_name']}}">
     </div>
-  <div class="form-group">
-      <label for="l_authorname">Study Description *</label>
+    <div class="form-group">
+      <label for="l_authorname">Study Description</label>
       
     </div>
    
     <div class="form-group">
-      <textarea class="form-control" onkeyup="countChar(this)" maxlength="500" rows = "5" name = "study_description" required="true"></textarea>
+      <textarea class="form-control" onkeyup="countChar(this)" maxlength="502" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
       <div id="charNum"> </div>
    
     </div>
     <div class="form-group">
       <label for="l_studyname">Study Licence</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" placeholder="Enter Study Licence">
+      <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" value="{{$study_content[0]['study_licence']}}" placeholder="Enter Study Licence">
     </div>
 
      <div class="form-group">
       <label for="l_studyname">Author(s)</label>
    
     </div>
+   
 
  
+
     <div class="form-group">
 
-      <input type="text" class="form-control style_width authors" autocomplete="off" id="authors" name="authors_input" data-role="tagsinput"  >
+      <input type="text" class="form-control style_width authors" autocomplete="off" id="authors" name="authors_input" value="{{$study_content[0]['authors']}}" data-role="tagsinput"  >
     </div>
 
     <div class="form-group">
@@ -64,7 +66,7 @@
 
     <div class="form-group">
       <label for="l_studyname">Publication Name</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="publication" name="publication_name" placeholder="Enter Publication Name">
+      <input type="text" class="form-control style_width" autocomplete="off" id="publication" name="publication_name" value="{{$study_content[0]['publication_name']}}" placeholder="Enter Publication Name">
     </div>
 
     <div class="form-group">
@@ -73,12 +75,12 @@
     </div>
      <div class="form-group">
      
-      <input id="datetimepicker" placeholder="Enter Publication Time" class="form-control style_width" type="text" autocomplete="off" name="publication_time"/>
+      <input id="datetimepicker" placeholder="Enter Publication Time" class="form-control style_width" type="text" autocomplete="off" value="{{$study_content[0]['publication_time']}}"  name="publication_time" />
     </div>
 
     <div class="form-group">
       <label for="l_studyname">Contact Info</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="contact_info" name="contact_info" placeholder="Enter Contact Info">
+      <input type="text" class="form-control style_width" autocomplete="off" id="contact_info" name="contact_info" value="{{$study_content[0]['contact_info']}}"  placeholder="Enter Contact Info">
     </div>
 
 
@@ -87,11 +89,11 @@
    
     </div>
 
-   
+
 
     <div class="form-group">
 
-      <input type="text" class="form-control style_width search_tags" autocomplete="off" id="search_tags" name="search_tags"  data-role="tagsinput"  >
+      <input type="text" class="form-control style_width search_tags" autocomplete="off" id="search_tags" name="search_tags" value="{{$study_content[0]['search_tags']}}"  data-role="tagsinput"  >
     </div>
 
 

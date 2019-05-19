@@ -44,6 +44,38 @@
 </div>
 <br><br>
 
+<div align="center"  class="container">
+  <div class="row">
+    <div align="right" class="col-sm-6">
+
+      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+        <input autocomplete="off" data-id='author_name' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Author" class="form-control search_by_author_name">
+      </form>
+
+
+
+
+    </div>
+
+
+
+
+    <div align="left"  class="col-sm-6">
+
+
+      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+        <input autocomplete="off" data-id='tag' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Tag" class="form-control search_by_tag">
+      </form>
+
+
+    </div>
+  </div>
+
+</div>
+<br><br>
+
+
+
 <div class="container">
 <div class="row">
     <div class="col-sm-6"></div>
@@ -93,7 +125,7 @@
       @if($value->user_id == Auth::user()->id)
         <tr id="ClickableRow{{$value->id}}">
           <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td>{{$value->study_id}}</td>
+          <td style="display:none;">{{$value->study_id}}</td>
           <td>{{$value->study_name}}</td>
 
           @if($value->access_status == "1")
@@ -109,7 +141,7 @@
       @else
         <tr>
           <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td>{{$value->study_id}}</td>
+          <td style="display:none;">{{$value->study_id}}</td>
           <td>{{$value->study_name}}</td>
 
           @if($value->access_status == "1")
@@ -130,7 +162,7 @@
     @if($value->access_status == "1")
       <tr id="ClickableRow{{$value->id}}">
         <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-        <td>{{$value->study_id}}</td>
+        <td style="display:none;">{{$value->study_id}}</td>
         <td>{{$value->study_name}}</td>
 
         @if($value->access_status == "1")
@@ -145,7 +177,7 @@
     @else
         <tr >
           <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td>{{$value->study_id}}</td>
+          <td style="display:none;" >{{$value->study_id}}</td>
           <td>{{$value->study_name}}</td>
 
           @if($value->access_status == "1")
@@ -260,6 +292,7 @@ function getEmployeeName(search_type){
   var jsonData=  result;
   console.log("TM");
   console.log(jsonData);
+  console.log(search_type);
   //ajaxToPass("/job_cards/get_problem_name.json", "" , "get");
 
   var productNames = new Array();
@@ -293,6 +326,25 @@ function getEmployeeName(search_type){
 
     } );
   }
+  if(search_type == "author_name"){
+
+    $.each( jsonData, function ( index, product )
+    {
+      console.log("Name" + product.author_name);
+      productNames.push( product.author_name );
+
+    } );
+  }
+  if(search_type == "tag"){
+
+    $.each( jsonData, function ( index, product )
+    {
+      console.log("Name" + product.search_tag);
+      productNames.push( product.search_tag );
+
+    } );
+  }  
+
 
   return productNames;
 }
@@ -378,7 +430,54 @@ $(function() {
 
 
   })
+  $('form').on('focus','.search_by_author_name',function(){
 
+
+
+    //var user_id = $('.search_by_task').val();
+
+    //console.log(user_id);
+
+
+
+
+    var productNames = getEmployeeName("author_name");
+      //var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
+    // getproblemName();
+
+
+    $(this).typeahead({
+
+
+      source: productNames,
+    });
+
+
+  })  
+  $('form').on('focus','.search_by_tag',function(){
+
+
+
+    //var user_id = $('.search_by_task').val();
+
+    //console.log(user_id);
+
+
+
+
+    var productNames = getEmployeeName("tag");
+      //var productNames = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda"];
+    // getproblemName();
+
+
+    $(this).typeahead({
+
+
+      source: productNames,
+    });
+
+
+  }) 
 
 });
 

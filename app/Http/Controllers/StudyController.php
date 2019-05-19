@@ -14,7 +14,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Studies;
 use App\Datasets;
+use App\authors;
+use App\search_tags;
 use DB;
+
 class StudyController extends Controller
 {
     //
@@ -65,13 +68,35 @@ class StudyController extends Controller
 
         }
 
+        if($search_type == "author_name"){
+
+          $services = DB::table('authors')
+              // ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              ->select('authors.author_name')
+              ->distinct()->get();
+          return  $services;
+
+
+
+        }
+        if($search_type == "tag"){
+          $services = DB::table('search_tags')
+          // ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+          ->select('search_tags.search_tag')
+          ->distinct()->get();
+          return  $services;
+
+
+
+        }        
         //return response()->json(['success'=>$imageName]);
         //return view('studies/create_study', ["studyid"=>$microtime]);
     }
 
     public function search_home_with_param(Request $request)
     {
-        //dd($request->search);
+       
+
         $search_param = $request->search;
         if (Datasets::where('task_related', '=', $search_param)->exists()) {
            // user found
@@ -97,11 +122,33 @@ class StudyController extends Controller
               return view('/welcome', ["my_studies"=>$my_studies]);
 
         }
+        else if (DB::table('authors')->where('author_name', '=', $search_param)->exists()) {
+          $my_studies = DB::table('studies')
+              ->join('authors', 'studies.study_id', '=', 'authors.study_id')
+              ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
+              ->where('authors.author_name', $search_param)
+              ->paginate(10);
+              return view('/welcome', ["my_studies"=>$my_studies]);
+
+        }
+        else if (DB::table('search_tags')->where('search_tag', '=', $search_param)->exists()) {
+          $my_studies = DB::table('studies')
+              ->join('search_tags', 'studies.study_id', '=', 'search_tags.study_id')
+              ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
+              ->where('search_tags.search_tag', $search_param)
+              ->paginate(10);
+              return view('/welcome', ["my_studies"=>$my_studies]);
+
+        }
         else{
           $my_studies = Studies::paginate(10);
           return view('/welcome', ["my_studies"=>$my_studies]);
 
         }
+    }
+    public function reg_result(){
+      Auth::logout();
+      return view('/reg_result');
     }
 
 
@@ -114,13 +161,41 @@ class StudyController extends Controller
         return view('studies/create_study', ["studyid"=>$microtime]);
     }
 
+    public function edit_study()
+    {   
+
+        
+
+        $study_content = Studies::where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->where('admin_approved',  "1")->get();
+        //dd( $study_content);
+
+        $microtime = "S-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
+
+        // $authors = "Amsterdam,Washington,Sydney,Beijing,Cairo";
+        // $search_tags = "Amsterdam1,Washington1,Sydney1,Beijing1,Cairo1";
+
+        //return response()->json(['success'=>$imageName]);
+        return view('studies/edit_study', ["studyid"=>$microtime,"study_content"=>$study_content]);
+    }
+
+
     public function my_studies()
     {
 
         //return response()->json(['success'=>$imageName]);
 
-        $my_studies = Studies::where('user_id', Auth::user()->id)->paginate(10);
+        $my_studies = Studies::where('user_id', Auth::user()->id)->where('archived_status',  "0")->paginate(10);
         return view('studies/my_studies', ["my_studies"=>$my_studies]);
+
+
+    }
+    public function approval_requests()
+    {
+
+        //return response()->json(['success'=>$imageName]);
+
+        $my_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "0")->paginate(10);
+        return view('studies/approval_requests', ["my_studies"=>$my_studies]);
 
 
     }
@@ -151,6 +226,7 @@ class StudyController extends Controller
       //   }
       //   fclose($file);
 
+
       
 
         if(Auth::check()){
@@ -160,13 +236,77 @@ class StudyController extends Controller
           if (file_exists($path)) {
               unlink($path);
           }
-        }
 
-        $my_studies = Studies::paginate(10);
-        return view('/welcome', ["my_studies"=>$my_studies]);
+            if(Auth::user()->user_approval_status == "0")
+            {
+              Auth::logout();
+            }
+        }
+     
+
+        
+          $my_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->paginate(10);
+          return view('/welcome', ["my_studies"=>$my_studies]);
+
+        
+
+
 
 
     }
+
+     public function post_edit_study(Request $request)
+    {
+
+            // DB::delete('delete  from authors where study_id = ?',[Session::get("current_study_id")]);
+            // DB::delete('delete from search_tags where study_id = ?',[Session::get("current_study_id")]);
+
+            DB::table('search_tags')->where('study_id',  Session::get("current_study_id"))->delete();
+            DB::table('authors')->where('study_id',  Session::get("current_study_id"))->delete();
+
+
+
+
+            // search_tags::where('study_id', '=', Session::get("current_study_id"))->delete();
+            // authors::where('study_id', '=', Session::get("current_study_id"))->delete();
+            $myArray = explode(',', $request->authors_input);
+            for($x=0;$x<count($myArray);$x++){
+
+              // echo $myArray[$x];
+              $bike_save = New authors;
+              $bike_save ->study_id = Session::get("current_study_id");
+              $bike_save ->author_name = $myArray[$x];
+              $bike_save -> save();
+            }
+            $myArray = explode(',', $request->search_tags);
+            for($x=0;$x<count($myArray);$x++){
+
+              // echo $myArray[$x];
+              $bike_save = New search_tags;
+              $bike_save ->study_id = Session::get("current_study_id");
+              $bike_save ->search_tag = $myArray[$x];
+              $bike_save -> save();
+            }
+
+
+            $updateDetails=array(
+
+              'study_name' => $request->study_name,
+              'study_description' => $request->study_description,
+              'study_licence' => $request->study_licence,
+              'authors' => $request->authors_input,
+              'publication_name' => $request->publication_name,
+              'publication_time' => $request->publication_time,
+              'contact_info' => $request->contact_info,
+              'search_tags' => $request->search_tags
+            );
+
+            DB::table('studies')
+            ->where('study_id', Session::get("current_study_id"))
+            ->update($updateDetails);
+            return Redirect::to('studies/edit_study');
+    }
+
 
 
      public function post_study(Request $request)
@@ -174,6 +314,29 @@ class StudyController extends Controller
 
             // $exists = Storage::disk('s3')->exists('dump/S-1550773295427-nPffh4/tm');
             // dd($exists);
+
+            $myArray = explode(',', $request->authors_input);
+            for($x=0;$x<count($myArray);$x++){
+
+              // echo $myArray[$x];
+              $bike_save = New authors;
+              $bike_save ->study_id = $request->study_id;
+              $bike_save ->author_name = $myArray[$x];
+              $bike_save -> save();
+            }
+            $myArray = explode(',', $request->search_tags);
+            for($x=0;$x<count($myArray);$x++){
+
+              // echo $myArray[$x];
+              $bike_save = New search_tags;
+              $bike_save ->study_id = $request->study_id;
+              $bike_save ->search_tag = $myArray[$x];
+              $bike_save -> save();
+            }
+
+            // dd($myArray[0]);
+
+            // dd($request->all());
             $date = Carbon::now();// will get you the current date, time
 
 
@@ -185,6 +348,15 @@ class StudyController extends Controller
 
             $bike_save ->user_id = Auth::user()->id;
             $bike_save ->study_path = 'dump/'.$request->study_id;
+
+            $bike_save ->study_description = $request->study_description;
+            $bike_save ->study_licence = $request->study_licence;
+            $bike_save ->authors = $request->authors_input;
+            $bike_save ->publication_name = $request->publication_name;
+            $bike_save ->publication_time = $request->publication_time;
+            $bike_save ->contact_info = $request->contact_info;
+            $bike_save ->search_tags = $request->search_tags;
+
 
             $bike_save -> save();
             $fileContents= 'TM';
@@ -211,6 +383,49 @@ class StudyController extends Controller
 
 
     }
+    public function study_archived()
+    {
+
+         $updateDetails=array(
+
+              'archived_status' => "1"
+            );
+
+            DB::table('studies')
+            ->where('study_id', Session::get("current_study_id"))
+            ->update($updateDetails);
+      return Redirect::to('studies/my_studies');
+    }
+    public function approval_rejection_study(Request $request)
+    {
+
+      if($request->status == "1"){
+          $updateDetails=array(
+
+                  'admin_approved' => "1"
+                );
+
+                DB::table('studies')
+                ->where('study_id', Session::get("current_study_id"))
+                ->update($updateDetails);
+      }
+      elseif ($request->status == "0") {
+        # code..
+        $updateDetails=array(
+
+                  'admin_approved' => "-1",
+                  'archived_status' => "1"
+                );
+
+                DB::table('studies')
+                ->where('study_id', Session::get("current_study_id"))
+                ->update($updateDetails);
+      }
+
+    }
+
+
+
 
     public function datasets()
     {
@@ -220,9 +435,30 @@ class StudyController extends Controller
             Session::put("current_dataset_name","");
             Session::put("current_path","");
             $my_datasets = Datasets::where('study_id',  Session::get("current_study_id"))->paginate(10);
+            $study_content = Studies::where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->get();
+
+            if (Auth::check())
+              {
+                  // The user is logged in...
+                  $study_user_id =  DB::table('studies')->where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->value('user_id');
+                  if ($study_user_id == Auth::user()->id) {
+                    # code...
+                    $data_mine = "1";
+                  }
+                  else{
+                    $data_mine = "0";
+                  }
+              }
+              else{
+                  $data_mine = "0";
+              }
 
 
-            return view('studies/datasets', ["my_datasets"=>$my_datasets]);
+
+            
+
+
+            return view('studies/datasets', ["my_datasets"=>$my_datasets,"study_content"=>$study_content,"data_mine"=>$data_mine]);
 
 
 
@@ -274,7 +510,7 @@ class StudyController extends Controller
 
 
           $dataset_path = DB::table('datasets')->where('study_id',  Session::get("current_study_id"))->where('dataset_name',  Session::get("current_dataset_name"))->value('dateset_path');
-          $study_path = DB::table('studies')->where('study_id',  Session::get("current_study_id"))->value('study_path');
+          $study_path = DB::table('studies')->where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->where('admin_approved',  "1")->value('study_path');
           if ($dataset_path == Session::get("current_path")) {
              // user found
              return "datasets";
