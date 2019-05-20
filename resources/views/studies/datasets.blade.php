@@ -7,24 +7,27 @@
       <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
 
 
-      @if((Auth::user()->admin_status == "1") and ($study_content[0]["admin_approved"]=="0"))
+      @if(Auth::check())
+        @if((Auth::user()->admin_status == "1") and ($study_content[0]["admin_approved"]=="0"))
 
-        <button style="margin-left: 15px;" type="button" class="btn btn-outline-success approve_study">Approve</button>
-        <button type="button" class="btn btn-outline-danger reject_study">Decline</button>
+          <button style="margin-left: 15px;" type="button" class="btn btn-outline-success approve_study">Approve</button>
+          <button type="button" class="btn btn-outline-danger reject_study">Decline</button>
+        @endif
       @endif
        
     </div>
     <div align="right" class="col-sm-7">
+      @if(Auth::check())
+        @if($data_mine == "1" )
+      	<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button> -->
 
-      @if($data_mine == "1" )
-    	<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Dataset</button> -->
-
-       <!--  <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
-       <button  class=" btn btn-outline-warning" onclick="window.location='{{ url("studies/edit_study") }}'" type="button" >Edit Study</button>
-       <button  class=" btn btn-outline-danger" data-toggle="modal" data-target="#myModal_3" type="button" >Delete Study</button>
-        <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
-      @else
-        <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Study info</button>
+         <!--  <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
+         <button  class=" btn btn-outline-warning" onclick="window.location='{{ url("studies/edit_study") }}'" type="button" >Edit Study</button>
+         <button  class=" btn btn-outline-danger" data-toggle="modal" data-target="#myModal_3" type="button" >Delete Study</button>
+          <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
+        @else
+          <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Study info</button>
+        @endif
       @endif
     </div>
   </div>

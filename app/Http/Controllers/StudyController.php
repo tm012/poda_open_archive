@@ -449,9 +449,9 @@ class StudyController extends Controller
                     $data_mine = "0";
                   }
               }
-              else{
+            else{
                   $data_mine = "0";
-              }
+            }
 
 
 
