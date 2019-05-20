@@ -466,8 +466,7 @@ class StudyController extends Controller
     }
 
     public function users_waiting(){
-
-
+      
       $users = DB::table('users')->where('user_approval_status',  "0")->paginate(10);
 
       return view('users_waiting', ["users"=>$users]);

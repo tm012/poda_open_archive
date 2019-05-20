@@ -43,10 +43,34 @@ class FileUploadController extends Controller
       $ext = pathinfo($imageName, PATHINFO_EXTENSION);
       $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
       // dd(  $filename_tm);
-
       $data_id=Datasets::where('study_id',  Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('id');
+
+
+      $path=FileUpload::where('study_id',  Session::get("current_study_id"))->where('type', "key")->value('path');
+
+      if ($path !="") {
+        # code...
+
+        $filename_key  =FileUpload::where('study_id',  Session::get("current_study_id"))->where('type', "key")->value('filename');
+
+        $file_path_storage = $path.'/'.$filename_key ;
+
+        Storage::disk('ftp')->delete($file_path_storage);
+        DB::table('col_names_key')->where('data_id', '=', $data_id)->delete();
+        DB::table('col_row_key')->where('data_id', '=', $data_id)->delete();
+        FileUpload::where('study_id',  Session::get("current_study_id"))->where('type', "key")->delete();
+      }
+
+      
+
+     
       if (col_names_key::where('data_id', '=', $data_id)->exists()) {
          // user found
+
+
+
+       
+
       }
       else{
 
