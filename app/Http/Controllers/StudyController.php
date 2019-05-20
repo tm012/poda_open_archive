@@ -464,6 +464,52 @@ class StudyController extends Controller
 
 
     }
+
+    public function users_waiting(){
+
+
+      $users = DB::table('users')->where('user_approval_status',  "0")->paginate(10);
+
+      return view('users_waiting', ["users"=>$users]);
+    }
+    public function user_approval_rejection(Request $request){
+
+
+      if($request->status == "1"){
+
+                $updateDetails=array(
+
+                  'user_approval_status' => "1"
+           
+                );
+      }
+      elseif ($request->status == "0") {
+        # code...
+
+        $updateDetails=array(
+
+                  'user_approval_status' => "-1"
+ 
+                );
+      }
+      else{
+          $updateDetails=array(
+
+                  'user_approval_status' => "0"
+           
+                );
+
+      }
+
+
+       
+
+                DB::table('users')
+                ->where('id', $request->user_id)
+                ->update($updateDetails);
+
+      return "1";
+    }
     public function back_pressed()
     {
       if(Auth::check()){

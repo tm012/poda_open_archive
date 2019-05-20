@@ -2,12 +2,6 @@
 @section('content')
 
 <div class="container">
-
-@if((Auth::user()->admin_status == "1"))
-
-        
-        <a href="/users_waiting"><button type="button" class="btn  btn-outline-primary ">Users (Waiting List)</button></a>
-      @endif
 <div class="row">
     <div class="col-sm-6"></div>
     <div align="right" class="col-sm-6">
@@ -24,29 +18,34 @@
           <th></th>
               <th></th>
         <!-- <th>Study ID</th> -->
-        <th>Study Name</th>
+        <th>Name</th>
 
-        <th>Access Status</th>
+        <th>Institution Name</th>
+        <th>Designation</th>
+        <th>Phone Number</th>
         <th>Created At</th>
 
+        
 
       </tr>
     </thead>
     <tbody id="myTable">
-	@foreach($my_studies as $my_study=>$value)
+	@foreach($users as $user=>$value)
       <tr id="ClickableRow{{$value->id}}">
-        <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-        <td style="display:none;">{{$value->study_id}}</td>
-        <td>{{$value->study_name}}</td>
+        <td><i class="fa fa-user-circle" aria-hidden="true"></i><td/>
+        <td style="display:none;">{{$value->id}}</td>
+        <td>{{$value->name}}</td>
+        <td>{{$value->institution_name}}</td>
+        <td>{{$value->designation}}</td>
+        <td>{{$value->phone_number}}</td>
 
-        @if($value->access_status == "1")
-		      <td>public</td>
-    		@else
-    		    <td>private</td>
-    		@endif
+      
 
 
         <td>{{$value->created_at}}</td>
+
+        <td><button type="button" value='{{$value->id}}' class="btn btn-outline-success btn_approve">Approve</button></td>
+        <td><button type="button" value='{{$value->id}}' class="btn btn-outline-danger btn_reject">Reject</button></td>
       </tr>
 	@endforeach
     </tbody>
@@ -56,7 +55,7 @@
 </div>
 
 <div align="center" class="container">
-  {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
+  {{ $users->links('vendor.pagination.bootstrap-4') }}
 </div>
 
 @endsection
@@ -79,18 +78,32 @@ $('#table_id').DataTable( {
     
 } );
 
-function ajax_call_go_to_dataset(study_id) {
-  var study_id = study_id;
-  console.log(study_id);
+
+$( ".btn_approve" ).click(function() {
+   var fired_button = $(this).val();
+    ajax_update_user_status(fired_button,'1');
+    
+});
+
+
+$( ".btn_reject" ).click(function() {
+  var fired_button = $(this).val();
+  ajax_update_user_status(fired_button,'0');
+});
+
+function ajax_update_user_status(user_id,status) {
+  var user_id = user_id;
+  console.log(user_id);
 
 
 
-
+alert(status);
 
   $.ajax({
-    url: "/go_to_study_page",
+    url: "/user_approval_rejection",
     data: {
-      study_id: study_id,
+      user_id: user_id,
+      status: status,
       submit_check_1: "submit_check_1"
 
 
@@ -100,8 +113,7 @@ function ajax_call_go_to_dataset(study_id) {
     success: function (data) {
       console.log("Success");
       console.log(data);
-
-     window.location.href = "/datesets";
+      window.location.href = "/users_waiting";
 
 
     //
@@ -129,8 +141,7 @@ $('#resultTable tr').click(function (event) {
 
       }
       else{
-
-        ajax_call_go_to_dataset(study_id);
+       // ajax_call_go_to_dataset(study_id);
       }
 
 

@@ -64,4 +64,5 @@ Route::get('/back_pressed', 'StudyController@back_pressed')->name('back pressed'
 Route::get('/check_for_filename', 'FileUploadController@check_for_filename')->name('ajax call to check file name');
 Route::get('/reg_result', 'StudyController@reg_result')->name('reg_result');
 
-
+Route::get('/users_waiting', 'StudyController@users_waiting')->name('users_waiting')->middleware('login_check');
+Route::get('/user_approval_rejection', 'StudyController@user_approval_rejection')->name('user_approval_rejection')->middleware('login_check');
