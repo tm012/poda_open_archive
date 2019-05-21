@@ -21,10 +21,22 @@
         <div class="form-group">
         <label for="l_data_set_name">Select Column Names for SmartSearch</label>
         <br>
+        @php
+
+        $i = 0;
+        @endphp
+					
         	@foreach($col_names as $col_name=>$value)
-		       
-        		<label for="l_data_set_name">{{$value->col_name}}</label>
-		        <input name="selector[]" type="checkbox" id="c_box" class="checkbox"  value="{{$value->col_name}}"> <br>
+        		@php
+
+			        	$i = $i+1;
+			        	// remove first two columns from search
+			    @endphp
+		       @if($i > 2)
+		       	
+	        		<label for="l_data_set_name">{{$value->col_name}}</label>
+			        <input name="selector[]" type="checkbox" id="c_box" class="checkbox"  value="{{$value->col_name}}"> <br>
+			    @endif
   			@endforeach
         
         </div>

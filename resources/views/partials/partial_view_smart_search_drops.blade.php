@@ -46,14 +46,22 @@
 					
 
 				
-					echo $contains;
+					// echo $contains;
 
 					
 
 				@endphp
 
 		          
-<button type="button" class="btn btn-link">Link</button>
+           <div class="form-group">
+                <label for="country">Select Search Criteria:</label>
+                <select name="country" class="form-control" style="width:250px">
+                    <option value="">--- Select  ---</option>
+                    @foreach ($contains as $key => $value)
+                    <option value="{{$value->name}}">{{$value->name}}</option>
+                    @endforeach
+                </select>
+            </div>
 		      
 		       <!--  </div> -->
 		      </div>
