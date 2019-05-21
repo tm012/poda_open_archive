@@ -693,6 +693,12 @@ class StudyController extends Controller
         return view('partials.partial_view_smart_search_drops',['status'=>  $status,'data_id'=>  $data_id]);
     }
 
+    public function submit_final_smart_search(Request $request)
+    {
+
+      dd($request->all());
+    }
+
     public function smart_search()
     {
 

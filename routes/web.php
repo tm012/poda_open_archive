@@ -76,3 +76,4 @@ Route::get('/test_file_up_queue', 'FileUploadController@test_file_up_queue')->na
 Route::get('/smart_search', 'StudyController@smart_search')->name("Smart Search");
 
 Route::get('/partial_view_smart_search_drops', 'StudyController@partial_view_smart_search_drops')->name("Partial view dropdowns");
+Route::post('/submit_final_smart_search', 'StudyController@submit_final_smart_search')->name("Partial view dropdowns");
