@@ -66,3 +66,9 @@ Route::get('/reg_result', 'StudyController@reg_result')->name('reg_result');
 
 Route::get('/users_waiting', 'StudyController@users_waiting')->name('users_waiting')->middleware('login_check');
 Route::get('/user_approval_rejection', 'StudyController@user_approval_rejection')->name('user_approval_rejection')->middleware('login_check');
+
+
+Route::get('/dataset_file_upload_queue', 'FileUploadController@dataset_file_upload_queue')->name("File upload queue");
+Route::get('/key_file_upload_queue', 'FileUploadController@key_file_upload_queue')->name("key file upload queue");
+Route::get('/test_file_up_queue', 'FileUploadController@test_file_up_queue')->name("File upload queue");
+

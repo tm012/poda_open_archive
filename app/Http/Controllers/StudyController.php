@@ -17,6 +17,8 @@ use App\Datasets;
 use App\authors;
 use App\search_tags;
 use DB;
+use App\file_upload_queue;
+
 
 class StudyController extends Controller
 {

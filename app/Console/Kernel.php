@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Console;
-
+use DB;
+use App\authors;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,15 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // $schedule->call(function () {
+
+        // })->everyMinute();
+
+        $schedule->call('App\Http\Controllers\FileUploadController@dataset_file_upload_queue')
+        ->everyMinute();
+        $schedule->call('App\Http\Controllers\FileUploadController@key_file_upload_queue')
+        ->everyMinute();
     }
 
     /**
