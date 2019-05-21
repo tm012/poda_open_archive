@@ -473,6 +473,8 @@ class FileUploadController extends Controller
       //     } 
       // } 
       // dd($image. ' '. $imageName );
+      Session::flash('message', "We are uploading the files, check back later");
+
       return Redirect::to('/datesets');
     }
 
@@ -1447,8 +1449,10 @@ class FileUploadController extends Controller
 //           //     unlink($path);
 //           // }
 //         }
+    Session::flash('message', "We are uploading the files, check back later");
 
-      return Redirect::to('/datesets');
+
+    return Redirect::to('/datesets');
 
     }
 

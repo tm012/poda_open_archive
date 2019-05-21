@@ -29,7 +29,7 @@ class StudyController extends Controller
         $search_type = $request->search_type;
         if($search_type == "study"){
 
-          $services = DB::table('studies')->distinct()->get();
+          $services = DB::table('studies')->where('studies.admin_approved', '1')->distinct()->get();
 
            return  $services;
 
@@ -43,7 +43,7 @@ class StudyController extends Controller
 
 
           $services = DB::table('studies')
-              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.admin_approved', '1')
               ->select('datasets.task_related')
               ->distinct()->get();
 
@@ -60,7 +60,7 @@ class StudyController extends Controller
 
 
           $services = DB::table('studies')
-              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.admin_approved', '1')
               ->select('datasets.dataset_name')
               ->distinct()->get();
 
@@ -107,11 +107,12 @@ class StudyController extends Controller
                ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
                ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
                ->where('datasets.task_related', $search_param)
+               ->where('studies.admin_approved', '1')
                ->paginate(10);
                return view('/welcome', ["my_studies"=>$my_studies]);
         }
         else if (Studies::where('study_name', '=', $search_param)->exists()) {
-          $my_studies = Studies::where('study_name', $search_param) ->paginate(10);
+          $my_studies = Studies::where('study_name', $search_param)->where('admin_approved', '1') ->paginate(10);
           return view('/welcome', ["my_studies"=>$my_studies]);
 
         }
@@ -119,7 +120,7 @@ class StudyController extends Controller
           $my_studies = DB::table('studies')
               ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
               ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
-              ->where('datasets.dataset_name', $search_param)
+              ->where('datasets.dataset_name', $search_param)->where('studies.admin_approved', '1')
               ->paginate(10);
               return view('/welcome', ["my_studies"=>$my_studies]);
 
@@ -128,7 +129,7 @@ class StudyController extends Controller
           $my_studies = DB::table('studies')
               ->join('authors', 'studies.study_id', '=', 'authors.study_id')
               ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
-              ->where('authors.author_name', $search_param)
+              ->where('authors.author_name', $search_param)->where('studies.admin_approved', '1')
               ->paginate(10);
               return view('/welcome', ["my_studies"=>$my_studies]);
 
@@ -137,7 +138,7 @@ class StudyController extends Controller
           $my_studies = DB::table('studies')
               ->join('search_tags', 'studies.study_id', '=', 'search_tags.study_id')
               ->select('studies.id' , 'studies.study_id' ,'studies.study_name' , 'studies.access_status', 'studies.created_date' ,'studies.user_id','studies.study_path','studies.created_at','studies.updated_at')
-              ->where('search_tags.search_tag', $search_param)
+              ->where('search_tags.search_tag', $search_param)->where('studies.admin_approved', '1')
               ->paginate(10);
               return view('/welcome', ["my_studies"=>$my_studies]);
 

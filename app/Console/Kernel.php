@@ -28,9 +28,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        // $schedule->call(function () {
+        $schedule->call(function () {
 
-        // })->everyMinute();
+            // DB::table('file_upload_queues')->where('study_id',  Session::get("current_study_id"))->delete();
+
+        })->quarterly();
 
         $schedule->call('App\Http\Controllers\FileUploadController@dataset_file_upload_queue')
         ->everyMinute();

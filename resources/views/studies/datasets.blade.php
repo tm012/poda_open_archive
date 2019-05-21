@@ -1,6 +1,11 @@
 @extends('default_contents')
 @section('content')
+@if (Session::has('message'))
+<div class="alert alert-info center_div">
+ <p align="middle" class="">{{ Session::get('message') }}</p>
 
+</div>
+@endif
 <div align="center" class="container">
   <div class="row">
     <div align="left" class="col-sm-5">

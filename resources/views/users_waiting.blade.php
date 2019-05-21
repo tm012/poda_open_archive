@@ -97,7 +97,7 @@ function ajax_update_user_status(user_id,status) {
 
 
 
-alert(status);
+// alert(status);
 
   $.ajax({
     url: "/user_approval_rejection",
