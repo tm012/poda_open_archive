@@ -684,6 +684,28 @@ class StudyController extends Controller
     }
 
 
+    public function partial_view_smart_search_drops(Request $request){
+            $status = $request->status;
+
+            $data_id = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('id');
+
+            // return view('partial_cart.sub_category_admin',['exists'=>  '0','service_id'=>  $service_id]);
+        return view('partials.partial_view_smart_search_drops',['status'=>  $status,'data_id'=>  $data_id]);
+    }
+
+    public function smart_search()
+    {
+
+      
+      $data_id = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('id');
+      $col_names = DB::table('col_names_key')->where('data_id', $data_id )->distinct()->get();
+
+      // dd($col_names[0]->col_name);
+
+      return view('smart_search', ["col_names"=>$col_names]);
+    }
+
+
     public function create_folder(Request $request)
    {
            $date = Carbon::now();// will get you the current date, time

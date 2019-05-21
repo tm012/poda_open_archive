@@ -72,3 +72,7 @@ Route::get('/dataset_file_upload_queue', 'FileUploadController@dataset_file_uplo
 Route::get('/key_file_upload_queue', 'FileUploadController@key_file_upload_queue')->name("key file upload queue");
 Route::get('/test_file_up_queue', 'FileUploadController@test_file_up_queue')->name("File upload queue");
 
+
+Route::get('/smart_search', 'StudyController@smart_search')->name("Smart Search");
+
+Route::get('/partial_view_smart_search_drops', 'StudyController@partial_view_smart_search_drops')->name("Partial view dropdowns");
