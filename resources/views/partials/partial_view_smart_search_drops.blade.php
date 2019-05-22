@@ -47,6 +47,7 @@
 						$col_no = DB::table('col_names_key')->where('data_id',  $data_id )->where('col_name', $white_spaced_removed_term)->value("col_no");
 
 						$contains = DB::table('col_row_key')->where('data_id',  $data_id )->where('col_no', $col_no)->select("name")->distinct()->get();
+
 						
 
 					
@@ -64,9 +65,13 @@
 	                <label for="country">Select Search Criteria:</label>
 	                <select name="selections[]" class="form-control" style="width:250px">
 	                    <option value="">--- Select  ---</option>
+	                    
 	                    @foreach ($contains as $key => $value)
-	                    <option value="{{$value->name}}">{{$value->name}}</option>
+	                    	@if($value->name != "")
+	                    		<option value="{{$value->name}}">{{$value->name}}</option>
+	                    	@endif
 	                    @endforeach
+		                
 	                </select>
 	            </div>
 			      

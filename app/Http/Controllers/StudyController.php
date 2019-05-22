@@ -695,8 +695,93 @@ class StudyController extends Controller
 
     public function submit_final_smart_search(Request $request)
     {
+      // dd(count($request->col_nos));
+      // dd($request->all());
 
-      dd($request->all());
+      // dd($request->col_nos[0]);
+      $data_id = $request->dataid;
+      $study_id = Session::get("current_study_id");
+      $dataset_name = Session::get("current_dataset_name");
+      $array_files_final=[];
+
+      for ($x = 0; $x <count($request->col_nos); $x++) {
+
+        $current_col_no = $request->col_nos[$x];
+        $current_selection = $request->selections[$x];
+        $array_files[$x]=[];
+
+
+
+        // if($x < 1){
+          // dd($current_col_no.' '. $current_selection);
+          $rows = DB::table('col_row_key')->where('data_id',  $data_id )->where('col_no', $current_col_no )->where('name',  $current_selection )->get();
+
+          for ($j = 0; $j <count($rows); $j++) {
+            $c_row = $rows[$j]->row_no;
+            // dd($rows[0]->row_no);
+            $c_file_name = DB::table('col_row_key')->where('data_id',  $data_id )->where('col_no', '1')->where('row_no',  $c_row)->value("name");
+            if ($c_file_name !=""){
+              if (in_array($c_file_name, $array_files[$x]))
+              {
+                // echo "Match found";
+              }
+              else{
+
+                // echo $c_file_name;
+                // echo '<br>';
+                array_push($array_files[$x],$c_file_name);
+                array_push($array_files_final,$c_file_name);
+              }
+            }
+          }
+
+        // }
+        // else{
+
+
+        // }
+
+        // dd($array_files[$x][0]);
+        //dd($array_files[$x]);
+ 
+      }
+
+      $array_files_final = array_unique($array_files_final);
+      for ($x = 0; $x <count($request->col_nos); $x++) {
+        $array_files_final=array_intersect($array_files_final,$array_files[$x]);
+      }
+
+      ///////////////////////////////////
+      //////////////////////////////////////
+      ///////////////////////////////////////
+      ///////////////////////////////////
+
+      if (substr(rtrim(Session::get("current_path")), -1) == "/") {
+        // Do stuff
+
+        $modified_path = substr(Session::get("current_path"), 0, strlen(Session::get("current_path"))-1);
+        Session::put("current_path",$modified_path);
+
+        //dd( Session::get("current_study_id") . " " . Session::get("current_dataset_name") . " ". Session::get("current_path"));
+
+      }
+      $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->get();
+
+      // print_r($array_files_final);
+      return view('submit_final_smart_search', ["contents"=>$contents,"array_files_final"=>$array_files_final]);
+
+
+      //////////////////////////////
+      //////////////////////////////
+      ///////////////////////////////
+      ///////////////////////////////////////
+
+     
+      //return view('smart_search', ["array_files_final"=>$array_files_final]);
+
+
+
+
     }
 
     public function smart_search()
