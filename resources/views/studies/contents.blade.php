@@ -9,10 +9,10 @@
 
 <div align="center" class="container">
   <div class="row">
-    <div align="left" class="col-sm-8">
+    <div align="left" class="col-sm-5">
   <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30">
     </div>
-    <div align="right" class="col-sm-4">
+    <div align="right" class="col-sm-7">
 
         @if(Auth::check())
       	 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
@@ -38,7 +38,8 @@
 
          <a href=' {{ $total = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('dataset_url')}}'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a>
 
-        <!--   <a href="{{ action('FileUploadController@zipcreate_test') }}"> <button    type="button" class="done_btn btn btn btn-link">Download as Zip</button></a> -->
+          <a href="/smart_search"> <button    type="button" class=" btn btn-outline-info">Smart Search</button></a>
+          
         @endif
 
     </div>
