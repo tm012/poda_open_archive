@@ -77,3 +77,12 @@ Route::get('/smart_search', 'StudyController@smart_search')->name("Smart Search"
 
 Route::get('/partial_view_smart_search_drops', 'StudyController@partial_view_smart_search_drops')->name("Partial view dropdowns");
 Route::post('/submit_final_smart_search', 'StudyController@submit_final_smart_search')->name("Partial view dropdowns");
+
+
+// Route::get('files/{file_name}', function($file_name = null)
+// {
+//     $path = storage_path().'/'.'app'.'/files/'.$file_name;
+//     if (file_exists($path)) {
+//         return Response::download($path);
+//     }
+// });

@@ -113,7 +113,7 @@ class FileUploadController extends Controller
 
             if($ext == "csv"){
 
-            $file_n = Storage::disk('public')->path($imageName);
+            $file_n = Storage::disk('public')->path('keys/'.$study_id.'/'.$imageName);
 
             $file = fopen($file_n, "r");
              $all_data = array();
@@ -223,7 +223,7 @@ class FileUploadController extends Controller
               $imageUpload ->user_id = $user_id;
               $imageUpload->save();
 
-              $localFile = File::get(public_path().'/files/'.$imageName);
+              $localFile = File::get(public_path().'/files/keys/'.$study_id.'/'.$imageName);
                         //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
               $modified_path = $file_url;
@@ -231,11 +231,14 @@ class FileUploadController extends Controller
               $tm = Storage::disk('ftp')->put($modified_path.'/'.$imageName,$localFile, 'public');
 
 
-                $path=public_path().'/files/'.$imageName;
+                // $path=public_path().'/files/'.$imageName;
+                $path=public_path().'/files/keys/'.$study_id.'/'.$imageName;
                 //bytes
 
                 if (file_exists($path)) {
                     unlink($path);
+
+                    File::deleteDirectory(public_path('/files/keys/'.$study_id));
 
                 }
               } 
@@ -276,7 +279,7 @@ class FileUploadController extends Controller
 
       $image = $request->file('zipfile');
       $imageName = $image->getClientOriginalName() ;
-      $image->move(public_path('files'),$imageName);
+      $image->move(public_path('files/keys/'.Session::get("current_study_id")),$imageName);
       $ext = pathinfo($imageName, PATHINFO_EXTENSION);
       $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
@@ -799,7 +802,7 @@ class FileUploadController extends Controller
 
 
 
-            Zipper::make(public_path('/files'.'/'.$imageName))->extractTo(public_path('/files'));
+            Zipper::make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
           //  dd("tm");
             $source_disk = 'public';
             $source_path =  $filename_tm;
@@ -829,7 +832,7 @@ class FileUploadController extends Controller
 
 
 
-              $filePath=public_path().'/files/'.$imageName;
+              $filePath=public_path().'/files/'.$study_id.'/'.$imageName;
 
 
               $zip = zip_open($filePath);
@@ -858,7 +861,7 @@ class FileUploadController extends Controller
 
                     if ($check_path_folder != "") {
                       // code...
-                      $localFile = File::get(public_path().'/files/'.zip_entry_name($zip_entry));
+                      $localFile = File::get(public_path().'/files/'.$study_id.'/'.zip_entry_name($zip_entry));
                     //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
                       $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
@@ -951,12 +954,14 @@ class FileUploadController extends Controller
 
             }
 
-            $path=public_path().'/files/'.$imageName;
+            $path=public_path().'/files/'.$study_id.'/'.$imageName;
             //bytes
 
             if (file_exists($path)) {
                 unlink($path);
-                Storage::disk('public')->deleteDirectory($filename_tm);
+               // Storage::disk('public')->deleteDirectory($filename_tm);
+                // File::deleteDirectory(public_path('/files/'.$study_id.'/'.$filename_tm));
+                File::deleteDirectory(public_path('/files/'.$study_id));
             }
 
             // $path=public_path().'/files/'.$filename_tm;
@@ -1061,7 +1066,7 @@ class FileUploadController extends Controller
 
       //Storage::disk('public')->put($imageName, $image );
 
-        $image->move(public_path('files'),$imageName);
+        $image->move(public_path('files/'.Session::get("current_study_id")),$imageName);
 
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
         $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);

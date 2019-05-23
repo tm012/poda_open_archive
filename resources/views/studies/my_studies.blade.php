@@ -6,7 +6,9 @@
     <div class="col-sm-6"></div>
     <div align="right" class="col-sm-6">
       
-
+ <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal">
+    See Instructions
+  </button>
       <input id="myInput" type="text" placeholder="Search..">
     </div>
   </div>
@@ -52,6 +54,39 @@
 <div align="center" class="container">
   {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
 </div>
+
+
+ <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Instructions</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          1. Zip your data set and then upload it. Please make sure the name of the zip file is the name of your data set. <a href="https://drive.google.com/file/d/1NdD3oKg7kV0WW8d0ueYAzI-vru84KqAP/view?usp=sharing" target="_blank">Please See This Data Set For Example.</a>
+
+          <br><br>
+          2. Your upload files need to be aprroved by the admin.
+          <br><br>
+          3. While uploading key file, use the first column for indexing and second column for file names. Don't use this two columns for anyother use. Please make sure the name of the zip file is the name of your data set. <a href="https://drive.google.com/file/d/1LtyXkbjWJsx1-SJTuUzAFaZ03q3mehYa/view?usp=sharing" target="_blank">Please See This Key File For Example.</a>
+          <br><br>
+          
+          4. Please refrain yourself fromuploading unnecessary data or you will be banned.    
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+         <!--  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 @endsection
 

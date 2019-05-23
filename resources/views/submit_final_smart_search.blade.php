@@ -15,7 +15,7 @@
     <div align="right" class="col-sm-4">
 
         @if(Auth::check())
-      	 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
+         <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>
 
         <button type="button" class="btn btn-primary upload_files">Upload Files</button>
 

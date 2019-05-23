@@ -32,14 +32,27 @@
          -->
          @if(Auth::check())
 
+         
+
           <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+
          @endif
 
 
          <a href=' {{ $total = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('dataset_url')}}'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a>
 
-          <a href="/smart_search"> <button    type="button" class=" btn btn-outline-info">Smart Search</button></a>
-          
+          @php
+            if (DB::table('file_uploads')->where('study_id', '=', Session::get("current_study_id"))->where('dateset_id', '=', Session::get("current_dataset_name"))->where('type', '=', 'key')->exists()) {
+              $key_exists = '1';
+            }
+            else{
+              $key_exists = '0';
+            }
+          @endphp
+          @if($key_exists == "1")
+
+            <a href="/smart_search"> <button  type="button" class=" btn btn-outline-info smart_search_cls">Smart Search</button></a>
+          @endif
         @endif
 
     </div>
@@ -342,5 +355,14 @@ $( ".back_button" ).click(function() {
 });
 
 </script>
+
+<style type="text/css">
+  
+
+  .smart_search_cls {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 1em;
+}
+</style>
 
 @endsection
