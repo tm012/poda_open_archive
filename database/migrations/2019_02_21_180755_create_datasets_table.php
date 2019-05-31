@@ -22,7 +22,7 @@ class CreateDatasetsTable extends Migration
             $table->string('dataset_name')->nullable($value = true);
             $table->string('task_related')->nullable($value = true);
             $table->string('created_date')->nullable($value = true);
-            $table->string('dateset_path')->nullable($value = true);
+            $table->text('dateset_path')->nullable($value = true);
             $table->timestamps();
         });
     }

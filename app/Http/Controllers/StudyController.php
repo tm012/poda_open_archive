@@ -18,7 +18,7 @@ use App\authors;
 use App\search_tags;
 use DB;
 use App\file_upload_queue;
-
+use File;
 
 class StudyController extends Controller
 {
@@ -204,11 +204,7 @@ class StudyController extends Controller
     }
 
     public function welcome()
-    {
-
-        //return response()->json(['success'=>$imageName]);
-        // $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
-        // $filename_tm = pathinfo('filename.md.txt', PATHINFO_FILENAME);
+    {    
 
       // $file_n = Storage::disk('public')->path('sample_csv_test.csv');
 
@@ -364,7 +360,7 @@ class StudyController extends Controller
             $bike_save -> save();
             $fileContents= 'TM';
 
-            Storage::disk('ftp')->put('dump/'.$request->study_id.'/1', $fileContents);
+            Storage::disk('s3')->put('dump/'.$request->study_id.'/1', $fileContents);
             //Storage::disk('s3')->delete('dump/'.$request->study_id.'/1');
             return Redirect::to('studies/my_studies');
     }
@@ -647,7 +643,7 @@ class StudyController extends Controller
             $dataset_name  = $request->dataset_name;
             $path = 'dump/' . Session::get("current_study_id") .'/'.$dataset_name ;
 
-            $exists = Storage::disk('ftp')->exists($path);
+            $exists = Storage::disk('s3')->exists($path);
 
             if($exists){
 
@@ -657,7 +653,7 @@ class StudyController extends Controller
 
             $date = Carbon::now();// will get you the current date, time
             $fileContents= 'TM';
-            Storage::disk('ftp')->put($path .'/1', $fileContents);
+            Storage::disk('s3')->put($path .'/1', $fileContents);
 
 
 
@@ -806,7 +802,7 @@ class StudyController extends Controller
 
            $path = Session::get("current_path") .'/'. $folder_name ;
 
-           $exists = Storage::disk('ftp')->exists($path);
+           $exists = Storage::disk('s3')->exists($path);
 
            if($exists){
 
@@ -816,7 +812,7 @@ class StudyController extends Controller
 
            $date = Carbon::now();// will get you the current date, time
            $fileContents= 'TM';
-           Storage::disk('ftp')->put($path .'/1', $fileContents);
+           Storage::disk('s3')->put($path .'/1', $fileContents);
 
 
 

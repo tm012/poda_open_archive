@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('file_upload/file/upload','FileUploadController@fileCreate');
 Route::post('file_upload/file/upload/store','FileUploadController@fileStore');
 Route::post('file_upload/file/delete','FileUploadController@fileDestroy');
-Route::get('/zipcreate','FileUploadController@zipcreate');
+#Route::get('/zipcreate','FileUploadController@zipcreate');
 Route::get('/zipcreate','FileUploadController@zipcreate_test');
 Route::post('/test_tm','FileUploadController@test_tm');
 Route::post('/upload_key_file','FileUploadController@upload_key_file');
@@ -78,6 +78,8 @@ Route::get('/smart_search', 'StudyController@smart_search')->name("Smart Search"
 Route::get('/partial_view_smart_search_drops', 'StudyController@partial_view_smart_search_drops')->name("Partial view dropdowns");
 Route::post('/submit_final_smart_search', 'StudyController@submit_final_smart_search')->name("Partial view dropdowns");
 
+Route::get('/test', 'FileUploadController@test')->name("testing things");
+Route::get('/update_signed_url', 'FileUploadController@update_signed_url')->name("update signed url");
 
 // Route::get('files/{file_name}', function($file_name = null)
 // {

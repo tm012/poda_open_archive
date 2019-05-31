@@ -32,6 +32,39 @@ class FileUploadController extends Controller
     	$folder_name = "folder 1";
         return view('file_upload/fileupload', ["folder_name"=>$folder_name]);
     }
+    public function update_signed_url()
+    {
+
+      $rows = DB::table('file_uploads')->where('type',  'file' )->orWhere('type', '=', 'key' )->get();
+
+      for ($j = 0; $j <count($rows); $j++) {
+        $path = $rows[$j]->path.'/'.$rows[$j]->filename;
+
+        $s3 = \Storage::disk('s3');
+        $client = $s3->getDriver()->getAdapter()->getClient();
+        $expiry = "+10000 minutes";
+
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+            'Key'    => $path
+        ]);
+
+        $request_tm = $client->createPresignedRequest($command, $expiry);
+        $path_s3 = (string) $request_tm->getUri();
+        $file_ul_tm = $path_s3;
+
+         $updateDetails=array(
+            'file_url' => $file_ul_tm
+          );
+         DB::table('file_uploads')
+        ->where('id', $rows[$j]->id)
+        ->update($updateDetails);
+
+
+      }
+   
+    }
+
 
     public function key_file_upload_queue()
     {
@@ -79,23 +112,25 @@ class FileUploadController extends Controller
           //////////////////////////////////////////
           //////////////////////////////////////////////
 
-          $current_dataset_name = DB::table('datasets')->where('study_id', $study_id)->value('dataset_name');
+          $current_dataset_name = $task_name;
+
+          #DB::table('datasets')->where('study_id', $study_id)->value('dataset_name');
           $data_id=Datasets::where('study_id',  $study_id)->where('dataset_name', $current_dataset_name)->value('id');
 
 
-          $path=FileUpload::where('study_id',  $study_id)->where('type', "key")->value('path');
+          $path=FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('path');
 
           if ($path !="") {
             # code...
 
-            $filename_key  =FileUpload::where('study_id',  $study_id)->where('type', "key")->value('filename');
+            $filename_key  =FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('filename');
 
             $file_path_storage = $path.'/'.$filename_key ;
 
-            Storage::disk('ftp')->delete($file_path_storage);
+            Storage::disk('s3')->delete($file_path_storage);
             DB::table('col_names_key')->where('data_id', '=', $data_id)->delete();
             DB::table('col_row_key')->where('data_id', '=', $data_id)->delete();
-            FileUpload::where('study_id',  $study_id)->where('type', "key")->delete();
+            FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->delete();
           }
 
           
@@ -113,7 +148,7 @@ class FileUploadController extends Controller
 
             if($ext == "csv"){
 
-            $file_n = Storage::disk('public')->path('keys/'.$study_id.'/'.$imageName);
+            $file_n = Storage::disk('public')->path('keys/'.$study_id.'/'.$current_dataset_name .'/'.$imageName);
 
             $file = fopen($file_n, "r");
              $all_data = array();
@@ -209,6 +244,9 @@ class FileUploadController extends Controller
               $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.$study_id.'/'.$current_dataset_name.'/'.$imageName ;
 
 
+             
+
+
               $imageUpload = new FileUpload();
               $imageUpload->filename = $imageName;
               // $imageUpload->data_id = $request->data_id;
@@ -223,22 +261,44 @@ class FileUploadController extends Controller
               $imageUpload ->user_id = $user_id;
               $imageUpload->save();
 
-              $localFile = File::get(public_path().'/files/keys/'.$study_id.'/'.$imageName);
+              $currently_upload_id= $imageUpload ->id;
+
+              $localFile = File::get(public_path().'/files/keys/'.$study_id.'/'.$current_dataset_name .'/'.$imageName);
                         //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
               $modified_path = $file_url;
 
-              $tm = Storage::disk('ftp')->put($modified_path.'/'.$imageName,$localFile, 'public');
+              $tm = Storage::disk('s3')->put($modified_path.'/'.$imageName,$localFile, 'private');
+
+              $s3 = \Storage::disk('s3');
+              $client = $s3->getDriver()->getAdapter()->getClient();
+              $expiry = "+10000 minutes";
+
+              $command = $client->getCommand('GetObject', [
+                  'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+                  'Key'    => $file_url.'/'.$imageName
+              ]);
+
+              $request_tm = $client->createPresignedRequest($command, $expiry);
+              $path_s3 = (string) $request_tm->getUri();
+              $file_ul_tm = $path_s3;
+
+               $updateDetails=array(
+                  'file_url' => $file_ul_tm
+                );
+               DB::table('file_uploads')
+              ->where('id', $currently_upload_id)
+              ->update($updateDetails);
 
 
                 // $path=public_path().'/files/'.$imageName;
-                $path=public_path().'/files/keys/'.$study_id.'/'.$imageName;
+                $path=public_path().'/files/keys/'.$study_id.'/'.$current_dataset_name .'/'.$imageName;
                 //bytes
 
                 if (file_exists($path)) {
                     unlink($path);
 
-                    File::deleteDirectory(public_path('/files/keys/'.$study_id));
+                    File::deleteDirectory(public_path('/files/keys/'.$study_id.'/'.$current_dataset_name));
 
                 }
               } 
@@ -270,6 +330,31 @@ class FileUploadController extends Controller
 
 
       }
+    }
+    public function test(Request $request)
+    {
+              $file_url='dump/S-1559278014751-IygPDN/DataSet2';
+              $imageName = 'index.php';
+              $id='8';
+              $s3 = \Storage::disk('s3');
+              $client = $s3->getDriver()->getAdapter()->getClient();
+              $expiry = "+10000 minutes";
+
+              $command = $client->getCommand('GetObject', [
+                  'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+                  'Key'    => $file_url.'/'.$imageName
+              ]);
+
+              $request_tm = $client->createPresignedRequest($command, $expiry);
+              $path_s3 = (string) $request_tm->getUri();
+              $file_ul_tm = $path_s3;
+
+               $updateDetails=array(
+                  'file_url' => $file_ul_tm
+                );
+               DB::table('file_uploads')
+              ->where('id', $id)
+              ->update($updateDetails);
     }    
 
     public function upload_key_file(Request $request)
@@ -279,7 +364,7 @@ class FileUploadController extends Controller
 
       $image = $request->file('zipfile');
       $imageName = $image->getClientOriginalName() ;
-      $image->move(public_path('files/keys/'.Session::get("current_study_id")),$imageName);
+      $image->move(public_path('files/keys/'.Session::get("current_study_id").'/'.Session::get("current_dataset_name")),$imageName);
       $ext = pathinfo($imageName, PATHINFO_EXTENSION);
       $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
@@ -302,7 +387,7 @@ class FileUploadController extends Controller
       $bike_save ->file_url = $request->path;
 
       $bike_save ->user_id = Auth::user()->id;
-      $bike_save ->task_name ="";
+      $bike_save ->task_name =Session::get("current_dataset_name");
 
       
 
@@ -327,7 +412,7 @@ class FileUploadController extends Controller
 
       //   $file_path_storage = $path.'/'.$filename_key ;
 
-      //   Storage::disk('ftp')->delete($file_path_storage);
+      //   Storage::disk('s3')->delete($file_path_storage);
       //   DB::table('col_names_key')->where('data_id', '=', $data_id)->delete();
       //   DB::table('col_row_key')->where('data_id', '=', $data_id)->delete();
       //   FileUpload::where('study_id',  Session::get("current_study_id"))->where('type', "key")->delete();
@@ -463,7 +548,7 @@ class FileUploadController extends Controller
 
       //     $modified_path = $request->path;
 
-      //     $tm = Storage::disk('ftp')->put($modified_path.'/'.$imageName,$localFile, 'public');
+      //     $tm = Storage::disk('s3')->put($modified_path.'/'.$imageName,$localFile, 'public');
 
 
       //       $path=public_path().'/files/'.$imageName;
@@ -545,7 +630,7 @@ class FileUploadController extends Controller
             $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
             $dataset_path_tm = 'dump/'. $study_id .'/' .$source_path;
-            $exists = Storage::disk('ftp')->exists($dataset_path_tm);
+            $exists = Storage::disk('s3')->exists($dataset_path_tm);
 
             if($exists){
 
@@ -601,12 +686,15 @@ class FileUploadController extends Controller
 
                       $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
 
-                      $tm = Storage::disk('ftp')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
+                      $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'private');
 
                       $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.$study_id.'/'.zip_entry_name($zip_entry);
                       // echo "---------------------- "."file url".$file_ul_tm. '<br>';
                       //
                       // dd($c_file_name  .' ' .$modified_path . ' '.str_replace("dump/".Session::get("current_study_id")."/","",public_path().'/files/'.$source_path));
+
+
+
 
                       $imageUpload = new FileUpload();
                       $imageUpload->filename = $c_file_name;
@@ -802,15 +890,18 @@ class FileUploadController extends Controller
 
 
 
-            Zipper::make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
+            // Zipper::make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
           //  dd("tm");
+            $zipper = new \Chumper\Zipper\Zipper;
+            $zipper->make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
+            $zipper->close();
             $source_disk = 'public';
             $source_path =  $filename_tm;
 
             $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
             $dataset_path_tm = 'dump/'. $study_id .'/' .$source_path;
-            $exists = Storage::disk('ftp')->exists($dataset_path_tm);
+            $exists = Storage::disk('s3')->exists($dataset_path_tm);
 
             if($exists){
 
@@ -866,7 +957,7 @@ class FileUploadController extends Controller
 
                       $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
 
-                      $tm = Storage::disk('ftp')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
+                      $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'private');
 
                       $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.$study_id.'/'.zip_entry_name($zip_entry);
                       // echo "---------------------- "."file url".$file_ul_tm. '<br>';
@@ -886,6 +977,27 @@ class FileUploadController extends Controller
                       $imageUpload->type = "file";
                       $imageUpload ->user_id = $user_id;
                       $imageUpload->save();
+                      $currently_upload_id= $imageUpload ->id;
+                      
+                      $s3 = \Storage::disk('s3');
+                      $client = $s3->getDriver()->getAdapter()->getClient();
+                      $expiry = "+10000 minutes";
+
+                      $command = $client->getCommand('GetObject', [
+                          'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+                          'Key'    => 'dump/'.$study_id.'/'.$check_path_folder.'/'.$c_file_name
+                      ]);
+
+                      $request_tm = $client->createPresignedRequest($command, $expiry);
+                      $path_s3 = (string) $request_tm->getUri();
+                      $file_ul_tm = $path_s3;
+
+                       $updateDetails=array(
+                          'file_url' => $file_ul_tm
+                        );
+                       DB::table('file_uploads')
+                      ->where('id', $currently_upload_id)
+                      ->update($updateDetails);
                     }
 
 
@@ -958,10 +1070,25 @@ class FileUploadController extends Controller
             //bytes
 
             if (file_exists($path)) {
-                unlink($path);
+
+              
+
+                
                // Storage::disk('public')->deleteDirectory($filename_tm);
                 // File::deleteDirectory(public_path('/files/'.$study_id.'/'.$filename_tm));
-                File::deleteDirectory(public_path('/files/'.$study_id));
+                if (file_upload_queue::where('study_id', '=', $study_id)->where('uploading_done', '=', '0')->exists()) {
+                   // user found
+                }
+                else{
+
+                  
+                  
+                  Storage::disk('public')->deleteDirectory($study_id);
+                  
+                }
+                unlink($path);
+                Storage::disk('public')->deleteDirectory($study_id.'/'.$filename_tm);
+                
             }
 
             // $path=public_path().'/files/'.$filename_tm;
@@ -1018,7 +1145,7 @@ class FileUploadController extends Controller
 
 //       $fileContents= 'TM';
 //
-//    Storage::disk('ftp')->put('1', $fileContents, 'public');
+//    Storage::disk('s3')->put('1', $fileContents, 'public');
 //
 //
 // // http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/files/1
@@ -1058,11 +1185,12 @@ class FileUploadController extends Controller
 
       $image = $request->file('zipfile');
       $imageName = $image->getClientOriginalName() ;
+      #for ftp
 
-      $tm = Storage::disk('ftp')->put('dump/'.Session::get("current_study_id").'/'.$imageName, $image, 'public');
+      // $tm = Storage::disk('s3')->put('dump/'.Session::get("current_study_id").'/'.$imageName, $image, 'private');
 
 
-      // dd($tm);
+       // dd($tm);
 
       //Storage::disk('public')->put($imageName, $image );
 
@@ -1078,7 +1206,7 @@ class FileUploadController extends Controller
         $bike_save ->file_ext = $ext;
         $bike_save ->file_name = $filename_tm ;
         $bike_save ->file_type = "dataset";
-        $bike_save ->file_url = "http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" . $tm ;
+        $bike_save ->file_url = "" ;
 
         $bike_save ->user_id = Auth::user()->id;
         $bike_save ->task_name = $request->task_name_m;
@@ -1086,6 +1214,7 @@ class FileUploadController extends Controller
         
 
         $bike_save -> save();
+        
 
         // dd(  $filename_tm);
 //         if($ext == "zip"){
@@ -1101,7 +1230,7 @@ class FileUploadController extends Controller
 //           $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
 //           $dataset_path_tm = 'dump/'. Session::get("current_study_id") .'/' .$source_path;
-//           $exists = Storage::disk('ftp')->exists($dataset_path_tm);
+//           $exists = Storage::disk('s3')->exists($dataset_path_tm);
 
 //           if($exists){
 
@@ -1126,7 +1255,7 @@ class FileUploadController extends Controller
 // //                 // dd( $file_name);
 // //                 $source_path = 'dump/'. Session::get("current_study_id") .'/' ;
 // //                 $source_path =  $source_path .$file_name;
-// //                 //$storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+// //                 //$storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
 // //
 // //                 $current_path_check = $source_path;
 // //                 $c_file_name = basename($current_path_check).PHP_EOL;
@@ -1187,7 +1316,7 @@ class FileUploadController extends Controller
 // //               $localFile = File::get(public_path().'/files/'.$tm_temp);
 // //
 // //
-// //               //Storage::disk('ftp')->put('path/to/distant-file.ext', $localFile);
+// //               //Storage::disk('s3')->put('path/to/distant-file.ext', $localFile);
 // //
 // //               // $path = $localFile->storeAs(
 // //               //   $modified_path, #$path
@@ -1196,11 +1325,11 @@ class FileUploadController extends Controller
 // //               // );
 // //
 // // //echo("dsd");
-// //             $tm = Storage::disk('ftp')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
-// // //             Storage::disk('ftp')->download('http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/S-1551306856758-LEGIip/DataSet2/folder5/1');
+// //             $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
+// // //             Storage::disk('s3')->download('http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/S-1551306856758-LEGIip/DataSet2/folder5/1');
 // // // dd("stopo");
 // // // echo('http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/'.$modified_path.'/'.$c_file_name);
-// //         //    $url = Storage::disk('ftp')->url($modified_path.'/'.$c_file_name);
+// //         //    $url = Storage::disk('s3')->url($modified_path.'/'.$c_file_name);
 // //
 // //
 // //
@@ -1237,7 +1366,7 @@ class FileUploadController extends Controller
 // //                 }
 // //                 else{
 // //
-// //                   //$exists = Storage::disk('ftp')->exists($check_path_folder);
+// //                   //$exists = Storage::disk('s3')->exists($check_path_folder);
 // //
 // //                 //  if (FileUpload::where('study_id', Session::get("current_study_id"))->where('type', 'folder')->where('path', $check_path_folder)->where('user_id', Auth::user()->id)->where('filename', $c_file_name_folder)->where('dateset_id', $filename_tm)->exists()){
 // //                   $row_count =FileUpload::where('path', '=', $check_path_folder)->where('filename', $c_file_name_folder)->count();
@@ -1310,7 +1439,7 @@ class FileUploadController extends Controller
 // //                                     ->where('n1.path', '=', 'n2.path') ->delete();
 // //
 // //    // echo '<br>' .'<br>'. '--------------------------';
-// //               //$storagePath = Storage::disk('ftp')->put($source_path, $file_content, 'public');
+// //               //$storagePath = Storage::disk('s3')->put($source_path, $file_content, 'public');
 // //                // echo '<br>' .'<br>' .$source_path . '<br>' . $c_file_name . '<br>'.$modified_path. '<br>'.$size. '<br>'. '<br>';
 // //    // echo '<br>' .'<br>'. '--------------E------------';
 // //
@@ -1351,7 +1480,7 @@ class FileUploadController extends Controller
 
 //                     $modified_path = 'dump/'.Session::get("current_study_id").'/'.$check_path_folder;
 
-//                     $tm = Storage::disk('ftp')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
+//                     $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'public');
 
 //                     $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.Session::get("current_study_id").'/'.zip_entry_name($zip_entry);
 //                     // echo "---------------------- "."file url".$file_ul_tm. '<br>';
@@ -1472,7 +1601,7 @@ class FileUploadController extends Controller
           }
         }
       // see laravel's config/filesystem.php for the source disk
-       $source_disk = 'ftp';
+       $source_disk = 's3';
        $source_path = Session::get("current_path");
        if ($source_path == "") {
          # code...
@@ -1496,6 +1625,8 @@ class FileUploadController extends Controller
        $path=public_path().'/archive.zip';
 
        //dd($path);
+     
+
 
 
 
@@ -1503,7 +1634,8 @@ class FileUploadController extends Controller
 
 
       // return redirect('archive.zip');
-       return response()->download(public_path('/files/archive_'.Auth::user()->id.'.zip'));
+       return response()->download(public_path('/files/archive_'.Auth::user()->id.'.zip'))->deleteFileAfterSend(true);
+
 
 
 
@@ -1514,7 +1646,7 @@ class FileUploadController extends Controller
     public function check_for_filename(Request $request)
     {
       $imageName = $request->file_name;
-      $exists = Storage::disk('ftp')->exists(Session::get("current_path") .'/'.$imageName);
+      $exists = Storage::disk('s3')->exists(Session::get("current_path") .'/'.$imageName);
       if($exists){
 
         $i = 1;
@@ -1530,7 +1662,7 @@ class FileUploadController extends Controller
             $ext = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_EXTENSION);
             $filename_tm = pathinfo(Session::get("current_path") .'/'.$imageName, PATHINFO_FILENAME);
             $filename_check = $filename_tm . "(" .(string) $i .').'.$ext;
-            $exists = Storage::disk('ftp')->exists(Session::get("current_path") .'/'.$filename_check);
+            $exists = Storage::disk('s3')->exists(Session::get("current_path") .'/'.$filename_check);
             if($exists){}
             else{
                 $imageName = $filename_check ;
@@ -1568,7 +1700,7 @@ class FileUploadController extends Controller
 
         $path = $request->path .'/';
 
-        $storagePath = Storage::disk('ftp')->put($path .$imageName, $contnets, 'public');
+        $storagePath = Storage::disk('s3')->put($path .$imageName, $contnets, 'private');
 
 
         $path=public_path().'/files/'.$imageName;
@@ -1611,7 +1743,7 @@ class FileUploadController extends Controller
 
         $path = Session::get("current_path") .'/'.$filename;
 
-        Storage::disk('ftp')->delete($path);
+        Storage::disk('s3')->delete($path);
 
         FileUpload::where('filename',$filename)->where('user_id',  Auth::user()->id)->where('study_id',  Session::get("current_study_id"))->where('dateset_id',  Session::get("current_dataset_name"))->delete();
         return $filename;

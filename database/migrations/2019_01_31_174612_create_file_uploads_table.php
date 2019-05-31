@@ -18,8 +18,8 @@ class CreateFileUploadsTable extends Migration
             $table->increments('id');
             $table->string('filename')->nullable($value = true);
             // $table->string('data_id')->nullable($value = true);
-            $table->string('file_url')->nullable($value = true);
-            $table->string('path')->nullable($value = true);
+            $table->text('file_url')->nullable($value = true);
+            $table->text('path')->nullable($value = true);
             $table->string('type')->nullable($value = true);
             $table->string('study_id')->nullable($value = true);
             $table->string('dateset_id')->nullable($value = true);
