@@ -864,6 +864,8 @@ class FileUploadController extends Controller
           $file_url = $image->file_url;
           $user_id = $image->user_id;
           $task_name= $image->task_name;
+          $file_size= $image->file_size;
+
 
 
             $updateDetails=array(
@@ -915,6 +917,7 @@ class FileUploadController extends Controller
               $bike_save ->task_related = $task_name;
               $bike_save ->created_date = $date->format("Y-m-d");
               $bike_save ->dataset_url = $file_url ;
+              $bike_save ->file_size = $file_size;
 
               $bike_save ->user_id = $user_id;
               $bike_save ->dateset_path = 'dump/' . $study_id ;
@@ -1184,15 +1187,30 @@ class FileUploadController extends Controller
 
 
       $image = $request->file('zipfile');
+
       $imageName = $image->getClientOriginalName() ;
+      try{
+         $file_size = filesize($image);
+        }
+        catch(\Exception $e){
+
+          $file_size= "0";
+        }
       #for ftp
 
       // $tm = Storage::disk('s3')->put('dump/'.Session::get("current_study_id").'/'.$imageName, $image, 'private');
 
 
        // dd($tm);
+        $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
       //Storage::disk('public')->put($imageName, $image );
+      if (Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dataset_name', '=', $filename_tm )->exists()) {
+   // user found
+        Session::flash('message', "Same dataset name exists in your study");
+      } 
+      else{
+
 
         $image->move(public_path('files/'.Session::get("current_study_id")),$imageName);
 
@@ -1207,6 +1225,7 @@ class FileUploadController extends Controller
         $bike_save ->file_name = $filename_tm ;
         $bike_save ->file_type = "dataset";
         $bike_save ->file_url = "" ;
+        $bike_save ->file_size = $file_size ;
 
         $bike_save ->user_id = Auth::user()->id;
         $bike_save ->task_name = $request->task_name_m;
@@ -1584,7 +1603,7 @@ class FileUploadController extends Controller
 //           // }
 //         }
     Session::flash('message', "We are uploading the file(s), check back later");
-
+  }
 
     return Redirect::to('/datesets');
 
@@ -1748,6 +1767,89 @@ class FileUploadController extends Controller
         FileUpload::where('filename',$filename)->where('user_id',  Auth::user()->id)->where('study_id',  Session::get("current_study_id"))->where('dateset_id',  Session::get("current_dataset_name"))->delete();
         return $filename;
     }
+
+    public function smart_search_zip_creation(Request $request,$files_string)
+    {
+      $arr=explode(",",$files_string);
+      // $random_id = uniqid();   
+     
+     
+
+      #################################3
+      #################
+      if(Auth::check()){
+        $path=public_path().'/files/archive_'.Auth::user()->id.'.zip';
+        //bytes
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
+      }
+    // see laravel's config/filesystem.php for the source disk
+     $source_disk = 's3';
+     $source_path = Session::get("current_path");
+     if ($source_path == "") {
+       # code...
+      $source_path = 'dump/'. Session::get("current_study_id");
+     }
+
+
+
+
+    $file_names = Storage::disk($source_disk)->allfiles($source_path);
+
+    $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
+    
+
+     foreach($file_names as $file_name){
+
+
+
+         // echo $file_name;
+         // echo '<br>';
+
+        for ($x = 0; $x <count($arr); $x++) {
+         # $c_folder_name = preg_replace('/\s+/', ' ', $arr[$x]);
+          $c_folder_name = trim(preg_replace('/\s+/',' ', $arr[$x]));
+          // echo $c_folder_name;
+          // echo '<br>';
+
+          if (strpos($file_name, '/'.$c_folder_name.'/') !== false) {
+            
+            // echo $file_name;
+
+            // echo '<br>';
+            $file_content = Storage::disk($source_disk)->get($file_name);
+            $zip->put($file_name, $file_content);
+          }
+        }
+         // $file_content = Storage::disk($source_disk)->get($file_name);
+         // $zip->put($file_name, $file_content);
+
+
+     }
+
+
+
+
+
+
+
+
+
+    $zip->getAdapter()->getArchive()->close();
+
+     $path=public_path().'/archive.zip';
+      // dd($arr);
+
+      // dd($files_string);
+
+     return response()->download(public_path('/files/archive_'.Auth::user()->id.'.zip'))->deleteFileAfterSend(true);
+      ###############################
+      ##########################
+    }
+
+    
 
 
 

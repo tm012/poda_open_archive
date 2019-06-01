@@ -81,6 +81,16 @@ Route::post('/submit_final_smart_search', 'StudyController@submit_final_smart_se
 Route::get('/test', 'FileUploadController@test')->name("testing things");
 Route::get('/update_signed_url', 'FileUploadController@update_signed_url')->name("update signed url");
 
+Route::get('/permanently_delete_data', 'StudyController@permanently_delete_data')->name("permanently_delete_data");
+// Route::get('/smart_search_zip_creation', 'FileUploadController@smart_search_zip_creation')->name("smart_search_zip_creation");
+
+
+
+$router->get('/smart_search_zip_creation/{files_string}',[
+    'uses' => 'FileUploadController@smart_search_zip_creation',
+    'as'   => 'switch'
+]);
+
 // Route::get('files/{file_name}', function($file_name = null)
 // {
 //     $path = storage_path().'/'.'app'.'/files/'.$file_name;

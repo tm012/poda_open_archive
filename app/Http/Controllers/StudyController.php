@@ -205,6 +205,7 @@ class StudyController extends Controller
 
     public function welcome()
     {    
+      
 
       // $file_n = Storage::disk('public')->path('sample_csv_test.csv');
 
@@ -224,6 +225,7 @@ class StudyController extends Controller
       //      // array_push($array, $all_data);
       //   }
       //   fclose($file);
+        #Storage::disk('s3')->deleteDirectory('dump/tm');
 
 
       
@@ -419,6 +421,12 @@ class StudyController extends Controller
                 DB::table('studies')
                 ->where('study_id', Session::get("current_study_id"))
                 ->update($updateDetails);
+
+
+                // DB::table('authors')->where('study_id',  Session::get("current_study_id"))->delete();
+
+
+                // Storage::disk('s3')->deleteDirectory('dump/'.Session::get("current_study_id"));
       }
 
     }
@@ -708,6 +716,7 @@ class StudyController extends Controller
 
 
 
+
         // if($x < 1){
           // dd($current_col_no.' '. $current_selection);
           $rows = DB::table('col_row_key')->where('data_id',  $data_id )->where('col_no', $current_col_no )->where('name',  $current_selection )->get();
@@ -763,8 +772,12 @@ class StudyController extends Controller
       }
       $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->get();
 
+      
+       $tags = implode(', ', $array_files_final);
+      // dd($tags);
+
       // print_r($array_files_final);
-      return view('submit_final_smart_search', ["contents"=>$contents,"array_files_final"=>$array_files_final]);
+      return view('submit_final_smart_search', ["contents"=>$contents,"files_string"=>$tags,"array_files_final"=>$array_files_final]);
 
 
       //////////////////////////////
@@ -791,6 +804,38 @@ class StudyController extends Controller
 
       return view('smart_search', ["col_names"=>$col_names]);
     }
+
+     public function permanently_delete_data(Request $request){
+
+
+        $rows = DB::table('studies')->where('admin_approved',  '-1' )->where('archived_status', '=', '1' )->get();
+
+        for ($j = 0; $j <count($rows); $j++) {
+
+          $current_study_id = $rows[$j]->study_id;
+
+          $data_ids = DB::table('datasets')->where('study_id',  $current_study_id )->get();
+          for ($k = 0; $k <count($data_ids); $k++) {
+
+            $current_data_id= $data_ids[$j]->id;
+            DB::table('col_names_key')->where('data_id', $current_data_id)->delete();
+            DB::table('col_row_key')->where('data_id', $current_data_id)->delete();
+
+
+          }
+          DB::table('authors')->where('study_id',  $current_study_id )->delete();
+          DB::table('datasets')->where('study_id',  $current_study_id )->delete();
+          DB::table('file_upload_queues')->where('study_id',  $current_study_id )->delete();
+          DB::table('file_uploads')->where('study_id',  $current_study_id )->delete();
+          DB::table('search_tags')->where('study_id',  $current_study_id )->delete();
+          DB::table('study_id')->where('study_id',  $current_study_id )->delete();
+
+
+          Storage::disk('s3')->deleteDirectory('dump/'.$current_study_id);
+
+
+        }
+     }
 
 
     public function create_folder(Request $request)

@@ -6,13 +6,15 @@
 
 </div>
 @endif
-
+<input type="hidden" id="file_list_strings" name="file_list_strings" class="cls_file_list_strings" value="{{$files_string}}">
 <div align="center" class="container">
   <div class="row">
     <div align="left" class="col-sm-8">
   <!-- <input type="image" src="/img/left_arrow.png" class="back_button" alt="Submit" width="30" height="30"> -->
     </div>
     <div align="right" class="col-sm-4">
+
+       <a href="{!! route('switch', ['files_string'=>$files_string]) !!}"><button    type="button" class="done_btn btn btn btn-link">Download Files as Zip</button></a>
 
         @if(Auth::check())
          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Folder</button>

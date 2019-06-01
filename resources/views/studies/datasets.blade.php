@@ -56,6 +56,7 @@
           <th></th>
           <th>Dataset Name</th>
           <th>Related Task</th>
+          <th>Folder Size (Bytes)</th>
 
 
           <th>Created At</th>
@@ -69,6 +70,7 @@
           <td><i class="fa fa-database" aria-hidden="true"></i><td/>
           <td>{{$value->dataset_name}}</td>
           <td>{{$value->task_related}}</td>
+          <td>{{$value->file_size}}</td>
 
 
 
