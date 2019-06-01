@@ -362,11 +362,7 @@ class FileUploadController extends Controller
 
       
 
-      $image = $request->file('zipfile');
-      $imageName = $image->getClientOriginalName() ;
-      $image->move(public_path('files/keys/'.Session::get("current_study_id").'/'.Session::get("current_dataset_name")),$imageName);
-      $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-      $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
+
 
 
 
@@ -375,23 +371,39 @@ class FileUploadController extends Controller
       ///////////////////////////
       /////////////////////////////
       /////////////////////////////////
+     if (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_type', '=', 'key' )->where('uploading_done', '=', '0' )->exists()) {
+        Session::flash('message', "A key file is uploading");
+
+        return Redirect::to('/datesets');
 
 
+     }
 
-      $bike_save = New file_upload_queue;
-      $bike_save ->study_id = Session::get("current_study_id");
-      $bike_save ->file_name_with_ext = $imageName;
-      $bike_save ->file_ext = $ext;
-      $bike_save ->file_name = $filename_tm ;
-      $bike_save ->file_type = "key";
-      $bike_save ->file_url = $request->path;
+      else {
+        $image = $request->file('zipfile');
+        $imageName = $image->getClientOriginalName() ;
+        $image->move(public_path('files/keys/'.Session::get("current_study_id").'/'.Session::get("current_dataset_name")),$imageName);
+        $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+        $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
-      $bike_save ->user_id = Auth::user()->id;
-      $bike_save ->task_name =Session::get("current_dataset_name");
+        $bike_save = New file_upload_queue;
+        $bike_save ->study_id = Session::get("current_study_id");
+        $bike_save ->file_name_with_ext = $imageName;
+        $bike_save ->file_ext = $ext;
+        $bike_save ->file_name = $filename_tm ;
+        $bike_save ->file_type = "key";
+        $bike_save ->file_url = $request->path;
 
-      
+        $bike_save ->user_id = Auth::user()->id;
+        $bike_save ->task_name =Session::get("current_dataset_name");
 
-      $bike_save -> save();
+        
+
+        $bike_save -> save();
+        Session::flash('message', "We are uploading the file(s), check back later");
+
+        return Redirect::to('/datesets');
+      }
 
 
       ///////////////////////////////////
@@ -561,9 +573,7 @@ class FileUploadController extends Controller
       //     } 
       // } 
       // dd($image. ' '. $imageName );
-      Session::flash('message', "We are uploading the file(s), check back later");
 
-      return Redirect::to('/datesets');
     }
 
     public function test_file_up_queue(){
@@ -1205,7 +1215,7 @@ class FileUploadController extends Controller
         $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
       //Storage::disk('public')->put($imageName, $image );
-      if (Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dataset_name', '=', $filename_tm )->exists()) {
+      if ((Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dataset_name', '=', $filename_tm )->exists()) || (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_name', '=', $filename_tm )->where('file_type', '=', 'dataset' )->where('uploading_done', '=', '0' )->exists())) {
    // user found
         Session::flash('message', "Same dataset name exists in your study");
       } 

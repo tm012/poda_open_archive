@@ -817,7 +817,7 @@ class StudyController extends Controller
           $data_ids = DB::table('datasets')->where('study_id',  $current_study_id )->get();
           for ($k = 0; $k <count($data_ids); $k++) {
 
-            $current_data_id= $data_ids[$j]->id;
+            $current_data_id= $data_ids[$k]->id;
             DB::table('col_names_key')->where('data_id', $current_data_id)->delete();
             DB::table('col_row_key')->where('data_id', $current_data_id)->delete();
 
@@ -828,7 +828,7 @@ class StudyController extends Controller
           DB::table('file_upload_queues')->where('study_id',  $current_study_id )->delete();
           DB::table('file_uploads')->where('study_id',  $current_study_id )->delete();
           DB::table('search_tags')->where('study_id',  $current_study_id )->delete();
-          DB::table('study_id')->where('study_id',  $current_study_id )->delete();
+          DB::table('studies')->where('study_id',  $current_study_id )->delete();
 
 
           Storage::disk('s3')->deleteDirectory('dump/'.$current_study_id);
