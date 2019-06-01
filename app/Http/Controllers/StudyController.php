@@ -169,7 +169,7 @@ class StudyController extends Controller
 
         
 
-        $study_content = Studies::where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->where('admin_approved',  "1")->get();
+        $study_content = Studies::where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->get();
         //dd( $study_content);
 
         $microtime = "S-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
