@@ -604,7 +604,24 @@ class StudyController extends Controller
       $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->paginate(10);
 
 
-      return view('studies/contents', ["contents"=>$contents]);
+      if (Auth::check())
+        {
+            // The user is logged in...
+            $study_user_id =  DB::table('studies')->where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->value('user_id');
+            if ($study_user_id == Auth::user()->id) {
+              # code...
+              $data_mine = "1";
+            }
+            else{
+              $data_mine = "0";
+            }
+        }
+      else{
+            $data_mine = "0";
+      }
+
+
+      return view('studies/contents', ["contents"=>$contents,"data_mine"=>$data_mine]);
 
 
 

@@ -33,8 +33,9 @@
          @if(Auth::check())
 
          
-
-          <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+          @if($data_mine == "1" )
+            <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+          @endif
 
          @endif
 
