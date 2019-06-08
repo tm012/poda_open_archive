@@ -1,7 +1,0 @@
-PEBL Anti-saccade task result summary
-Tue Jul 03 15:24:54 2018
-Participant code:    100-2-4
-Accuracy:            0.98
-Bivalent Accuracy:   1
-Response time:       640.18
-Note: Bivalent accuracy shows accuracy scored only for the correct direction (horizontal vs vertical).  Here, L is correct for either L or R.; etc.  Possibly, enough information is present to discriminate LR vs UD, but not between LR or UD.
