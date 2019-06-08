@@ -4,7 +4,8 @@
 <?php
 
 ?>
-
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
 
 <div class="grid-container">
   <div class="grid-item"></div>
@@ -13,7 +14,7 @@
   <div class="grid-item"></div>
   <div class="grid-item">
 
-    <h2 style="font-style: italic;">Thank You</h2>
+    <h2 style="font-style: italic; color: black;">Thank You. Wait For Admin's Approval.</h2>
 
 
 

@@ -1,15 +1,77 @@
-<div class="header">
-  <input type="image" src="/img/logo_transparent.png" class="go_home_btn" alt="Submit" width="70" height="70"  onclick="window.location='{{ url("/") }}'">
-  <div class="header-right">
-    @if (Auth::check())
+<header class="site-header collapsed-nav" data-bg-image="">
+  <div class="container">
+    <div class="header-bar">
+      <a style="text-decoration:none" onclick="window.location='{{ url("/") }}'" class="branding">
+        <img src="/img/logo_transparent.png" width="70" height="70" alt="" class="logo">
+        <div class="logo-type">
+          <h1 class="site-title">PODA</h1>
+          <small class="site-description">lorem ipsum</small>
+        </div>
+      </a>
 
-      <div class="style_header_contents">
-          <a href="{{ url('studies/create_study') }}">Create Study</a>
-          <a href="{{ url('studies/my_studies') }}">My Studies</a>
-          @if(Auth::user()->admin_status =='1') 
-            <a href="{{ url('studies/approval_requests') }}">Approval Requests</a>
+      <nav class="main-navigation">
+        <button class="menu-toggle"><i class="fa fa-bars"></i></button>
+        <ul class="menu">
+          <li class="home menu-item "><a href="/"><img src="images/home-icon.png" alt="Home"></a></li>
+          <li class="menu-item "><a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a></li>  
+<!--           <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">PEBL</a>
+           <div class="dropdown-content">
+              <a style="text-decoration:none" href="http://pebl.sourceforge.net/" target="_blank">PEBL Website</a>
+              <a style="text-decoration:none" href="https://en.wikipedia.org/wiki/PEBL_(software)" target="_blank">PEBL Wikipedia</a>
+              
+            </div>
+          </li>
+ -->
+<!--           <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Guidelines</a>
+           <div class="dropdown-content">
+              <a style="text-decoration:none" href="">Help</a>
+              <a style="text-decoration:none" href="">FAQ</a>
+              <a style="text-decoration:none" href="">Quick-start Guide</a>
+              <a style="text-decoration:none" href="">Licenses</a>
+              <a style="text-decoration:none" href="">Contact</a>
+              <a style="text-decoration:none" href="https://www.superiorideas.org/" target="_blank">Donate</a>
+              
+            </div>
+          </li>  -->                    
+          @if (Auth::check())
+
+           
+            <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Study</a>
+             <div class="dropdown-content">
+                <a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a>
+                <a style="text-decoration:none" href="{{ url('studies/create_study') }}">Create Study</a>
+                <a style="text-decoration:none" href="{{ url('studies/my_studies') }}">My Studies</a>
+              
+
+
+                
+              </div>
+            </li> 
+            @if(Auth::user()->admin_status =='1') 
+              <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Admin</a>
+               <div class="dropdown-content">
+              
+                  @if(Auth::user()->admin_status =='1') 
+                    <a style="text-decoration:none" href="{{ url('studies/approval_requests') }}">Approval Requests</a>
+                  @endif
+           
+
+                  
+                </div>
+              </li> 
+         @endif
+          @else
+             <li class="menu-item "><a style="text-decoration:none" href="{{ url('/login') }}">Login</a></li> 
+                
+               <li class="menu-item "><a style="text-decoration:none" href="{{ url('/register') }}">Register</a></li> 
+
           @endif
-          <a href="{{ route('logout') }}"
+
+           <li class="menu-item "><a style="text-decoration:none" href="">Contact</a></li>  
+
+
+          @if (Auth::check())
+            <li class="menu-item"><a style="text-decoration:none" href="{{ route('logout') }}"
               onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
               Logout
@@ -17,87 +79,70 @@
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                            {{ csrf_field() }}
                                        </form>
-          </a>
-        </div>
+              </a>
+            </li>
 
-    @else
-        <div class="style_header_contents">
-          <a href="{{ url('/login') }}">Login</a>
-          <a href="{{ url('/register') }}">Register</a>
-        </div>
-    @endif
+          @endif
+
+
+       
+
+
+
+   
+
+      
+
+              
+
+        </ul>
+      </nav>
+
+      <div class="mobile-navigation"></div>
+    </div>
   </div>
-
-</div>
-  <hr  style="height:1px;border:none;color:#333;background-color:#333;">
-  <style>
+</header>
 
 
-
-  .header {
-    overflow: hidden;
-
-    padding-top: 20px;
-   padding-right: 10px;
-   padding-bottom: 0px;
-   padding-left: 10px;
-  }
-
-  .header a {
-    float: left;
-    color: black;
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
-    border-radius: 4px;
-  }
-
-  .header a.logo {
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  .header a:hover {
-    background-color: #00adb5;
-    color: black;
-  }
-
-  .header a.active {
-    background-color: dodgerblue;
-    color: white;
-  }
-
-  .header-right {
-    float: right;
-  }
-
-  @media screen and (max-width: 500px) {
-    .header a {
-      float: none;
-      display: block;
-      text-align: left;
-    }
-
-    .header-right {
-      float: none;
-    }
-  }
-
-  .style_header_contents {
-
-    margin-top: 10px;
-  }
+<script type="text/javascript">
+  
 
 
-  </style>
+</script>
 
+<style>
+.dropbtn {
+  background-color: white;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
 
-  <script>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
-$( ".go_home_btn" ).click(function() {
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
 
-   window.location.href = "/";
-});
-  </script>
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>

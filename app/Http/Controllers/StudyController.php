@@ -203,6 +203,11 @@ class StudyController extends Controller
 
     }
 
+    public function landing_page(){
+      return view('landing_page');
+
+    }
+
     public function welcome()
     {    
       
@@ -627,33 +632,43 @@ class StudyController extends Controller
 
     }
 
+ public function set_breadcrumb_path(Request $request)
+    {       
+
+      Session::put("current_path",$request->path);
+      return $request->path;
+    }
 
 
     public function go_to_files(Request $request)
-    {
-            $date = Carbon::now();// will get you the current date, time
-            $next_destination = $request->next_destination;
-            //dd(Session::get("current_study_id"));
-            if (Session::get("current_dataset_name") == '')
-            {
-              Session::put("current_dataset_name",$next_destination);
-
-              $path = 'dump/' . Session::get("current_study_id") .'/'. Session::get("current_dataset_name") ;
-              Session::put("current_path",$path);
-            }
-
-            else{
-
-              $path = Session::get("current_path") .'/'. $next_destination ;
-              Session::put("current_path",$path);
+    {       
 
 
-            }
-            // $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->get();
-            //
-            //
-            // return view('studies/files', ["contents"=>$contents]);
-            return $path;
+          
+      $date = Carbon::now();// will get you the current date, time
+      $next_destination = $request->next_destination;
+      //dd(Session::get("current_study_id"));
+      if (Session::get("current_dataset_name") == '')
+      {
+        Session::put("current_dataset_name",$next_destination);
+
+        $path = 'dump/' . Session::get("current_study_id") .'/'. Session::get("current_dataset_name") ;
+        Session::put("current_path",$path);
+      }
+
+      else{
+
+        $path = Session::get("current_path") .'/'. $next_destination ;
+        Session::put("current_path",$path);
+
+
+      }
+      // $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->get();
+      //
+      //
+      // return view('studies/files', ["contents"=>$contents]);
+      return $path;
+          
 
 
 

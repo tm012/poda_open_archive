@@ -3,7 +3,8 @@
 
 
 
-
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
  <div class="container">
   <h2>Create Study</h2>
    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ action('StudyController@post_study') }}">
@@ -29,7 +30,7 @@
     </div>
 
      <div class="form-group">
-      <label for="l_studyname">Author(s)</label>
+      <label for="l_studyname">Author(s) - Press ENTER key after typing each author name</label>
    
     </div>
 
@@ -83,7 +84,7 @@
 
 
     <div class="form-group">
-      <label for="l_studyname">Search Tag(s)</label>
+      <label for="l_studyname">Keywords(s) - Press ENTER key after typing each Keyword </label>
    
     </div>
 

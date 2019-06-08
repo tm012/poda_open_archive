@@ -333,28 +333,29 @@ class FileUploadController extends Controller
     }
     public function test(Request $request)
     {
-              $file_url='dump/S-1559278014751-IygPDN/DataSet2';
-              $imageName = 'index.php';
-              $id='8';
-              $s3 = \Storage::disk('s3');
-              $client = $s3->getDriver()->getAdapter()->getClient();
-              $expiry = "+10000 minutes";
+              // $file_url='dump/S-1559278014751-IygPDN/DataSet2';
+              // $imageName = 'index.php';
+              // $id='8';
+              // $s3 = \Storage::disk('s3');
+              // $client = $s3->getDriver()->getAdapter()->getClient();
+              // $expiry = "+10000 minutes";
 
-              $command = $client->getCommand('GetObject', [
-                  'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
-                  'Key'    => $file_url.'/'.$imageName
-              ]);
+              // $command = $client->getCommand('GetObject', [
+              //     'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+              //     'Key'    => $file_url.'/'.$imageName
+              // ]);
 
-              $request_tm = $client->createPresignedRequest($command, $expiry);
-              $path_s3 = (string) $request_tm->getUri();
-              $file_ul_tm = $path_s3;
+              // $request_tm = $client->createPresignedRequest($command, $expiry);
+              // $path_s3 = (string) $request_tm->getUri();
+              // $file_ul_tm = $path_s3;
 
-               $updateDetails=array(
-                  'file_url' => $file_ul_tm
-                );
-               DB::table('file_uploads')
-              ->where('id', $id)
-              ->update($updateDetails);
+              //  $updateDetails=array(
+              //     'file_url' => $file_ul_tm
+              //   );
+              //  DB::table('file_uploads')
+              // ->where('id', $id)
+              // ->update($updateDetails);
+      return view('test');
     }    
 
     public function upload_key_file(Request $request)

@@ -1,6 +1,7 @@
 @extends('default_contents')
 @section('content')
-
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
 <div class="container">
 
 @if((Auth::user()->admin_status == "1"))

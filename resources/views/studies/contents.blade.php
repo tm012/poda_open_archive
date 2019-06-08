@@ -1,5 +1,7 @@
 @extends('default_contents')
 @section('content')
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
 @if (Session::has('message'))
 <div class="alert alert-info center_div">
  <p align="middle" class="">{{ Session::get('message') }}</p>
@@ -7,6 +9,93 @@
 </div>
 @endif
 
+
+
+@php
+
+  $current_path = Session::get("current_path");
+  #echo $current_path;
+  #echo '-----------------------';
+
+
+  #$study_id = substr($string_upto_study_id, strrpos($string_upto_study_id, '/') + 1);
+  $study_name = DB::table('studies')->where('study_id', '=', Session::get("current_study_id"))->value('study_name');
+  # echo $study_name;
+  $cars = array("Volvo", "BMW", "Toyota");
+  $current_dataset_name =  Session::get("current_dataset_name");
+ $array_paths=array();
+  $array_basenames=array();
+ # array_push($array_paths,'dump/'.Session::get("current_study_id").'');
+ #array_push($array_paths,'dump/'.Session::get("current_study_id").'/'.$current_dataset_name.'');
+
+
+ $output =  $current_path;
+
+ $string_upto_dataset = 'dump/'. Session::get("current_study_id");
+ $string_upto_dataset_real = 'dump/'. Session::get("current_study_id").'/'.$current_dataset_name;
+
+ 
+# echo $string_upto_dataset;
+ $i=0;
+#echo $current_path;
+#echo '          ';
+
+ while( ($string_upto_dataset != $output)){
+    if($string_upto_dataset != $output){
+      if($i < 1){
+        $output=$current_path;
+        array_push($array_basenames,basename($output).PHP_EOL);
+        array_push($array_paths,$output);
+        #echo $i;
+      }else{
+        $output= dirname($output);
+        #echo $output;
+        array_push($array_basenames,basename($output).PHP_EOL);
+        array_push($array_paths,$output);
+        
+        #echo $i;
+      }
+      $i=$i+1;
+    }
+
+
+    
+} 
+#array_push($array_paths,'dump/'.Session::get("current_study_id").'');
+#print_r($array_paths);
+#print_r($array_basenames);
+$array_paths=array_reverse($array_paths);
+$array_basenames = array_reverse($array_basenames);
+
+ 
+
+@endphp
+
+<div align="center" class="container">
+  <div class="row">
+    <div align="right" class="col-sm-12">
+@if(Auth::check())
+ <a style="text-decoration:none; color:black;"   href="studies/my_studies">{{ $study_name}}/</a>
+@else
+
+<a style="text-decoration:none; color:black;"   href="/welcome">{{ $study_name}}/</a>
+@endif
+
+
+
+ <!--  <a style="text-decoration:none; color:black;"   href="/datesets">{{ Session::get("current_dataset_name")}}/</a> -->
+@for ($i = 1; $i <count($array_paths); $i++)
+  @if ($string_upto_dataset_real == $array_paths[$i]) 
+    <a style="text-decoration:none; color:black;" class="go_to_dataset_breadcrumb" data-value="{{$array_paths[$i]}}" href="/contents">{{$array_basenames[$i]}}</a>/
+  @else
+
+  <a style="text-decoration:none; color:black;" class ="bread_tags" data-value="{{$array_paths[$i]}}"onclick='return check()' href="/contents">{{$array_basenames[$i]}}</a>/
+
+  @endif
+
+       
+@endfor
+</div></div></div>
 <div align="center" class="container">
   <div class="row">
     <div align="left" class="col-sm-5">
@@ -212,7 +301,63 @@
 
 @section('page-script')
 
+<script type='text/javascript'>
 
+$(".bread_tags").click(function(){
+    i=$(this).data("value");
+    //alert(i);
+    ajax_call_to_set_bread_crumb_path(i) ;
+   // ajax_call_go_to_files(i,'1');
+    
+});
+$(".go_to_dataset_breadcrumb").click(function(){
+    i=$(this).data("value");
+  //alert(i);
+//ajax_call_go_to_files(dataset_name);
+   // ajax_call_go_to_files(i,'1');
+    ajax_call_to_set_bread_crumb_path(i) ;
+    
+});
+
+
+
+function ajax_call_to_set_bread_crumb_path(path) {
+  var path = path;
+
+
+
+
+
+
+  $.ajax({
+    url: "/set_breadcrumb_path",
+    data: {
+      path: path,
+  
+      submit_check_1: "submit_check_1"
+
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      console.log(data);
+      //window.location.href = "/contents";
+
+
+    //
+    //  $("#sub_category_admin").html(html);
+
+
+    }
+  })
+
+
+
+
+}
+</script>
 <script>
 
 
@@ -278,6 +423,7 @@ function ajax_call_go_to_files(dataset_name) {
     url: "/go_to_files",
     data: {
       next_destination: dataset_name,
+  
       submit_check_1: "submit_check_1"
 
 

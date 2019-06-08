@@ -75,7 +75,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> -->
 
 
-
+  <link rel="stylesheet" type="text/css" href="{{ asset('/css/theame_science_lab.css') }}">
 
 
 
@@ -169,7 +169,8 @@
  
   <link rel="stylesheet" type="text/css" href="{{ asset('/css/jquery.datetimepicker.min.css') }}">
 
-
+  <script src="{{ asset('/js/theame_science_lab/app.js') }}"></script>
+  <script src="{{ asset('/js/theame_science_lab/plugins.js') }}"></script>
 
 @yield('page-script')
 </body>

@@ -1,11 +1,35 @@
 @extends('default_contents')
 @section('content')
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
 @if (Session::has('message'))
 <div class="alert alert-info center_div">
  <p align="middle" class="">{{ Session::get('message') }}</p>
 
 </div>
 @endif
+@php
+
+  $current_path = Session::get("current_path");
+
+
+
+  #$study_id = substr($string_upto_study_id, strrpos($string_upto_study_id, '/') + 1);
+  $study_name = DB::table('studies')->where('study_id', '=', Session::get("current_study_id"))->value('study_name');
+@endphp
+<div align="center" class="container">
+  <div class="row">
+    <div align="right" class="col-sm-12">
+      @if(Auth::check())
+       <a style="text-decoration:none; color:black;"   href="studies/my_studies">{{ $study_name}}/</a>
+      @else
+
+      <a style="text-decoration:none; color:black;"   href="/welcome">{{ $study_name}}/</a>
+      @endif
+
+</div></div></div>
+
+<!--   <a style="text-decoration:none; color:black;"   href="/datesets">{{ Session::get("current_dataset_name")}}/</a> -->
 <div align="center" class="container">
   <div class="row">
     <div align="left" class="col-sm-5">
@@ -36,7 +60,7 @@
       @endif
     </div>
   </div>
-
+</div>
   <input type="hidden" id="auth_check" class="form-control" name="auth_check" value="{{Auth::check()}}">
 
 <br><br>
@@ -49,7 +73,8 @@
           <input id="myInput" type="text" placeholder="Search..">
         </div>
       </div>
-    <table id="resultTable" class="table table-striped">
+      <br>
+    <table data-bg-color="#edf2f4" id="resultTable" class="table table-striped">
       <thead>
         <tr>
             <th></th>

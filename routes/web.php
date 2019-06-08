@@ -15,7 +15,9 @@
 //     return view('welcome');
 // });
 
-Route::get('/', 'StudyController@welcome')->name('index page');
+Route::get('/', 'StudyController@landing_page')->name('index page');
+
+Route::get('/welcome', 'StudyController@welcome')->name('study page');
 
 Auth::routes();
 
@@ -83,7 +85,7 @@ Route::get('/update_signed_url', 'FileUploadController@update_signed_url')->name
 
 Route::get('/permanently_delete_data', 'StudyController@permanently_delete_data')->name("permanently_delete_data");
 // Route::get('/smart_search_zip_creation', 'FileUploadController@smart_search_zip_creation')->name("smart_search_zip_creation");
-
+Route::get('/set_breadcrumb_path', 'StudyController@set_breadcrumb_path')->name("set_breadcrumb_path");
 
 
 $router->get('/smart_search_zip_creation/{files_string}',[

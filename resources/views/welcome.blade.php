@@ -5,204 +5,198 @@
 @section('content')
 
 <!-- <button type="button" onclick="window.location='{{ url("test_tm") }}'">Button</button -->
-
-<div align="center"  class="container">
-  <div class="row">
-    <div class="col-sm-4">
-
-      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='study' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search By Study Name" class="form-control search_by_study">
-      </form>
-
-
+<div class="site-content">
+  <main class="main-content">
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
+    
+    
+    
+        <div class="fullwidth-block" data-bg-color="#edf2f4">
 
 
+          <div align="center" class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-4">
+                
+                  <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+                    <input autocomplete="off" data-id='study' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search By Study Name" class="form-control search_by_study">
+                  </form>
+                
+              </div>
+              <div class="col-md-4 col-sm-4">
+               
+                  <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+                    <input autocomplete="off" data-id='dataset' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_dataset">
+                  </form>
+                
+              </div>
+              <div class="col-md-4 col-sm-4">
+                
+                  <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+                    <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Task Name" class="form-control search_by_task">
+                  </form>
+                
+              </div>
+            
+            </div> <!-- .row -->
+          </div> <!-- .container -->
+        </div> <!-- .fullwidth-block -->
+         <div class="fullwidth-block" data-bg-color="#edf2f4">
+
+
+          <div align="center" class="container">
+            <div class="row">
+              <div align="right" class="col-sm-6">
+                
+                  <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+                    <input autocomplete="off" data-id='author_name' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Author" class="form-control search_by_author_name">
+                  </form>
+              
+              </div>
+         
+              <div align="left"  class="col-sm-6">
+
+
+                <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
+                  <input autocomplete="off" data-id='tag' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Keyword" class="form-control search_by_tag">
+                </form>
+
+
+              </div>
+            
+            </div> <!-- .row -->
+          </div> <!-- .container -->     
+    <div class="fullwidth-block" data-bg-color="#edf2f4">    
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div align="right" class="col-sm-6">
+
+
+              <input id="myInput" type="text" placeholder="Search..">
+            </div>
+          </div>
+          <table id="resultTable" class="table table-striped">
+            <thead>
+              <tr>
+                  <th></th>
+                      <th></th>
+               <!--  <th>Study ID</th> -->
+                <th>Study Name</th>
+
+                <th>Access Status</th>
+                <th>Created At</th>
+
+
+              </tr>
+            </thead>
+            <tbody id="myTable">
+          @foreach($my_studies as $my_study=>$value)
+
+
+          @if(Auth::check())
+
+            @if($value->access_status == "1")
+              <tr id="ClickableRow{{$value->id}}">
+                <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+                <td style="display:none;">{{$value->study_id}}</td>
+                <td>{{$value->study_name}}</td>
+
+                @if($value->access_status == "1")
+                 <td>public</td>
+               @else
+                   <td>private</td>
+               @endif
+
+
+                <td>{{$value->created_at}}</td>
+              </tr>
+            @else
+
+              @if($value->user_id == Auth::user()->id)
+                <tr id="ClickableRow{{$value->id}}">
+                  <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+                  <td style="display:none;">{{$value->study_id}}</td>
+                  <td>{{$value->study_name}}</td>
+
+                  @if($value->access_status == "1")
+                   <td>public</td>
+                 @else
+                     <td>private</td>
+                 @endif
+
+
+                  <td>{{$value->created_at}}</td>
+                </tr>
+
+              @else
+                <tr>
+                  <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+                  <td style="display:none;">{{$value->study_id}}</td>
+                  <td>{{$value->study_name}}</td>
+
+                  @if($value->access_status == "1")
+                   <td>public</td>
+                 @else
+                     <td>private</td>
+                 @endif
+
+
+                  <td>{{$value->created_at}}</td>
+                </tr>
+
+              @endif
+
+            @endif
+
+          @else
+            @if($value->access_status == "1")
+              <tr id="ClickableRow{{$value->id}}">
+                <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+                <td style="display:none;">{{$value->study_id}}</td>
+                <td>{{$value->study_name}}</td>
+
+                @if($value->access_status == "1")
+                 <td>public</td>
+               @else
+                   <td>private</td>
+               @endif
+
+
+                <td>{{$value->created_at}}</td>
+              </tr>
+            @else
+                <tr >
+                  <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
+                  <td style="display:none;" >{{$value->study_id}}</td>
+                  <td>{{$value->study_name}}</td>
+
+                  @if($value->access_status == "1")
+                   <td>public</td>
+                 @else
+                     <td>private</td>
+                 @endif
+
+
+                  <td>{{$value->created_at}}</td>
+                </tr>
+            @endif
+          @endif
+
+          @endforeach
+            </tbody>
+          </table>
+
+
+      </div>
+
+      <div align="center" class="container">
+        {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
+      </div>
     </div>
-
-    <div class="col-sm-4">
-
-
-      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='dataset' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_dataset">
-      </form>
-
-
-    </div>
-
-
-    <div class="col-sm-4">
-
-
-      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Task Name" class="form-control search_by_task">
-      </form>
-
-
-    </div>
-  </div>
-
+  </main>
 </div>
-<br><br>
-
-<div align="center"  class="container">
-  <div class="row">
-    <div align="right" class="col-sm-6">
-
-      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='author_name' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Author" class="form-control search_by_author_name">
-      </form>
-
-
-
-
-    </div>
-
-
-
-
-    <div align="left"  class="col-sm-6">
-
-
-      <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
-        <input autocomplete="off" data-id='tag' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Tag" class="form-control search_by_tag">
-      </form>
-
-
-    </div>
-  </div>
-
-</div>
-<br><br>
-
-
-
-<div class="container">
-<div class="row">
-    <div class="col-sm-6"></div>
-    <div align="right" class="col-sm-6">
-
-
-      <input id="myInput" type="text" placeholder="Search..">
-    </div>
-  </div>
-  <table id="resultTable" class="table table-striped">
-    <thead>
-      <tr>
-          <th></th>
-              <th></th>
-       <!--  <th>Study ID</th> -->
-        <th>Study Name</th>
-
-        <th>Access Status</th>
-        <th>Created At</th>
-
-
-      </tr>
-    </thead>
-    <tbody id="myTable">
-	@foreach($my_studies as $my_study=>$value)
-
-
-  @if(Auth::check())
-
-    @if($value->access_status == "1")
-      <tr id="ClickableRow{{$value->id}}">
-        <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-        <td style="display:none;">{{$value->study_id}}</td>
-        <td>{{$value->study_name}}</td>
-
-        @if($value->access_status == "1")
-         <td>public</td>
-       @else
-           <td>private</td>
-       @endif
-
-
-        <td>{{$value->created_at}}</td>
-      </tr>
-    @else
-
-      @if($value->user_id == Auth::user()->id)
-        <tr id="ClickableRow{{$value->id}}">
-          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td style="display:none;">{{$value->study_id}}</td>
-          <td>{{$value->study_name}}</td>
-
-          @if($value->access_status == "1")
-           <td>public</td>
-         @else
-             <td>private</td>
-         @endif
-
-
-          <td>{{$value->created_at}}</td>
-        </tr>
-
-      @else
-        <tr>
-          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td style="display:none;">{{$value->study_id}}</td>
-          <td>{{$value->study_name}}</td>
-
-          @if($value->access_status == "1")
-           <td>public</td>
-         @else
-             <td>private</td>
-         @endif
-
-
-          <td>{{$value->created_at}}</td>
-        </tr>
-
-      @endif
-
-    @endif
-
-  @else
-    @if($value->access_status == "1")
-      <tr id="ClickableRow{{$value->id}}">
-        <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-        <td style="display:none;">{{$value->study_id}}</td>
-        <td>{{$value->study_name}}</td>
-
-        @if($value->access_status == "1")
-         <td>public</td>
-       @else
-           <td>private</td>
-       @endif
-
-
-        <td>{{$value->created_at}}</td>
-      </tr>
-    @else
-        <tr >
-          <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
-          <td style="display:none;" >{{$value->study_id}}</td>
-          <td>{{$value->study_name}}</td>
-
-          @if($value->access_status == "1")
-           <td>public</td>
-         @else
-             <td>private</td>
-         @endif
-
-
-          <td>{{$value->created_at}}</td>
-        </tr>
-    @endif
-  @endif
-
-	@endforeach
-    </tbody>
-  </table>
-
-
-</div>
-
-<div align="center" class="container">
-  {{ $my_studies->links('vendor.pagination.bootstrap-4') }}
-</div>
-
 @endsection
 @section('page-script')
 
