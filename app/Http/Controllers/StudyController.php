@@ -19,6 +19,8 @@ use App\search_tags;
 use DB;
 use App\file_upload_queue;
 use File;
+use App\tasks;
+
 
 class StudyController extends Controller
 {
@@ -163,6 +165,78 @@ class StudyController extends Controller
         //return response()->json(['success'=>$imageName]);
         return view('studies/create_study', ["studyid"=>$microtime]);
     }
+    public function tasks()
+    {
+      $tasks = DB::table('tasks')
+              // ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              
+             ->paginate(10);
+
+        //return response()->json(['success'=>$imageName]);
+        return view('studies/tasks', ["tasks"=>$tasks]);
+    }
+    public function edit_task_name(Request $request)
+    {
+      
+
+
+        $task_name = $request->task_name;
+        $id = $request->id;
+        if (DB::table('tasks')->where('task_name', '=', $task_name )->exists()) {
+           // user found
+        }
+        else{
+            $updateDetails=array(
+
+              'task_name' => $request->task_name,
+           
+            );
+
+            DB::table('tasks')
+            ->where('id',  $id )
+            ->update($updateDetails);
+
+        }
+      //  $tasks = DB::table('tasks')
+      //         // ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')
+              
+      //        ->paginate(10);        
+      //   //return response()->json(['success'=>$imageName]);
+      // return view('studies/tasks', ["tasks"=>$tasks]);
+    }
+    public function delete_task_name(Request $request){
+       //do stuffs here with $prisw and $secsw
+
+      DB::delete('delete  from tasks where id = ?',[$request->id]);
+    }
+    public function post_task(Request $request)
+    {
+
+      
+
+
+       $myArray = explode(',', $request->search_tags);
+        for($x=0;$x<count($myArray);$x++){
+
+          // echo $myArray[$x];
+          if (tasks::where('task_name', '=', $myArray[$x])->exists()) {
+             // user found
+          }
+          else{
+            $bike_save = New tasks;
+            $bike_save ->task_name = $myArray[$x];
+         
+            $bike_save -> save();
+
+          }
+
+
+        }
+      return Redirect::to('studies/tasks');
+
+
+    }
+
 
     public function edit_study()
     {   
@@ -465,12 +539,14 @@ class StudyController extends Controller
                   $data_mine = "0";
             }
 
+            $tasks = DB::table('tasks')->get();
+
 
 
             
 
 
-            return view('studies/datasets', ["my_datasets"=>$my_datasets,"study_content"=>$study_content,"data_mine"=>$data_mine]);
+            return view('studies/datasets', ["my_datasets"=>$my_datasets,"study_content"=>$study_content,"data_mine"=>$data_mine,"tasks"=>$tasks]);
 
 
 

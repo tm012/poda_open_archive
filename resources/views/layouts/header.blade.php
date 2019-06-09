@@ -12,8 +12,8 @@
       <nav class="main-navigation">
         <button class="menu-toggle"><i class="fa fa-bars"></i></button>
         <ul class="menu">
-          <li class="home menu-item "><a href="/"><img src="images/home-icon.png" alt="Home"></a></li>
-          <li class="menu-item "><a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a></li>  
+          <li class="home menu-item "><a href="/"><img src="../images/home-icon.png" alt="Home"></a></li>
+         
 <!--           <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">PEBL</a>
            <div class="dropdown-content">
               <a style="text-decoration:none" href="http://pebl.sourceforge.net/" target="_blank">PEBL Website</a>
@@ -53,6 +53,8 @@
               
                   @if(Auth::user()->admin_status =='1') 
                     <a style="text-decoration:none" href="{{ url('studies/approval_requests') }}">Approval Requests</a>
+
+                    <a style="text-decoration:none" href="{{ url('studies/tasks') }}">Tasks</a>
                   @endif
            
 
@@ -61,14 +63,15 @@
               </li> 
          @endif
           @else
+           <li class="menu-item "><a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a></li>  
              <li class="menu-item "><a style="text-decoration:none" href="{{ url('/login') }}">Login</a></li> 
                 
                <li class="menu-item "><a style="text-decoration:none" href="{{ url('/register') }}">Register</a></li> 
 
           @endif
 
-           <li class="menu-item "><a style="text-decoration:none" href="">Contact</a></li>  
-
+          <!--  <li class="menu-item "><a style="text-decoration:none" href="">Contact</a></li>  
+ -->
 
           @if (Auth::check())
             <li class="menu-item"><a style="text-decoration:none" href="{{ route('logout') }}"

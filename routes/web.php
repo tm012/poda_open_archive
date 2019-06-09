@@ -93,6 +93,12 @@ $router->get('/smart_search_zip_creation/{files_string}',[
     'as'   => 'switch'
 ]);
 
+// https://stackoverflow.com/questions/34810479/how-to-pass-value-inside-href-to-laravel-controller
+
+Route::get('studies/tasks', 'StudyController@tasks')->name("tasks")->middleware('admin_check');
+Route::post('/post_task', 'StudyController@post_task')->name("post_task")->middleware('admin_check');
+Route::get('/edit_task_name', 'StudyController@edit_task_name')->name("edit_task_name")->middleware('admin_check');
+Route::get('/delete_task_name', 'StudyController@delete_task_name')->name("delete_task_name")->middleware('admin_check');
 // Route::get('files/{file_name}', function($file_name = null)
 // {
 //     $path = storage_path().'/'.'app'.'/files/'.$file_name;

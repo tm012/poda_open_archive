@@ -129,7 +129,22 @@
 		    </div>
           <div class="form-group">
 			  <label for="l_name_task">Task Related to the Dataset</label>
-			  <input type="text" id="create_task" class="form-control" name="new_task">
+          <select id="create_task" class="form-control" name="new_task"">
+             
+            <option>Select Task</option>
+              
+                       
+              @foreach ($tasks as $key => $value)
+               
+                  <option value="{{$value->task_name}}">{{$value->task_name}}</option>
+                
+              @endforeach
+              
+          </select>
+
+          <!-- https://itsolutionstuff.com/post/laravel-set-selected-option-in-dropdown-menuexample.html -->
+
+			 <!--  <input type="text" id="create_task" class="form-control" name="new_task"> -->
 		    </div>
         </div>
         <div class="modal-footer">
@@ -195,7 +210,22 @@
 
                 <div class="form-group">
                   <label for="l_task_name_m">Task Related to The Dataset</label>
-                  <input type="text" class="form-control" name="task_name_m" id="task_name_m" required>
+                  <!-- <input type="text" class="form-control" name="task_name_m" id="task_name_m" required> -->
+
+          <select id="task_name_m" class="form-control" name="task_name_m" required="true">
+             
+         <!--    <option>Select Task</option> -->
+              
+                       
+              @foreach ($tasks as $key => $value)
+               
+                  <option value="{{$value->task_name}}">{{$value->task_name}}</option>
+                
+              @endforeach
+              
+          </select>
+
+
                 </div>
                 <div align="center" class="form-group">
                   <label for="l_zip_file">Zip file</label>
