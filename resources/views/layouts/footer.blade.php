@@ -5,10 +5,10 @@
 						<div class="col-md-3">
 							<div class="widget">
 								<h3 class="widget-title">Our address</h3>
-								<strong>Company name INC</strong>
-								<address>592 Avenue Street, Los Angeles, CA 90012</address>
-								<a href="tel:+1 800 931 812">+1 800 931 812</a> <br>
-								<a href="mailto:office@companyname.com">office@companyname.com</a>
+								<strong>Meese Center 203</strong>
+								<address>Cognitive and Learning Sciences, Michigan Technological University, Houghton MI 49931</address>
+								<a href="tel:+1 800 931 812">+1 906-487-1159</a> <br>
+								<a href="mailto:office@companyname.com">shanem@mtu.edu</a>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -60,8 +60,10 @@
 							</div>
 						</div> -->
 					</div> <!-- .row -->
-
-					<p class="colophon">copyright 2014 Company name. Designed by <a href="http://www.vandelaydesign.com/" title="Designed by VandelayDesign.com" target="_blank">VandelayDesign.com</a>. All rights reserved</p>
+@php
+$year  = date("Y");
+@endphp
+					<p class="colophon">© {{$year}} Shane T. Mueller, Associate Professor of Psychology, Cognitive and Learning Sciences, Michigan Technological University. All rights reserved.</p>
 				</div> <!-- .container -->
 			</footer>
 

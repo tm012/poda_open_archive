@@ -119,28 +119,28 @@
 								<p>Distinctio delectus consequuntur sed quod ipsum a, odio obcaecati neque, aliquam nostrum aliquid reprehenderit ad quae qui autem voluptate omnis quas Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime magnam amet obcaecati dolore omnis consectetur dignissimos iste cupiditate excepturi quae porro fugiat, nemo iure, minima. Fuga hic voluptate ratione, at.ullam.</p>
 							</div>
 							<div class="col-md-4">
-								<h2 class="section-title">Research summaries</h2>
+								<h2 class="section-title">Latest Studies</h2>
 								<ul class="arrow-list has-border">
 									<li><a href="#">Praesentium voluptatum deleniti atque dolores</a></li>
 									<li><a href="#">Corrupti quos et quas molestias excepturi sint</a></li>
 									<li><a href="#">Occaecati cupiditate non provident similique sunt</a></li>
 									<li><a href="#">Nam libero tempore, cum soluta nobis est eligendi</a></li>
 								</ul>
-								<a href="#" class="button">Show more</a>
+								<a href="/welcome" class="button">Show more</a>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="fullwidth-block cta" data-bg-image="images/cta-bg.jpg">
+<!-- 				<div class="fullwidth-block cta" data-bg-image="images/cta-bg.jpg">
 					<div class="container">
 						<h2 class="cta-title">Neque porro quisquam</h2>
 						<p>Modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem enim ad minima veniam quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil moles</p>
 						<a href="#" class="button">See details</a>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="fullwidth-block" data-bg-color="#edf2f4">
+<!-- 				<div class="fullwidth-block" data-bg-color="#edf2f4">
 					<div class="container">
 						<div class="subscribe-form">
 							<h2>Join our newsletter</h2>
@@ -150,7 +150,7 @@
 							</form>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 			</main> <!-- .main-content -->
 
