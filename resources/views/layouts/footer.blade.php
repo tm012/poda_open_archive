@@ -6,7 +6,7 @@
 							<div class="widget">
 								<h3 class="widget-title">Our address</h3>
 								<strong>Meese Center 203</strong>
-								<address>Cognitive and Learning Sciences, Michigan Technological University, Houghton MI 49931</address>
+								<address>Cognitive and Learning Sciences, Michigan Technological University, Houghton. MI-49931</address>
 								<a href="tel:+1 800 931 812">+1 906-487-1159</a> <br>
 								<a href="mailto:office@companyname.com">shanem@mtu.edu</a>
 							</div>

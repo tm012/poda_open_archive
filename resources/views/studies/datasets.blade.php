@@ -63,6 +63,47 @@
 </div>
   <input type="hidden" id="auth_check" class="form-control" name="auth_check" value="{{Auth::check()}}">
 
+
+  <div  class="container ">
+    <div align="center" class="row">
+      <div class="col-sm-12">
+        <p style="font-family: 'Lucida Console';"><font size="6">{{$study_content[0]['study_name']}}</font></p>
+
+      </div>
+      <div class="form-group" align="left" class="row">
+        <div class="col-sm-12">
+          <label style="font-style: bold;color: black;font-size: 15px;">Abstract:</label>
+          <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['study_description']}}</font></p>
+
+        </div>
+      </div>
+      <div class="form-group"  class="row">
+        <div align="right" class="col-sm-4">
+          <label style="font-style: bold;color: black;font-size: 15px;">Publication Name:</label>
+          <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['publication_name']}}</font></p>
+
+        </div>
+        <div  class="col-sm-4"></div>
+        <div align="left" class="col-sm-4">
+          <label style="font-style: bold;color: black;font-size: 15px;">Publication Time:</label>
+          <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['publication_time']}}</font></p>
+
+        </div>
+
+      </div>  
+      <div class="form-group" align="center" class="row">
+        <div class="col-sm-12">
+          <label style="font-style: bold;color: black;font-size: 15px;">Authors:</label>
+          <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['authors']}}</font></p>
+
+        </div>
+
+
+      </div> 
+      <div class="form-group" align="left" class="row">
+
+      </div>                
+  </div>
 <br><br>
   <div  class="container">
     <div class="row">
@@ -299,7 +340,7 @@
           <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" disabled placeholder="Enter Study Name" value="{{$study_content[0]['study_name']}}">
         </div>
         <div align="left"class="form-group">
-          <label for="l_authorname">Study Description</label>
+          <label for="l_authorname">Abstract</label>
           
         </div>
    

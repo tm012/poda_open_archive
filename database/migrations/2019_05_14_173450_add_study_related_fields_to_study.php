@@ -17,7 +17,7 @@ class AddStudyRelatedFieldsToStudy extends Migration
 
         Schema::defaultStringLength(500);
         Schema::table('studies', function($table) {
-            $table->string('study_description')->nullable($value = true);
+            $table->text('study_description')->nullable($value = true);
             $table->string('study_licence')->nullable($value = true);
             $table->string('authors')->nullable($value = true);
             $table->string('publication_name')->nullable($value = true);
