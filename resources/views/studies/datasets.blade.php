@@ -42,6 +42,17 @@
           <button style="margin-left: 15px;" type="button" class="btn btn-outline-success approve_study">Approve</button>
           <button type="button" class="btn btn-outline-danger reject_study">Decline</button>
         @endif
+        @if((Auth::user()->admin_status == "1") and ($study_content[0]["admin_approved"]=="1"))
+
+          @if($study_content[0]['featured'] == "0")
+            <button style="margin-left: 15px;"  class="btn-feature btn btn-outline-primary"><i class="fa fa-star-o" aria-hidden="true"></i></i> Make it Featured</button>
+          @else
+            <button style="margin-left: 15px;"  class="btn-feature btn btn-outline-primary"><i class="fa fa-star" aria-hidden="true"></i> Featured</button>
+          @endif
+
+
+        @endif
+
       @endif
        
     </div>
@@ -78,7 +89,7 @@
         </div>
       </div>
       <div class="form-group"  class="row">
-        <div align="right" class="col-sm-4">
+        <div align="left" class="col-sm-4">
           <label style="font-style: bold;color: black;font-size: 15px;">Publication Name:</label>
           <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['publication_name']}}</font></p>
 
@@ -445,7 +456,36 @@
 
 <script type="text/javascript">
 
+$( ".btn-feature" ).click(function() {
+  $.ajax({
+    url: "/feature_change",
+    data: {
+      
+      
+      submit_check_1: "submit_check_1"
 
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      console.log(data);
+      alert("Status change");
+
+
+
+      window.location.href = "datesets";
+
+
+    //
+    //  $("#sub_category_admin").html(html);
+
+
+    }
+  })
+
+});
 $( ".approve_study" ).click(function() {
   
   ajax_study_approve_reject("1");
@@ -667,9 +707,20 @@ $( ".back_button" ).click(function() {
 
 <style type="text/css">
   
+/*  .btn-feature:hover {
+  background-color: RoyalBlue;
+  }
+  .btn-feature {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}*/
 
   
-}
+
 </style>
 
 

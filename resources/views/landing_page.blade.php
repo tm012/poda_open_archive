@@ -39,45 +39,90 @@
 			</div>
 
 			<main class="main-content">
-				<div class="fullwidth-block">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-3 col-sm-6">
-								<div class="feature">
-									<img src="images/icon-research-small.png" alt="" class="feature-image">
-									<h2 class="feature-title">Research</h2>
-									<p>Laborum et dolorum fuga harum quidem rerum facilis et expedita distinctio nam libero tempore.</p>
-									<a href="" class="button">Learn more</a>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="feature">
-									<img src="images/icon-medicine-small.png" alt="" class="feature-image">
-									<h2 class="feature-title">Medicice</h2>
-									<p>Laborum et dolorum fuga harum quidem rerum facilis et expedita distinctio nam libero tempore.</p>
-									<a href="" class="button">Learn more</a>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="feature">
-									<img src="images/icon-genetics-small.png" alt="" class="feature-image">
-									<h2 class="feature-title">Genetics</h2>
-									<p>Laborum et dolorum fuga harum quidem rerum facilis et expedita distinctio nam libero tempore.</p>
-									<a href="" class="button">Learn more</a>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="feature">
-									<img src="images/icon-energy-small.png" alt="" class="feature-image">
-									<h2 class="feature-title">Energy</h2>
-									<p>Laborum et dolorum fuga harum quidem rerum facilis et expedita distinctio nam libero tempore.</p>
-									<a href="" class="button">Learn more</a>
-								</div>
-							</div>
-						</div> <!-- .row -->
-					</div> <!-- .container -->
-				</div> <!-- .fullwidth-block -->
+				@if($featuredCount >0)
+					<div class="fullwidth-block">
+						<div class="container">
+							<div class="row">
 
+							 	@if($featuredCount == "1")
+							 		@foreach($featured_studies as $featured_study=>$value)
+							 			@php
+
+							 			$abstract_reduced = substr($value->study_description, 0, 250);
+							 			$abstract_reduced = $abstract_reduced.'....';
+
+							 			@endphp
+										<div class="col-sm-12" align="center">
+											<div class="feature">
+												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
+												<h2 class="feature-title">{{$value->study_name}}</h2>
+												<p>{{$abstract_reduced}}</p>
+												<button type="button" value="{{$value->study_id}}" class="btn btn-outline-info btn_featured_learn_more">LEARN MORE </button>
+											</div>
+										</div>						 				
+							 		@endforeach
+							 	@endif
+							 	@if($featuredCount == "2")
+							 		@foreach($featured_studies as $featured_study=>$value)
+							 			@php
+
+							 			$abstract_reduced = substr($value->study_description, 0, 200);
+							 			$abstract_reduced = $abstract_reduced.'....';
+
+							 			@endphp
+										<div class="col-sm-6" align="center">
+											<div class="feature">
+												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
+												<h2 class="feature-title">{{$value->study_name}}</h2>
+												<p>{{$abstract_reduced}}</p>
+												<button type="button" value="{{$value->study_id}}" class="btn btn-outline-info btn_featured_learn_more">LEARN MORE </button>
+											</div>
+										</div>						 				
+							 		@endforeach
+							 	@endif
+
+							 	@if($featuredCount == "3")
+							 		@foreach($featured_studies as $featured_study=>$value)
+							 			@php
+
+							 			$abstract_reduced = substr($value->study_description, 0, 150);
+							 			$abstract_reduced = $abstract_reduced.'....';
+
+							 			@endphp
+										<div class="col-sm-4" align="center">
+											<div class="feature">
+												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
+												<h3 class="feature-title">{{$value->study_name}}</h3>
+												<p>{{$abstract_reduced}}</p>
+												<button type="button" value="{{$value->study_id}}" class="btn btn-outline-info btn_featured_learn_more">LEARN MORE </button>
+											</div>
+										</div>						 				
+							 		@endforeach
+							 	@endif
+
+							 	@if($featuredCount > 3)
+							 		@foreach($featured_studies as $featured_study=>$value)
+							 			@php
+
+							 			$abstract_reduced = substr($value->study_description, 0, 100);
+							 			$abstract_reduced = $abstract_reduced.'....';
+
+							 			@endphp
+										<div class="col-sm-3" align="center">
+											<div class="feature">
+												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
+												<h3 >{{$value->study_name}}</h3>
+												<p>{{$abstract_reduced}}</p>
+												<button type="button" value="{{$value->study_id}}" class="btn btn-outline-info btn_featured_learn_more">LEARN MORE </button>
+											</div>
+										</div>						 				
+							 		@endforeach
+							 	@endif							 							 	
+
+							</div> <!-- .row -->
+						</div> <!-- .container -->
+					</div> <!-- .fullwidth-block -->
+				@endif	
 				<div class="fullwidth-block" data-bg-color="#edf2f4">
 					<div class="container">
 						<h2 class="section-title">Latest News</h2>
@@ -119,14 +164,16 @@
 								<p>Distinctio delectus consequuntur sed quod ipsum a, odio obcaecati neque, aliquam nostrum aliquid reprehenderit ad quae qui autem voluptate omnis quas Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime magnam amet obcaecati dolore omnis consectetur dignissimos iste cupiditate excepturi quae porro fugiat, nemo iure, minima. Fuga hic voluptate ratione, at.ullam.</p>
 							</div>
 							<div class="col-md-4">
-								<h2 class="section-title">Latest Studies</h2>
-								<ul class="arrow-list has-border">
-									<li><a href="#">Praesentium voluptatum deleniti atque dolores</a></li>
-									<li><a href="#">Corrupti quos et quas molestias excepturi sint</a></li>
-									<li><a href="#">Occaecati cupiditate non provident similique sunt</a></li>
-									<li><a href="#">Nam libero tempore, cum soluta nobis est eligendi</a></li>
-								</ul>
-								<a href="/welcome" class="button">Show more</a>
+								@if($latest_studies_count >0)
+									<h2 class="section-title">Latest Studies</h2>
+									<ul class="arrow-list has-border">
+										@foreach($latest_studies as $latest_study=>$value)
+											<li><a class ="bread_tags" data-value="{{$value->study_id}}"onclick='return check()' href="/datesets">{{$value->study_name}}</a></li>
+										@endforeach
+										
+									</ul>
+									<a href="/welcome" class="button">Show more</a>
+								@endif	
 							</div>
 						</div>
 					</div>
@@ -163,6 +210,97 @@
 	 	<script src="{{ asset('/js/theame_science_lab/plugins.js') }}"></script> -->
 @endsection	 	
 @section('page-script')	
+<script type="text/javascript">
+    //$(document).ready(function() {
+        $('.btn_featured_learn_more').click(function() {
+            //alert($(this).attr("value"));
+            ajax_call_go_to_dataset($(this).attr("value"));
+        });
+    //});
 
+    $(".bread_tags").click(function(){
+    	i=$(this).data("value");
+	    //alert(i);
+	    ajax_call_go_to_dataset_from_a_tag(i);
+	   // ajax_call_to_set_bread_crumb_path(i) ;
+	   // ajax_call_go_to_files(i,'1');
+	    
+	});
+
+
+	function ajax_call_go_to_dataset_from_a_tag(study_id) {
+	  var study_id = study_id;
+	  console.log(study_id);
+
+
+
+
+
+	  $.ajax({
+	    url: "/go_to_study_page",
+	    data: {
+	      study_id: study_id,
+	      submit_check_1: "submit_check_1"
+
+
+	    },
+	    type: 'GET',
+	    async: false,
+	    success: function (data) {
+	      console.log("Success");
+	      console.log(data);
+	      //window.location.href = "/datesets";
+
+
+	    //
+	    //  $("#sub_category_admin").html(html);
+
+
+	    }
+	  })
+
+
+
+
+	}
+
+
+	function ajax_call_go_to_dataset(study_id) {
+	  var study_id = study_id;
+	  console.log(study_id);
+
+
+
+
+
+	  $.ajax({
+	    url: "/go_to_study_page",
+	    data: {
+	      study_id: study_id,
+	      submit_check_1: "submit_check_1"
+
+
+	    },
+	    type: 'GET',
+	    async: false,
+	    success: function (data) {
+	      console.log("Success");
+	      console.log(data);
+	      window.location.href = "/datesets";
+
+
+	    //
+	    //  $("#sub_category_admin").html(html);
+
+
+	    }
+	  })
+
+
+
+
+	}
+
+</script>
 
 @endsection

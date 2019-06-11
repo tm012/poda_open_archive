@@ -106,3 +106,6 @@ Route::get('/delete_task_name', 'StudyController@delete_task_name')->name("delet
 //         return Response::download($path);
 //     }
 // });
+
+Route::get('/feature_change', 'AdminController@feature_change')->name("feature_change")->middleware('admin_check');
+

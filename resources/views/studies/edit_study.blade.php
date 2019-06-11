@@ -19,7 +19,7 @@
     </div>
    
     <div class="form-group">
-      <textarea class="form-control" onkeyup="countChar(this)" maxlength="502" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
+      <textarea class="form-control" onkeyup="countChar(this)" maxlength="5000" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
       <div id="charNum"> </div>
    
     </div>
@@ -130,10 +130,10 @@
           
       function countChar(val) {
         var len = val.value.length;
-        if (len >= 500) {
-          val.value = val.value.substring(0, 500);
+        if (len >= 5000) {
+          val.value = val.value.substring(0, 5000);
         } else {
-          $('#charNum').text((500 - len)+' remaining number of letters' );
+          $('#charNum').text((5000 - len)+' remaining number of letters' );
 
         }
       };

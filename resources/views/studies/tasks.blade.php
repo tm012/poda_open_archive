@@ -26,7 +26,7 @@
     <table id="resultTable" class="table table-striped">
       <thead>
         <tr>
-		    <th>Task Name (Type to Edit)</th>
+		    <th>Task Name (Click & Type to Edit)</th>
 		    <th>Edit</th>
 		    <th>Delete</th>
 	

@@ -278,7 +278,44 @@ class StudyController extends Controller
     }
 
     public function landing_page(){
-      return view('landing_page');
+
+
+
+
+      $featured_list = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->where('featured',  "1")->get();
+      $featuredCount = $featured_list->count();
+      if ($featuredCount == 1) {
+        # code...
+        $featured_studies = $featured_list->random(1);
+      }
+      elseif ($featuredCount == 2) {
+        # code...
+        $featured_studies = $featured_list->random(2);
+      }
+
+      elseif ($featuredCount == 3) {
+        # code...
+        $featured_studies = $featured_list->random(3);
+      }
+      elseif ($featuredCount > 3) {
+        # code...
+        $featured_studies = $featured_list->random(4);
+      }
+      else{
+        $featured_studies = [];
+      }
+
+      $latest_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->orderBy('created_at', 'desc')->limit(4)->get();
+      $latest_studies_count = $latest_studies->count();
+
+
+      // $featured_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->where('featured',  "1")->get()->random(4);;
+
+      // dd($featured_studies[0]["study_id"]);
+
+      return view('landing_page', ["featuredCount"=>$featuredCount,"featured_studies"=>$featured_studies,"latest_studies"=>$latest_studies,"latest_studies_count"=>$latest_studies_count]);
+
+      // return view('landing_page');
 
     }
 
