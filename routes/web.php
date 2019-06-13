@@ -108,4 +108,20 @@ Route::get('/delete_task_name', 'StudyController@delete_task_name')->name("delet
 // });
 
 Route::get('/feature_change', 'AdminController@feature_change')->name("feature_change")->middleware('admin_check');
+Route::get('admin/add_news', 'AdminController@add_news')->name("add_news")->middleware('admin_check');
+// Route::get('admin/edit_news', 'AdminController@edit_news')->name("edit_news")->middleware('admin_check');
+Route::post('/post_news', 'AdminController@post_news')->name("post_news")->middleware('admin_check');
+Route::get('admin/delete_news', 'AdminController@delete_news')->name("delete_news")->middleware('admin_check');
+Route::get('admin/news_list', 'AdminController@news_list')->name("news_list")->middleware('admin_check');
+
+
+$router->get('/admin/edit_news/{news_id}',[
+    'uses' => 'AdminController@edit_news',
+    'as'   => 'switch_edit_news'
+]);
+
+Route::post('/post_edit_news', 'AdminController@post_edit_news')->name("post_edit_news")->middleware('admin_check');
+
+
+
 

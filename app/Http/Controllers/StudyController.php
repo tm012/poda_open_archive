@@ -321,7 +321,21 @@ class StudyController extends Controller
 
     public function welcome()
     {    
-      
+      // $path = 'news_images/Psychology.jpg';
+      //         $s3 = \Storage::disk('s3');
+      //   $client = $s3->getDriver()->getAdapter()->getClient();
+      //   $expiry = "+10000 minutes";
+
+      //   $command = $client->getCommand('GetObject', [
+      //       'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+      //       'Key'    => $path
+      //   ]);
+
+      //   $request_tm = $client->createPresignedRequest($command, $expiry);
+      //   $path_s3 = (string) $request_tm->getUri();
+       //  //
+       // <!--   <img src="{!! url($path_s3 ) !!}" alt="Smiley face" width="42" height="42"> -->
+      // https://stackoverflow.com/questions/39095691/how-to-display-image-from-aws-s3-in-blade-laravel-5-2
 
       // $file_n = Storage::disk('public')->path('sample_csv_test.csv');
 

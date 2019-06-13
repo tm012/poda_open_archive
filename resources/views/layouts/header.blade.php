@@ -53,6 +53,7 @@
               
                   @if(Auth::user()->admin_status =='1') 
                     <a style="text-decoration:none" href="{{ url('studies/approval_requests') }}">Approval Requests</a>
+                    <a style="text-decoration:none" href="{{ url('admin/news_list') }}">News</a>
 
                     <a style="text-decoration:none" href="{{ url('studies/tasks') }}">Tasks</a>
                   @endif
