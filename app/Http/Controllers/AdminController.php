@@ -56,6 +56,12 @@ class AdminController extends Controller
   {
      return view('admin/add_news');
   }
+  public function news_details($news_id)
+  { 
+     $news = DB::table('news')->where('id', $news_id)->get();
+     return view('news_details', ["news"=>$news]);
+  }
+
 
   public function news_list(Request $request)
   {
@@ -63,7 +69,12 @@ class AdminController extends Controller
     
     return view('admin/news_list', ["news"=>$news]);
   }  
-
+  public function news(Request $request)
+  {
+    $news = DB::table('news')->paginate(10);
+    
+    return view('news', ["news"=>$news]);
+  }  
   public function edit_news($news_id){
        //do stuffs here with $prisw and $secsw
     //dd($news_id);

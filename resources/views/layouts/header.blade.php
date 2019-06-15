@@ -12,7 +12,8 @@
       <nav class="main-navigation">
         <button class="menu-toggle"><i class="fa fa-bars"></i></button>
         <ul class="menu">
-          <li class="home menu-item "><a href="/"><img src="../images/home-icon.png" alt="Home"></a></li>
+       
+          <li class="home menu-item "><a href="/"><img src="<?= asset('images/home-icon.png') ?>" alt="Home"></a></li>
          
 <!--           <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">PEBL</a>
            <div class="dropdown-content">

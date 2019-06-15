@@ -122,6 +122,12 @@ $router->get('/admin/edit_news/{news_id}',[
 
 Route::post('/post_edit_news', 'AdminController@post_edit_news')->name("post_edit_news")->middleware('admin_check');
 
+Route::get('news', 'AdminController@news')->name("news_list_for_all");
+
+$router->get('/news_details/{news_id}',[
+    'uses' => 'AdminController@news_details',
+    'as'   => 'switch_news_details'
+]);
 
 
 

@@ -19,6 +19,7 @@ use App\search_tags;
 use DB;
 use App\file_upload_queue;
 use File;
+use App\news;
 use App\tasks;
 
 
@@ -308,12 +309,14 @@ class StudyController extends Controller
       $latest_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->orderBy('created_at', 'desc')->limit(4)->get();
       $latest_studies_count = $latest_studies->count();
 
+      $latest_news = news::orderBy('created_at', 'desc')->limit(3)->get();
+      $latest_news_studies_count = $latest_news->count();
 
       // $featured_studies = Studies::where('archived_status',  "0")->where('admin_approved',  "1")->where('featured',  "1")->get()->random(4);;
 
       // dd($featured_studies[0]["study_id"]);
 
-      return view('landing_page', ["featuredCount"=>$featuredCount,"featured_studies"=>$featured_studies,"latest_studies"=>$latest_studies,"latest_studies_count"=>$latest_studies_count]);
+      return view('landing_page', ["featuredCount"=>$featuredCount,"featured_studies"=>$featured_studies,"latest_studies"=>$latest_studies,"latest_studies_count"=>$latest_studies_count,"latest_news"=>$latest_news,"latest_news_studies_count"=>$latest_news_studies_count]);
 
       // return view('landing_page');
 

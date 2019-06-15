@@ -8,30 +8,30 @@
 
 			<div class="hero">
 				<ul class="slides">
-					<li data-bg-image="images/slider-1.jpg">
+					<li data-bg-image="images/DSC_5517.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 class="slide-title">LaboreLabore et dolore magna</h2>
-								<p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
-								<a href="#" class="button">See details</a>
+								<h2 style="font-family: Cursive!important;" class="slide-title">Keep your PEBL Data flowing</h2>
+								<a href="/welcome" class="button">go with the flow</a>
 							</div>
 						</div>
 					</li>
-					<li data-bg-image="images/slider-2.jpg">
+					<li data-bg-image="images/DSC_7153.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 class="slide-title">LaboreLabore et dolore magna</h2>
-								<p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
-								<a href="#" class="button">See details</a>
+								<h2 style="font-family: Cursive!important;" class="slide-title"> Your donation let's us build</h2>
+								
+								<a href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">let's take a look</a>
+							
+								
 							</div>
 						</div>
 					</li>
-					<li data-bg-image="images/slider-3.jpg">
+					<li data-bg-image="images/DSC_5547.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 class="slide-title">LaboreLabore et dolore magna</h2>
-								<p>Enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit.</p>
-								<a href="#" class="button">See details</a>
+								<h2 style="font-family: Cursive!important;" class="slide-title">Register here for accessing large array of data</h2>
+								<a href="/register" class="button">let's roll</a>
 							</div>
 						</div>
 					</li>
@@ -52,8 +52,8 @@
 							 			$abstract_reduced = $abstract_reduced.'....';
 
 							 			@endphp
-										<div class="col-sm-12" align="center">
-											<div class="feature">
+										<div  class="col-sm-12" align="center">
+											<div style="height: 300px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -71,7 +71,7 @@
 
 							 			@endphp
 										<div class="col-sm-6" align="center">
-											<div class="feature">
+											<div style="height: 300px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -90,7 +90,7 @@
 
 							 			@endphp
 										<div class="col-sm-4" align="center">
-											<div class="feature">
+											<div style="height: 300px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 class="feature-title">{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
@@ -109,7 +109,7 @@
 
 							 			@endphp
 										<div class="col-sm-3" align="center">
-											<div class="feature">
+											<div style="height: 300px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 >{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
@@ -123,45 +123,242 @@
 						</div> <!-- .container -->
 					</div> <!-- .fullwidth-block -->
 				@endif	
-				<div class="fullwidth-block" data-bg-color="#edf2f4">
-					<div class="container">
-						<h2 class="section-title">Latest News</h2>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="post">
-									<figure class="featured-image"><img src="images/news-1.jpg" alt=""></figure>
-									<h2 class="entry-title"><a href="">Magni dolores rationale</a></h2>
-									<small class="date">2 oct 2014</small>
-									<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...</p>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="post">
-									<figure class="featured-image"><img src="images/news-2.jpg" alt=""></figure>
-									<h2 class="entry-title"><a href="">Perspiciatis unde omnus</a></h2>
-									<small class="date">2 oct 2014</small>
-									<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...</p>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="post">
-									<figure class="featured-image"><img src="images/news-3.jpg" alt=""></figure>
-									<h2 class="entry-title"><a href="">Voluptatem laundantium  totam</a></h2>
-									<small class="date">2 oct 2014</small>
-									<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...</p>
-								</div>
-							</div>
-						</div> <!-- .row -->
-					</div> <!-- .container -->
-				</div> <!-- .fullwidth-block -->
+				@if($latest_news_studies_count >0)
+					<div class="fullwidth-block" data-bg-color="#edf2f4">
+						<div class="container">
+							<h2 class="section-title">Latest News</h2>
+							<div class="row">
+								@if($latest_news_studies_count == "1")
+									<div class="col-md-4">
+										
+									</div>
+									<div class="col-md-4">
+										@foreach($latest_news as $latest_new=>$value)
+										
+								 			@php
 
+								 				if($value->news_image_path_storage !="")
+								 				{
+								 					$path = $value->news_image_path_storage;
+											        $s3 = \Storage::disk('s3');
+											        $client = $s3->getDriver()->getAdapter()->getClient();
+											        $expiry = "+10000 minutes";
+
+											        $command = $client->getCommand('GetObject', [
+											            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+											            'Key'    => $path
+											        ]);
+										            $request_tm = $client->createPresignedRequest($command, $expiry);
+    												$image_url = (string) $request_tm->getUri();
+								 				}
+								 				else{
+								 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+								 				}
+								 				$abstract_reduced = substr($value->news_description, 0, 250);
+							 					$abstract_reduced = $abstract_reduced.'....';				
+								 			@endphp
+											<div class="post">
+												<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+												<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$value->id]) !!}">{{$value->news_title}}</a></h2>
+												<small class="date">{{$value->created_at}}</small>
+												<p>{{$abstract_reduced}}</p>
+											</div>
+										@endforeach
+									</div>
+									<div class="col-md-4">
+										
+									</div>
+								@endif
+								@if($latest_news_studies_count == "2")
+									<div class="col-md-2">
+
+									</div>
+									<div class="col-md-4">
+							 			@php
+
+							 				if($latest_news[0]["news_image_path_storage"] !="")
+							 				{
+							 					$path = $latest_news[0]["news_image_path_storage"];
+										        $s3 = \Storage::disk('s3');
+										        $client = $s3->getDriver()->getAdapter()->getClient();
+										        $expiry = "+10000 minutes";
+
+										        $command = $client->getCommand('GetObject', [
+										            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+										            'Key'    => $path
+										        ]);
+									            $request_tm = $client->createPresignedRequest($command, $expiry);
+												$image_url = (string) $request_tm->getUri();
+							 				}
+							 				else{
+							 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+							 				}
+							 				$abstract_reduced = substr($latest_news[0]["news_description"], 0, 250);
+						 					$abstract_reduced = $abstract_reduced.'....';
+						 					$news_id = 	$latest_news[0]["id"];			
+							 			@endphp
+										<div class="post">
+											<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+											<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$news_id ]) !!}">{{$latest_news[0]["news_title"]}}</a></h2>
+											<small class="date">{{$latest_news[0]["created_at"]}}</small>
+											<p>{{$abstract_reduced}}</p>
+										</div>										
+									</div>
+
+									<div class="col-md-4">
+							 			@php
+
+							 				if($latest_news[1]["news_image_path_storage"] !="")
+							 				{
+							 					$path = $latest_news[1]["news_image_path_storage"];
+										        $s3 = \Storage::disk('s3');
+										        $client = $s3->getDriver()->getAdapter()->getClient();
+										        $expiry = "+10000 minutes";
+
+										        $command = $client->getCommand('GetObject', [
+										            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+										            'Key'    => $path
+										        ]);
+									            $request_tm = $client->createPresignedRequest($command, $expiry);
+												$image_url = (string) $request_tm->getUri();
+							 				}
+							 				else{
+							 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+							 				}
+							 				$abstract_reduced = substr($latest_news[1]["news_description"], 0, 250);
+						 					$abstract_reduced = $abstract_reduced.'....';	
+						 					$news_id = 	$latest_news[1]["id"];				
+							 			@endphp
+										<div class="post">
+											<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+											<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$news_id]) !!}">{{$latest_news[1]["news_title"]}}</a></h2>
+											<small class="date">{{$latest_news[1]["created_at"]}}</small>
+											<p>{{$abstract_reduced}}</p>
+										</div>										
+									</div>
+									<div class="col-md-2">
+
+									</div>
+								@endif
+								@if($latest_news_studies_count == "3")
+									
+									<div class="col-md-4">
+							 			@php
+
+							 				if($latest_news[0]["news_image_path_storage"] !="")
+							 				{
+							 					$path = $latest_news[0]["news_image_path_storage"];
+										        $s3 = \Storage::disk('s3');
+										        $client = $s3->getDriver()->getAdapter()->getClient();
+										        $expiry = "+10000 minutes";
+
+										        $command = $client->getCommand('GetObject', [
+										            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+										            'Key'    => $path
+										        ]);
+									            $request_tm = $client->createPresignedRequest($command, $expiry);
+												$image_url = (string) $request_tm->getUri();
+							 				}
+							 				else{
+							 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+							 				}
+							 				$abstract_reduced = substr($latest_news[0]["news_description"], 0, 250);
+						 					$abstract_reduced = $abstract_reduced.'....';	
+						 					$news_id = 	$latest_news[0]["id"];			
+							 			@endphp
+										<div class="post">
+											<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+											<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$news_id]) !!}">{{$latest_news[0]["news_title"]}}</a></h2>
+											<small class="date">{{$latest_news[0]["created_at"]}}</small>
+											<p>{{$abstract_reduced}}</p>
+										</div>										
+									</div>
+
+									<div class="col-md-4">
+							 			@php
+
+							 				if($latest_news[1]["news_image_path_storage"] !="")
+							 				{
+							 					$path = $latest_news[1]["news_image_path_storage"];
+										        $s3 = \Storage::disk('s3');
+										        $client = $s3->getDriver()->getAdapter()->getClient();
+										        $expiry = "+10000 minutes";
+
+										        $command = $client->getCommand('GetObject', [
+										            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+										            'Key'    => $path
+										        ]);
+									            $request_tm = $client->createPresignedRequest($command, $expiry);
+												$image_url = (string) $request_tm->getUri();
+							 				}
+							 				else{
+							 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+							 				}
+							 				$abstract_reduced = substr($latest_news[1]["news_description"], 0, 250);
+						 					$abstract_reduced = $abstract_reduced.'....';
+						 					$news_id = 	$latest_news[1]["id"];				
+							 			@endphp
+										<div class="post">
+											<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+											<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$news_id]) !!}">{{$latest_news[1]["news_title"]}}</a></h2>
+											<small class="date">{{$latest_news[1]["created_at"]}}</small>
+											<p>{{$abstract_reduced}}</p>
+										</div>										
+									</div>
+									<div class="col-md-4">
+							 			@php
+
+							 				if($latest_news[2]["news_image_path_storage"] !="")
+							 				{
+							 					$path = $latest_news[2]["news_image_path_storage"];
+										        $s3 = \Storage::disk('s3');
+										        $client = $s3->getDriver()->getAdapter()->getClient();
+										        $expiry = "+10000 minutes";
+
+										        $command = $client->getCommand('GetObject', [
+										            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+										            'Key'    => $path
+										        ]);
+									            $request_tm = $client->createPresignedRequest($command, $expiry);
+												$image_url = (string) $request_tm->getUri();
+							 				}
+							 				else{
+							 					$image_url= "http://icc.mtu.edu/wp-content/uploads/2016/01/ICC_CyberHuman_Dark-300x300.jpg";
+							 				}
+							 				$abstract_reduced = substr($latest_news[2]["news_description"], 0, 250);
+						 					$abstract_reduced = $abstract_reduced.'....';	
+						 					$news_id = 	$latest_news[2]["id"];			
+							 			@endphp
+										<div class="post">
+											<figure class="featured-image"><img style="height: 230px!important;" src="{!! url($image_url ) !!}" alt=""></figure>
+											<h2 class="entry-title"><a href="{!! route('switch_news_details', ['news_id'=>$news_id]) !!}">{{$latest_news[2]["news_title"]}}</a></h2>
+											<small class="date">{{$latest_news[2]["created_at"]}}</small>
+											<p>{{$abstract_reduced}}</p>
+										</div>										
+									</div>
+								@endif
+							</div> <!-- .row -->
+							<div align="right"><a href="/news" class="button">Show more</a></div>
+						</div> <!-- .container -->
+					</div> <!-- .fullwidth-block -->
+
+					
+				@endif
 				<div class="fullwidth-block">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-8">
 								<h2 class="section-title">Our mission and vision</h2>
-								<p>Consequuntur minima, delectus quia labore sapiente maiores illo enim numquam sint? Molestias odio itaque, recusandae ut quae fuga ea tempore facere facilis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi cupiditate repellat velit quo, fugiat dolores eum corrupti commodi? Deserunt, adipisci sunt voluptas aliquid aliquam eos. Perspiciatis, similique atque deserunt nam.</p>
-								<p>Distinctio delectus consequuntur sed quod ipsum a, odio obcaecati neque, aliquam nostrum aliquid reprehenderit ad quae qui autem voluptate omnis quas Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime magnam amet obcaecati dolore omnis consectetur dignissimos iste cupiditate excepturi quae porro fugiat, nemo iure, minima. Fuga hic voluptate ratione, at.ullam.</p>
+								<p>PEBL Online Data Archive (PODA) is an online data archive that allows researchers to share
+results of their behavioral tests with other researchers of the field. The data archive is built
+mainly for data produced on PEBL (Psychology Experiment Building Language) which is a free,
+open-source software system, used in running different types of behavioral experiments. This
+search based online archive will help researchers to find appropriate data from the archive for
+their research. The main goals for this online archive is to reduce the timing for data collection
+in a research project and ultimately removing the need for running experiments for data
+collection which may have already run by others. This will save both resource and time in a
+research project. As the archive grows, researchers will be able to browse on a large array of
+data and it will help us to preserve data which may get lost with time otherwise.</p>
 							</div>
 							<div class="col-md-4">
 								@if($latest_studies_count >0)

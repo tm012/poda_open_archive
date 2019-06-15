@@ -1,6 +1,7 @@
 @extends('default_contents')
 @section('content')
-
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
  <div id = "sub_category_admin">
 
 

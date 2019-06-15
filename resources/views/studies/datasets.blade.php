@@ -21,10 +21,10 @@
   <div class="row">
     <div align="right" class="col-sm-12">
       @if(Auth::check())
-       <a style="text-decoration:none; color:black;"   href="studies/my_studies">{{ $study_name}}/</a>
+       <a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
       @else
 
-      <a style="text-decoration:none; color:black;"   href="/welcome">{{ $study_name}}/</a>
+      <a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
       @endif
 
 </div></div></div>

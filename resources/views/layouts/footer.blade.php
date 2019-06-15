@@ -16,8 +16,8 @@
 								<h3 class="widget-title">Guidelines</h3>
 
 								<ul class="arrow-list" ">
-									<li><a style="text-decoration:none; color:black;" href="">Help</a></li> 
-									<li><a style="text-decoration:none;color:black;" href="">FAQ</a></li>
+									<!-- <li><a style="text-decoration:none; color:black;" href="">Help</a></li> 
+									<li><a style="text-decoration:none;color:black;" href="">FAQ</a></li> -->
 									<li><a style="text-decoration:none; color:black;" href="">Quick-Start Guide</a></li> 
 									<li><a style="text-decoration:none; color:black;" href="">Licenses</a></li>
 									<li> <a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/" target="_blank">Donate</a></li>
@@ -30,8 +30,8 @@
 								<h3 class="widget-title">Partners</h3>
 								<ul class="arrow-list">
 									<li><a style="text-decoration:none; color:black;" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a></li> 
-									<li><a style="text-decoration:none; color:black;" href="https://icc.edu/academics/catalog/academic-departments/arts-and-behavioral-sciences/psychology/">Illinois Central College</a></li>
-									<li><a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/">Superior Ideas </a></li> 
+									<li><a style="text-decoration:none; color:black;" href="http://icc.mtu.edu/hcc/">ICC</a></li>
+									<li><a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas </a></li> 
 								
 							
 								</ul>
