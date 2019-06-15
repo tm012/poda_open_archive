@@ -730,6 +730,7 @@ class StudyController extends Controller
     if (substr(rtrim(Session::get("current_path")), -1) == "/") {
         // Do stuff
 
+
           $modified_path = substr(Session::get("current_path"), 0, strlen(Session::get("current_path"))-1);
         Session::put("current_path",$modified_path);
 
@@ -737,6 +738,7 @@ class StudyController extends Controller
 
       }
       $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->paginate(10);
+      
 
 
       if (Auth::check())
