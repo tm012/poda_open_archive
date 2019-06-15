@@ -593,7 +593,7 @@ class StudyController extends Controller
                   $data_mine = "0";
             }
 
-            $tasks = DB::table('tasks')->get();
+            $tasks = DB::table('tasks')->orderBy('task_name')->get();
 
 
 

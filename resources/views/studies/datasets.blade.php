@@ -422,7 +422,7 @@
 
 
         <div align="left" class="form-group">
-          <label for="l_studyname">Search Tag(s)</label>
+          <label for="l_studyname">Keywords(s)</label>
        
         </div>
 
