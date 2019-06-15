@@ -19,7 +19,7 @@
 					<li data-bg-image="images/DSC_7153.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important;" class="slide-title"> Your donation let's us build</h2>
+								<h2 style="font-family: Cursive!important;" class="slide-title"> Your donation help us build</h2>
 								
 								<a href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">let's take a look</a>
 							
