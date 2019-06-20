@@ -7,27 +7,13 @@
       <br> <br><br> <br> 
  <div class="container">
 
-<div class="row">
-
-  @foreach($news as $service=>$value)
-
-  <div class="col-md-6 col-lg-4">
-    <div class="product is-gray">
-      <div class="image d-flex align-items-center justify-content-center">
-        <div class="ribbon ribbon-primary text-uppercase"></div><img src="" alt="product" class="img-fluid">
-        <div class="hover-overlay d-flex align-items-center justify-content-center">
-          <div class="CTA d-flex align-items-center justify-content-center"><a href="" class="visit-product active"><i class="fa fa-gavel"></i></a></div>
-
-          <!--    <a href="#" data-toggle="modal" data-target="#exampleModal" class="quick-view"><i class="fa fa-arrows-alt"></i></a> -->
-        </div>
-      </div>
-      <div class="title"><small class="text-muted">{{$value->news_title}}</small><a>
-      </a></div>
-    </div>
-  </div>
-
-  @endforeach
-</div>
+  <div class="row">
+    <div align="right" class="col-sm-12">
+		@if(Auth::check())
+		 <a   href="{{ url('admin/add_news') }}">Add News</a>
+		@endif
+	</div>
+		</div>
     <table id="resultTable" class="table table-striped">
       <thead>
         <tr>
