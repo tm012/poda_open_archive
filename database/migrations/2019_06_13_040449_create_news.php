@@ -18,10 +18,10 @@ class CreateNews extends Migration
         Schema::create('news', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('news_title');
-            $table->text('news_description');
-            $table->string('news_author');
-            $table->string('news_image_path_storage');
+            $table->string('news_title')->nullable($value = true);
+            $table->text('news_description')->nullable($value = true);
+            $table->string('news_author')->nullable($value = true);
+            $table->string('news_image_path_storage')->nullable($value = true);
 
             $table->timestamps();
         });        
