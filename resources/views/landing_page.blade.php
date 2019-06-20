@@ -53,7 +53,7 @@
 
 							 			@endphp
 										<div  class="col-sm-12" align="center">
-											<div style="height: 300px;" class="feature">
+											<div style="height: 350px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -71,7 +71,7 @@
 
 							 			@endphp
 										<div class="col-sm-6" align="center">
-											<div style="height: 300px;" class="feature">
+											<div style="height: 350px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -90,7 +90,7 @@
 
 							 			@endphp
 										<div class="col-sm-4" align="center">
-											<div style="height: 300px;" class="feature">
+											<div style="height: 350px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 class="feature-title">{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
@@ -109,7 +109,7 @@
 
 							 			@endphp
 										<div class="col-sm-3" align="center">
-											<div style="height: 300px;" class="feature">
+											<div style="height: 350px;" class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 >{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
