@@ -21,6 +21,8 @@ use App\file_upload_queue;
 use File;
 use App\news;
 use App\tasks;
+use App\Licence;
+
 
 
 class StudyController extends Controller
@@ -162,9 +164,10 @@ class StudyController extends Controller
     public function create_study()
     {
         $microtime = "S-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
+        $licences = Licence::get();
 
         //return response()->json(['success'=>$imageName]);
-        return view('studies/create_study', ["studyid"=>$microtime]);
+        return view('studies/create_study', ["studyid"=>$microtime,"licences"=>$licences]);
     }
     public function tasks()
     {
@@ -246,6 +249,7 @@ class StudyController extends Controller
 
         $study_content = Studies::where('study_id',  Session::get("current_study_id"))->where('archived_status',  "0")->get();
         //dd( $study_content);
+        $licences = Licence::get();
 
         $microtime = "S-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
 
@@ -253,7 +257,7 @@ class StudyController extends Controller
         // $search_tags = "Amsterdam1,Washington1,Sydney1,Beijing1,Cairo1";
 
         //return response()->json(['success'=>$imageName]);
-        return view('studies/edit_study', ["studyid"=>$microtime,"study_content"=>$study_content]);
+        return view('studies/edit_study', ["studyid"=>$microtime,"study_content"=>$study_content,"licences"=>$licences]);
     }
 
 

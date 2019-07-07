@@ -16,6 +16,11 @@
 
   #$study_id = substr($string_upto_study_id, strrpos($string_upto_study_id, '/') + 1);
   $study_name = DB::table('studies')->where('study_id', '=', Session::get("current_study_id"))->value('study_name');
+
+
+  $licence_url = DB::table('licences')->where('licence_name', '=', $study_content[0]["study_licence"])->value('licence_url');
+
+
 @endphp
 <div align="center" class="container">
   <div class="row">
@@ -102,12 +107,19 @@
         </div>
 
       </div>  
-      <div class="form-group" align="center" class="row">
-        <div class="col-sm-12">
+      <div class="form-group" align="left" class="row">
+        <div class="col-sm-4">
+          <label style="font-style: bold;color: black;font-size: 15px;">Licence:</label>
+          <br>
+          <a href="{{$licence_url}}"  style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['study_licence']}}</font></a>
+
+        </div>
+        <div  class="col-sm-4"></div>
+        <div class="col-sm-4">
           <label style="font-style: bold;color: black;font-size: 15px;">Authors:</label>
           <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['authors']}}</font></p>
 
-        </div>
+        </div>        
 
 
       </div> 

@@ -25,7 +25,25 @@
     </div>
     <div class="form-group">
       <label for="l_studyname">Study Licence</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" value="{{$study_content[0]['study_licence']}}" placeholder="Enter Study Licence">
+      <!-- <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" value="{{$study_content[0]['study_licence']}}" placeholder="Enter Study Licence"> -->
+          <select id="studylicence" class="form-control" name="study_licence"">
+             
+           <!--  <option>Select Licence</option> -->
+              
+                       
+              @foreach ($licences as $key => $value)
+                  @if($study_content[0]['study_licence'] == $value->licence_name )
+                      <option value="{{$value->licence_name}}" selected >{{$value->licence_name}}</option>
+                  @else
+                       <option value="{{$value->licence_name}}">{{$value->licence_name}}</option>
+                  @endif
+               
+                 
+                
+              @endforeach
+              
+          </select>
+
     </div>
 
      <div class="form-group">

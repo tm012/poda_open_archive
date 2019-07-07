@@ -26,7 +26,21 @@
     </div>
     <div class="form-group">
       <label for="l_studyname">Study Licence</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" placeholder="Enter Study Licence">
+      <!-- <input type="text" class="form-control style_width" autocomplete="off" id="studylicence" name="study_licence" placeholder="Enter Study Licence">
+
+ -->
+          <select id="studylicence" class="form-control" name="study_licence"">
+             
+           <!--  <option>Select Licence</option> -->
+              
+                       
+              @foreach ($licences as $key => $value)
+               
+                  <option value="{{$value->licence_name}}">{{$value->licence_name}}</option>
+                
+              @endforeach
+              
+          </select>
     </div>
 
      <div class="form-group">

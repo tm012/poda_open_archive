@@ -1077,7 +1077,7 @@ class FileUploadController extends Controller
 
                           if (Datasets::where('study_id', '=', $study_id)->where('dataset_name', '=', $filename_tm)->exists()) {
                              // user found
-                              DB::table('datasets')->where('id',  $dataset_id )->delete();
+                              //DB::table('datasets')->where('id',  $dataset_id )->delete();
                           }
                            #DB::table('datasets')->where('id',  $dataset_id )->delete();
                         }
