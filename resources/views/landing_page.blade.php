@@ -11,7 +11,7 @@
 					<li data-bg-image="images/DSC_5517.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important;" class="slide-title">Keep your PEBL Data flowing</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Keep your PEBL Data flowing</h2>
 								<a href="/welcome" class="button">go with the flow</a>
 							</div>
 						</div>
@@ -19,7 +19,7 @@
 					<li data-bg-image="images/DSC_7153.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important;" class="slide-title"> Your donation help us build</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title"> Your donation help us build</h2>
 								
 								<a href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">let's take a look</a>
 							
@@ -30,7 +30,7 @@
 					<li data-bg-image="images/DSC_5547.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important;" class="slide-title">Register here for accessing large array of data</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Register here for accessing large array of data</h2>
 								<a href="/register" class="button">let's roll</a>
 							</div>
 						</div>
