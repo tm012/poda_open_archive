@@ -19,7 +19,7 @@
 					<li data-bg-image="images/DSC_7153.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important; color:white;" class="slide-title"> Your Donation Help Us Build</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title"> Your Donation Will Help Us Build</h2>
 								
 								<a style="text-decoration:none;" href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">Let's Take A Look</a>
 							
@@ -30,7 +30,7 @@
 					<li data-bg-image="images/DSC_5547.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Register Here For Accessing Large Aarray Of Data</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Register Here For Accessing Large Array Of Data</h2>
 								<a style="text-decoration:none;" href="/register" class="button">Let's Roll</a>
 							</div>
 						</div>
@@ -338,7 +338,7 @@
 									</div>
 								@endif
 							</div> <!-- .row -->
-							<div align="right"><a href="/news" class="button">Show more</a></div>
+							<div align="right"><a href="/news" style="text-decoration:none;" class="button">Show more</a></div>
 						</div> <!-- .container -->
 					</div> <!-- .fullwidth-block -->
 
@@ -369,7 +369,7 @@ data and it will help us to preserve data which may get lost with time otherwise
 										@endforeach
 										
 									</ul>
-									<a href="/welcome" class="button">Show more</a>
+									<a href="/welcome" style="text-decoration:none;" class="button">Show more</a>
 								@endif	
 							</div>
 						</div>
