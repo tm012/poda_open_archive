@@ -145,8 +145,9 @@ $array_basenames = array_reverse($array_basenames);
             }
           @endphp
           @if($key_exists == "1")
-
-            <a href="/smart_search"> <button  type="button" class=" btn btn-outline-info smart_search_cls">Smart Search</button></a>
+            @if(Auth::check())
+              <a href="/smart_search"> <button  type="button" class=" btn btn-outline-info smart_search_cls">Smart Search</button></a>
+            @endif
           @endif
         @endif
 
