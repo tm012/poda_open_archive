@@ -130,9 +130,10 @@ $array_basenames = array_reverse($array_basenames);
 
 
        <!--   <a href=' {{ $total = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', Session::get("current_dataset_name"))->value('dataset_url')}}'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a> -->
+        @if(Auth::check())
 
           <a href='/zipcreate'><button    type="button" class="done_btn btn btn btn-link">Download Dataset as Zip</button></a>
-
+        @endif
        
 
           @php
