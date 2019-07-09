@@ -11,17 +11,17 @@
 					<li data-bg-image="images/DSC_5517.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Keep your PEBL Data flowing</h2>
-								<a href="/welcome" class="button">go with the flow</a>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Keep Your PEBL Data Flowing</h2>
+								<a style="text-decoration:none;" href="/welcome" class="button">Go With The Flow</a>
 							</div>
 						</div>
 					</li>
 					<li data-bg-image="images/DSC_7153.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important; color:white;" class="slide-title"> Your donation help us build</h2>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title"> Your Donation Help Us Build</h2>
 								
-								<a href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">let's take a look</a>
+								<a style="text-decoration:none;" href="https://www.superiorideas.org/projects/open-source-psychology-software" class="button">Let's Take A Look</a>
 							
 								
 							</div>
@@ -30,8 +30,8 @@
 					<li data-bg-image="images/DSC_5547.JPG">
 						<div class="container">
 							<div class="slide-content">
-								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Register here for accessing large array of data</h2>
-								<a href="/register" class="button">let's roll</a>
+								<h2 style="font-family: Cursive!important; color:white;" class="slide-title">Register Here For Accessing Large Aarray Of Data</h2>
+								<a style="text-decoration:none;" href="/register" class="button">Let's Roll</a>
 							</div>
 						</div>
 					</li>
