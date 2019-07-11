@@ -86,6 +86,7 @@
         <p style="font-family: 'Lucida Console';"><font size="6">{{$study_content[0]['study_name']}}</font></p>
 
       </div>
+    </div>
       <div class="form-group" align="left" class="row">
         <div class="col-sm-12">
           <label style="font-style: bold;color: black;font-size: 15px;">Abstract:</label>

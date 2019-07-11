@@ -153,10 +153,20 @@
 
 
   $(document).ready(function () {
+    //alert('hii');
 
 
      $.datetimepicker.setLocale('en');
-      $('#datetimepicker').datetimepicker();
+           $('#datetimepicker').datepicker({
+            'format': 'dd-mm-yy'
+           });
+      //     $('#datetimepicker').datetimepicker('destroy');
+      // $('#datetimepicker').datetimepicker({
+      //   'showTimepicker':false,
+      //   'format': "dd-mm-yy"
+
+
+      // });
 
 
        //$("#authors").val();

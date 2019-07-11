@@ -1,7 +1,8 @@
-@extends('default_contents')
+@extends('default_contents_footer_trouble')
 @section('content')
  <br> <br><br> <br>
       <br> <br><br> <br> 
+
 <div class="container">
 <div class="row">
     <div class="col-sm-6"></div>

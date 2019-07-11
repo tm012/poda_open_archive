@@ -1,4 +1,4 @@
-@extends('default_contents')
+@extends('default_contents_footer_trouble')
 @section('content')
   <br> <br><br> <br>
       <br> <br><br> <br> 

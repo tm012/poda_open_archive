@@ -2,7 +2,8 @@
 @section('content')
 
 
-
+  <br> <br><br> <br>
+      <br> <br><br> <br> 
 
  <div class="container">
   <h2>Edit Study</h2>
@@ -161,7 +162,11 @@
 
 
      $.datetimepicker.setLocale('en');
-      $('#datetimepicker').datetimepicker();
+      // $('#datetimepicker').datetimepicker();
+        $.datetimepicker.setLocale('en');
+           $('#datetimepicker').datepicker({
+            'format': 'dd-mm-yy'
+           });
 
 
        //$("#authors").val();
