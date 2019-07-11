@@ -346,7 +346,7 @@
 				@endif
 
 				<div class="fullwidth-block">
-					<div class="container">
+					<div align="center" class="container">
 						<div class="row">
 							<div class="col-md-12">
 								<img src="/images/banner_poda_instructions_jpg.jpg" alt="Trulli" width="1000" height="600">
