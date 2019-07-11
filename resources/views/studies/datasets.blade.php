@@ -95,13 +95,13 @@
         </div>
       </div>
       <div class="form-group"  class="row">
-        <div align="left" class="col-sm-4">
+        <div align="left" class="col-sm-7">
           <label style="font-style: bold;color: black;font-size: 15px;">Publication Name:</label>
           <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['publication_name']}}</font></p>
 
         </div>
-        <div  class="col-sm-4"></div>
-        <div align="left" class="col-sm-4">
+        <div  class="col-sm-1"></div>
+        <div align="left" class="col-sm-2">
           <label style="font-style: bold;color: black;font-size: 15px;">Publication Time:</label>
           <p style="font-family: 'Lucida Console';"><font size="3">{{$study_content[0]['publication_time']}}</font></p>
 
@@ -239,7 +239,7 @@
         </div>
 
         <!-- Modal body -->
-        <div class="modal-body">
+        <div align="center" class="modal-body">
           <button type="button" id ="go_home" class="btn btn-default" data-dismiss="modal">Go Home</button>
           <button type="button" id ="go_my_studies" class="btn btn-default" data-dismiss="modal">Go to My Studies</button>
 

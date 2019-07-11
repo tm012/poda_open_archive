@@ -175,12 +175,16 @@ $year  = date("Y");
         
         <!-- Modal body -->
         <div class="modal-body">
-          1. Zip your data set and then upload it. Please make sure the name of the zip file is the name of your data set. <a href="https://drive.google.com/file/d/1NdD3oKg7kV0WW8d0ueYAzI-vru84KqAP/view?usp=sharing" target="_blank">Please See This Data Set For Example.</a>
+          1. First create a study from <a href='http://poda.cls.mtu.edu/studies/create_study'>Create Study</a> page.
+            <br><br>
+          2. After that go to the study page and click on "Upload Dataset as Zip".
+            <br><br>
+          3. Zip your data set and then upload it. Please make sure the name of the zip file is the name of your data set. Don't forget add the task name for the data set. <a href="https://drive.google.com/file/d/1NdD3oKg7kV0WW8d0ueYAzI-vru84KqAP/view?usp=sharing" target="_blank">Please See This Data Set For Example.</a>
 
           <br><br>
-          2. Your upload files need to be approved by the admin.
+          3. Your upload files need to be approved by the admin.
           <br><br>
-          3. While uploading key file, use the first column for indexing and second column for file names. Don't use this two columns for any other use. <a href="https://drive.google.com/file/d/1LtyXkbjWJsx1-SJTuUzAFaZ03q3mehYa/view?usp=sharing" target="_blank">Please See This Key File For Example.</a>
+          4. While uploading key file, use the first column for indexing and second column for file names. Don't use this two columns for any other use. <a href="https://drive.google.com/file/d/1LtyXkbjWJsx1-SJTuUzAFaZ03q3mehYa/view?usp=sharing" target="_blank">Please See This Key File For Example.</a>
           <br><br>
           
           4. Please refrain yourself from uploading unnecessary data or you will be banned.    
