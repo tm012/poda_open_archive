@@ -5,7 +5,7 @@
         <img src="/img/logo_transparent.png" width="70" height="70" alt="" class="logo">
         <div class="logo-type">
           <h1 class="site-title">PODA</h1>
-          <small class="site-description">lorem ipsum</small>
+          <small class="site-description">Data Hive for PEBL</small>
         </div>
       </a>
 
