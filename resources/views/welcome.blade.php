@@ -47,7 +47,7 @@
 
           <div align="center" class="container">
             <div class="row">
-              <div align="right" class="col-sm-6">
+              <div class="col-sm-6">
                 
                   <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
                     <input autocomplete="off" data-id='author_name' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search by Author" class="form-control search_by_author_name">
@@ -55,7 +55,7 @@
               
               </div>
          
-              <div align="left"  class="col-sm-6">
+              <div   class="col-sm-6">
 
 
                 <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
