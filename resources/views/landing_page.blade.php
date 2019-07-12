@@ -349,7 +349,7 @@
 					<div align="center" class="container">
 						<div class="row">
 							<div class="col-md-12">
-								<img src="/images/banner_poda_instructions_jpg.jpg" alt="Trulli" width="1000" height="600">
+								<img src="/images/banner_poda_instructions_jpg.jpg" style="height:auto; max-width:100%;border:none;display:block;" alt="">
 							</div>
 				
 						</div>
