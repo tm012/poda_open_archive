@@ -34,7 +34,7 @@ class StudyController extends Controller
         $search_type = $request->search_type;
         if($search_type == "study"){
 
-          $services = DB::table('studies')->where('studies.admin_approved', '1')->distinct()->get();
+          $services = DB::table('studies')->where('studies.admin_approved', '1')->where('studies.archived_status', '0')->distinct()->get();
 
            return  $services;
 
@@ -48,7 +48,7 @@ class StudyController extends Controller
 
 
           $services = DB::table('studies')
-              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.admin_approved', '1')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.archived_status', '0')->where('studies.admin_approved', '1')
               ->select('datasets.task_related')
               ->distinct()->get();
 
@@ -65,7 +65,7 @@ class StudyController extends Controller
 
 
           $services = DB::table('studies')
-              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.admin_approved', '1')
+              ->join('datasets', 'studies.study_id', '=', 'datasets.study_id')->where('studies.archived_status', '0')->where('studies.admin_approved', '1')
               ->select('datasets.dataset_name')
               ->distinct()->get();
 
