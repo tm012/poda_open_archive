@@ -11,16 +11,16 @@
     <input name="study_id"  type="hidden" value="{{ $studyid }}"/>
      <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
     <div class="form-group">
-      <label for="l_studyname">Study Name</label>
-      <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" placeholder="Enter Study Name" value="{{$study_content[0]['study_name']}}">
+      <label for="l_studyname">Study Name *</label>
+      <input type="text" class="form-control style_width" required="true" autocomplete="off" id="studyname" name="study_name" placeholder="Enter Study Name" value="{{$study_content[0]['study_name']}}">
     </div>
     <div class="form-group">
-      <label for="l_authorname">Study Description</label>
+      <label for="l_authorname">Abstract *</label>
       
     </div>
    
     <div class="form-group">
-      <textarea class="form-control" onkeyup="countChar(this)" maxlength="5000" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
+      <textarea required="true" class="form-control" onkeyup="countChar(this)" maxlength="5000" rows = "5" name = "study_description" >{{$study_content[0]['study_description']}}</textarea>
       <div id="charNum"> </div>
    
     </div>

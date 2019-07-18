@@ -15,7 +15,7 @@
       <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" required="true" placeholder="Enter Study Name">
     </div>
   <div class="form-group">
-      <label for="l_authorname">Study Description *</label>
+      <label for="l_authorname">Abstract *</label>
       
     </div>
    
