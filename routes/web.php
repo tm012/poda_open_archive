@@ -41,7 +41,7 @@ Route::get('studies/create_study', 'StudyController@create_study')->name('create
 Route::get('studies/edit_study', 'StudyController@edit_study')->name('edit study')->middleware('login_check');
 Route::get('studies/study_archived', 'StudyController@study_archived')->name('archived study')->middleware('login_check');
 
-
+Route::post('/change_dataset_name','FileUploadController@change_dataset_name')->middleware('login_check');
 
 Route::post('studies/post_study', 'StudyController@post_study')->name('post study')->middleware('login_check');
 
@@ -86,7 +86,7 @@ Route::get('/update_signed_url', 'FileUploadController@update_signed_url')->name
 Route::get('/permanently_delete_data', 'StudyController@permanently_delete_data')->name("permanently_delete_data");
 // Route::get('/smart_search_zip_creation', 'FileUploadController@smart_search_zip_creation')->name("smart_search_zip_creation");
 Route::get('/set_breadcrumb_path', 'StudyController@set_breadcrumb_path')->name("set_breadcrumb_path");
-
+Route::get('/delete_dataset', 'FileUploadController@delete_dataset')->name('Delete Dataset')->middleware('login_check');
 
 $router->get('/smart_search_zip_creation/{files_string}',[
     'uses' => 'FileUploadController@smart_search_zip_creation',

@@ -67,6 +67,12 @@
 $array_paths=array_reverse($array_paths);
 $array_basenames = array_reverse($array_basenames);
 
+#print_r($array_paths);
+#print_r($array_basenames);
+
+ $dataset_given_name = DB::table('datasets')->where('study_id', Session::get("current_study_id"))->where('dataset_name', $current_dataset_name)->value('dateset_id');
+
+
  
 
 @endphp
@@ -86,7 +92,9 @@ $array_basenames = array_reverse($array_basenames);
  <!--  <a style="text-decoration:none; color:black;"   href="/datesets">{{ Session::get("current_dataset_name")}}/</a> -->
 @for ($i = 1; $i <count($array_paths); $i++)
   @if ($string_upto_dataset_real == $array_paths[$i]) 
-    <a style="text-decoration:none; color:black;" class="go_to_dataset_breadcrumb" data-value="{{$array_paths[$i]}}" href="/contents">{{$array_basenames[$i]}}</a>/
+
+   
+    <a style="text-decoration:none; color:black;" class="go_to_dataset_breadcrumb" data-value="{{$array_paths[$i]}}" href="/contents">{{$dataset_given_name}}</a>/
   @else
 
   <a style="text-decoration:none; color:black;" class ="bread_tags" data-value="{{$array_paths[$i]}}"onclick='return check()' href="/contents">{{$array_basenames[$i]}}</a>/
@@ -123,7 +131,9 @@ $array_basenames = array_reverse($array_basenames);
 
          
           @if($data_mine == "1" )
+            <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Change Dataset Name</button>
             <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+            <button  class="btn btn-outline-danger " data-toggle="modal" data-target="#myModal_3"   type="button" >Delete this Dataset</button>
           @endif
 
          @endif
@@ -235,7 +245,7 @@ $array_basenames = array_reverse($array_basenames);
 
         <!-- Modal body -->
         <div class="upload_portion">
-          <div class="modal-body">
+          <div class="modal-body" align="center">
             <form method="post" action="{{url('upload_key_file')}}" enctype="multipart/form-data"
                         >
                <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
@@ -264,8 +274,70 @@ $array_basenames = array_reverse($array_basenames);
       </div>
     </div>
   </div>
+  <div class="modal fade" id="myModal_4">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Input Name</h4>
 
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body" align="center">
+            <form method="post" action="{{url('change_dataset_name')}}" enctype="multipart/form-data"
+                        >
+               <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+
+               <input name="data_id" type="hidden" value="{{$current_dataset_name}}"/>
+                <input name="new_dataset_name" class="form-control" placeholder="New Dataset Name" />
+
+               <br>
+
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+
+               </form>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal_3">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure?</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body" align="center">
+             <button  class="btn btn-outline-danger delete_dataset" data-toggle="modal" data-target="#myModal_3" data-value="{{$current_dataset_name}}"  type="button" >Delete</button>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -277,7 +349,7 @@ $array_basenames = array_reverse($array_basenames);
           <button type="button" class="close" data-dismiss="modal">&times;</button>
       <!--     <h4 class="modal-title">Modal Header</h4> -->
         </div>
-        <div class="modal-body">
+        <div class="modal-body" align="center">
 
         <div class="form-group">
         <label for="l_data_set_name">Folder Name</label>
@@ -321,7 +393,53 @@ $(".go_to_dataset_breadcrumb").click(function(){
     
 });
 
+$(".delete_dataset").click(function(){
+    i=$(this).data("value");
+  //alert(i);
+//ajax_call_go_to_files(dataset_name);
+   // ajax_call_go_to_files(i,'1');
+  
+   ajax_call_to_delete_dataset(i) ;
+    
+});
 
+
+function ajax_call_to_delete_dataset(dataset_name) {
+  var dataset_name = dataset_name;
+
+
+
+
+
+  $.ajax({
+    url: "/delete_dataset",
+    data: {
+      dataset_name: dataset_name,
+  
+      submit_check_1: "submit_check_1"
+
+
+    },
+    type: 'GET',
+    async: false,
+    success: function (data) {
+      console.log("Success");
+      alert("Dataset Deleted");
+      console.log(data);
+      window.location.href = "/datesets";
+
+
+    //
+    //  $("#sub_category_admin").html(html);
+
+
+    }
+  })
+
+
+
+
+}
 
 function ajax_call_to_set_bread_crumb_path(path) {
   var path = path;

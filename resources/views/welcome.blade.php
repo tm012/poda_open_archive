@@ -17,21 +17,21 @@
 
           <div align="center" class="container">
             <div class="row">
-              <div class="col-md-4 col-sm-4">
+              <div class="col-md-6 col-sm-6">
                 
                   <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
                     <input autocomplete="off" data-id='study' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search By Study Name" class="form-control search_by_study">
                   </form>
                 
               </div>
-              <div class="col-md-4 col-sm-4">
+         <!--      <div class="col-md-0 col-sm-0">
                
                   <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
                     <input autocomplete="off" data-id='dataset' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Data Set Name" class="form-control search_by_dataset">
                   </form>
                 
-              </div>
-              <div class="col-md-4 col-sm-4">
+              </div> -->
+              <div class="col-md-6 col-sm-6">
                 
                   <form method="GET" action="{{ action('StudyController@search_home_with_param') }}">
                     <input autocomplete="off" data-id='task' onchange="this.form.submit()" type="text" name="search" id="search" placeholder="Search using Task Name" class="form-control search_by_task">

@@ -38,6 +38,8 @@ class Kernel extends ConsoleKernel
         ->everyMinute();
         $schedule->call('App\Http\Controllers\FileUploadController@key_file_upload_queue')
         ->everyMinute();
+        // $schedule->call('App\Http\Controllers\FileUploadController@change_dataset_name')
+        // ->everyMinute();
         $schedule->call('App\Http\Controllers\FileUploadController@update_signed_url')
         ->daily();
         $schedule->call('App\Http\Controllers\StudyController@permanently_delete_data')

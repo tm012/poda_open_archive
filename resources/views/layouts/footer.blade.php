@@ -21,6 +21,7 @@
 							<!-- 		<li><a style="text-decoration:none; color:black;" href="">Quick-Start Guide</a></li> 
 									<li><a style="text-decoration:none; color:black;" href="">Licenses</a></li> -->
 									<li><a style="text-decoration:none; color:black;"  data-toggle="modal" data-target="#myModalInstructions" href="">How to Upload</a></li>
+									<li><a style="text-decoration:none; color:black;"  data-toggle="modal" data-target="#myModalKeyFile" href="">What is a Key File?</a></li>
 									<li> <a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/" target="_blank">Donate</a></li>
 								</ul>
 							</div>
@@ -30,9 +31,9 @@
 							<div class="widget">
 								<h3 class="widget-title">Partners</h3>
 								<ul class="arrow-list">
-									<li><a style="text-decoration:none; color:black;" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a></li> 
-									<li><a style="text-decoration:none; color:black;" href="http://icc.mtu.edu/hcc/">ICC</a></li>
-									<li><a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas </a></li> 
+									<li><a style="text-decoration:none; color:black;" target="_blank" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a></li> 
+									<li><a style="text-decoration:none; color:black;" target="_blank" href="http://icc.mtu.edu/hcc/">ICC</a></li>
+									<li><a style="text-decoration:none; color:black;" target="_blank" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas </a></li> 
 								
 							
 								</ul>
@@ -83,7 +84,7 @@ $year  = date("Y");
             <br><br>
           2. After that go to the study page and click on "Upload Dataset as Zip".
             <br><br>
-          3. Zip your data set and then upload it. Please make sure the name of the zip file is the name of your data set. Don't forget add the task name for the data set. <a href="https://drive.google.com/file/d/1NdD3oKg7kV0WW8d0ueYAzI-vru84KqAP/view?usp=sharing" target="_blank">Please See This Data Set For Example.</a>
+          3. Zip your data set and then upload it. Please make sure the name of the zip file is the name of your data set. Don't forget to add the task name for the data set. <a href="https://drive.google.com/file/d/1NdD3oKg7kV0WW8d0ueYAzI-vru84KqAP/view?usp=sharing" target="_blank">Please See This Data Set For Example.</a>
 
           <br><br>
           3. Your upload files need to be approved by the admin.
@@ -92,6 +93,30 @@ $year  = date("Y");
           <br><br>
           
           4. Please refrain yourself from uploading unnecessary data or you will be banned.    
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+         <!--  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+   <div class="modal fade" id="myModalKeyFile">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Key File</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" >
+          Key file is a spreadsheet which links each participant's code with demographic information, experimental condition etc. You can put any number of custom columns but use the first column for indexing and second column for file names. 
         </div>
         
         <!-- Modal footer -->

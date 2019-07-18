@@ -53,7 +53,7 @@
 
 							 			@endphp
 										<div  class="col-sm-12" align="center">
-											<div style="height: 350px;" class="feature">
+											<div  class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -71,7 +71,7 @@
 
 							 			@endphp
 										<div class="col-sm-6" align="center">
-											<div style="height: 350px;" class="feature">
+											<div  class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h2 class="feature-title">{{$value->study_name}}</h2>
 												<p>{{$abstract_reduced}}</p>
@@ -90,7 +90,7 @@
 
 							 			@endphp
 										<div class="col-sm-4" align="center">
-											<div style="height: 350px;" class="feature">
+											<div  class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 class="feature-title">{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
@@ -109,7 +109,7 @@
 
 							 			@endphp
 										<div class="col-sm-3" align="center">
-											<div style="height: 350px;" class="feature">
+											<div class="feature">
 												<img src="images/icon-genetics-small.png" alt="" class="feature-image">
 												<h3 >{{$value->study_name}}</h3>
 												<p>{{$abstract_reduced}}</p>
@@ -361,16 +361,7 @@
 						<div class="row">
 							<div class="col-md-8">
 								<h2 class="section-title">Our mission and vision</h2>
-								<p>PEBL Online Data Archive (PODA) is an online data archive that allows researchers to share
-results of their behavioral tests with other researchers of the field. The data archive is built
-mainly for data produced on PEBL (Psychology Experiment Building Language) which is a free,
-open-source software system, used in running different types of behavioral experiments. This
-search based online archive will help researchers to find appropriate data from the archive for
-their research. The main goals for this online archive is to reduce the timing for data collection
-in a research project and ultimately removing the need for running experiments for data
-collection which may have already run by others. This will save both resource and time in a
-research project. As the archive grows, researchers will be able to browse on a large array of
-data and it will help us to preserve data which may get lost with time otherwise.</p>
+								<p>The exponential growth of data in many research fields means that revolutionary measures are needed for data management & accessibility. Government regulations and scientific standards both encourage open archival of research data, and the most popular avenue for sharing research data are online repositories. Most of the online data archives (e.g., Open Science Framework; Harvard dataverse; zenodo.org) are created for general purpose use rather than field-specific data hosting. Some domain-specific archives have been developed (e.g., animal tracking movebank.org; the COMSes.net agent-based modeling network) that take advantage of communities of practice and common data formats, and these can offer advantages over general-purpose archives. PEBL Online Data Archive (<a href="https://poda.cls.mtu.edu">PODA</a>) hosts behavioral test data collected using the Psychology Experiment Building Language (PEBL) Test Battery. PEBL is a free, open-source software system, which includes more than 100 psychological tasks used by a wide range of researchers and clinicians across many behavioral and medical science disciplines. PODA is an online data archive that allows researchers to share raw data from PEBL tasks. The initial goal of PODA is to provide researchers a common location for archiving data produced by PEBL, so that multiple researchers and laboratories can share data of common tasks in a common format.</p>
 							</div>
 							<div class="col-md-4">
 								@if($latest_studies_count >0)

@@ -162,7 +162,9 @@
   	@foreach($my_datasets as $my_study=>$value)
         <tr id="ClickableRow{{$value->id}}">
           <td><i class="fa fa-database" aria-hidden="true"></i><td/>
-          <td>{{$value->dataset_name}}</td>
+          <td>{{$value->dateset_id}}</td> 
+          <td style="display:none;">{{$value->dataset_name}}</td>
+
           <td>{{$value->task_related}}</td>
           <td>{{$value->file_size}}</td>
 
@@ -190,7 +192,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
       <!--     <h4 class="modal-title">Modal Header</h4> -->
         </div>
-        <div class="modal-body">
+        <div class="modal-body" align="center">
 
         <div class="form-group">
 			  <label for="l_data_set_name">Dataset Name</label>
@@ -268,7 +270,7 @@
 
         <!-- Modal body -->
         <div class="upload_portion">
-          <div class="modal-body">
+          <div class="modal-body" align="center">
             <form method="post" action="{{url('test_tm')}}" enctype="multipart/form-data"
                         >
                <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
@@ -331,7 +333,7 @@
 
         <!-- Modal body -->
         <div class="upload_portion">
-          <div class="modal-body">
+          <div class="modal-body" align="center">
 
 
             <button type="button" onclick="window.location='{{ url("studies/study_archived") }}'" class="btn btn-danger">Delete</button>
@@ -651,7 +653,8 @@ $('#resultTable tr').click(function (event) {
      // alert($("#resultTable").find(cls).html());
      // $(cls).find("td:first").css('color', 'green');
      //alert($(cls).find("td:nth-child(3)").text());
-     var dataset_name = $(cls).find("td:nth-child(3)").text();
+     var dataset_name = $(cls).find("td:nth-child(4)").text();
+     //alert(dataset_name);
      if (dataset_name != ""){
       ajax_call_go_to_files(dataset_name);
      }

@@ -22,6 +22,7 @@ use File;
 use App\news;
 use App\tasks;
 use App\Licence;
+use Zipper;
 
 
 
@@ -363,6 +364,59 @@ class StudyController extends Controller
       //   }
       //   fclose($file);
         #Storage::disk('s3')->deleteDirectory('dump/tm');
+      #dd(public_path().'/files/S-1562448123818-s7xlS9/DataSet2.zip');
+
+      
+
+      // Zipper::make(public_path().'/files/S-1562448123818-s7xlS9/data-antisaccade.zip')->extractTo(public_path().'/files/S-1562448123818-s7xlS9');
+      // rename (public_path().'/files/S-1562448123818-s7xlS9/data-antisaccade', public_path().'/files/S-1562448123818-s7xlS9/tm7');
+      // $files = glob(public_path().'/files/S-1562448123818-s7xlS9/tm7');
+      // \Zipper::make(public_path().'/files/S-1562448123818-s7xlS9/tm7.zip')->add($files)->close();
+
+      $string = 'folder5/folder7/folder6/1';
+      $folder_string = dirname($string);
+
+//echo $folder_string;
+  //echo('<br>');
+      $folder_array = explode("/",$folder_string);
+      if($folder_string != "."){
+            for($i=count($folder_array) -1; $i>=0;$i--){
+
+                $folder_name = $folder_array[$i];
+                $empty_string="dump/tm/tttt/";
+                // echo('<br>'.'----------S i--------------');
+               // echo $i;
+               // echo('<br>'.'----------E i--------------');
+                for($j=0; $j < $i;$j++){
+                //  echo('<br>'.'---------------------S j------------------');
+      //echo $j;
+                //echo('<br>'.'-------E j----------------------');
+                  $empty_string = $empty_string . $folder_array[$j] . '/';
+                }
+
+      //           echo($folder_name);
+      //            echo('<br>');
+      // echo (rtrim($empty_string, '/'));
+      //         echo('<br>');
+
+            }
+          }
+
+         
+
+      // dd($folder_array);
+
+      // while($folder_string != ".") {
+
+      //   echo 'dump/tm/'.basename($folder_string);
+      //   echo('<br>');
+      //   $folder_string = dirname($folder_string);
+      // }
+      // dd('');
+
+
+
+      
 
 
       
@@ -442,7 +496,7 @@ class StudyController extends Controller
             DB::table('studies')
             ->where('study_id', Session::get("current_study_id"))
             ->update($updateDetails);
-            return Redirect::to('studies/edit_study');
+            return Redirect::to('/datesets');
     }
 
 
@@ -741,7 +795,7 @@ class StudyController extends Controller
         //dd( Session::get("current_study_id") . " " . Session::get("current_dataset_name") . " ". Session::get("current_path"));
 
       }
-      $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->paginate(10);
+      $contents = FileUpload::where('study_id',  Session::get("current_study_id"))->where('dateset_id', Session::get("current_dataset_name"))->where('path', Session::get("current_path"))->groupBy('filename')->paginate(10);
       
 
 
@@ -973,10 +1027,10 @@ class StudyController extends Controller
       return view('smart_search', ["col_names"=>$col_names]);
     }
 
-     public function permanently_delete_data(Request $request){
+     public function permanently_delete_data(){
 
 
-        $rows = DB::table('studies')->where('admin_approved',  '-1' )->where('archived_status', '=', '1' )->get();
+        $rows = DB::table('studies')->where('admin_approved',  '-1' )->orWhere('admin_approved',  '1' )->where('archived_status', '=', '1' )->get();
 
         for ($j = 0; $j <count($rows); $j++) {
 

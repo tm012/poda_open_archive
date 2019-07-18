@@ -29,7 +29,7 @@ class FileUploadController extends Controller
 
     public function fileCreate()
     {
-    	$folder_name = "folder 1";
+      $folder_name = "folder 1";
         return view('file_upload/fileupload', ["folder_name"=>$folder_name]);
     }
     public function update_signed_url()
@@ -579,272 +579,6 @@ class FileUploadController extends Controller
 
     public function test_file_up_queue(){
 
-      $date = Carbon::now();
-
-
-      if (file_upload_queue::where('uploading_done', '=', "0")->where('file_type', '=', "dataset")->exists()) {
-
-         
-        if (file_upload_queue::where('uploading', '=', "1")->where('file_type', '=', "dataset")->exists()) {
-         
-
-        
-        }
-
-        else{
-
-      
-
-          $image = DB::table('file_upload_queues')->where('file_type', '=', "dataset")->where('uploading_done', '=', "0")->first();
-          // $image = DB::table('authors')->first();
-          // dd($image->author_name);
-          $study_id = $image->study_id;
-          $imageName = $image->file_name_with_ext;
-          $ext = $image->file_ext;
-          $filename_tm = $image->file_name;
-
-          $file_url = $image->file_url;
-          $user_id = $image->user_id;
-          $task_name= $image->task_name;
-
-
-            $updateDetails=array(
-
-              'uploading' => '1'
-
-            );
-
-            DB::table('file_upload_queues')
-            ->where('id', $image->id)
-            ->update($updateDetails);
-
-          ///////////////////////////////////////////
-          ///////////////////////////////////////////
-          ///////////////////////////////////////////
-          ////////////////////////////////////////////////
-          ////////////////////////////////////////////
-          /////////////////////////////////////
-          //////////////////////////////////////////
-          //////////////////////////////////////////////
-
-    // dd($ext);
-
-          if($ext == "zip"){
-
-
-
-            Zipper::make(public_path('/files'.'/'.$imageName))->extractTo(public_path('/files'));
-          //  dd("tm");
-            $source_disk = 'public';
-            $source_path =  $filename_tm;
-
-            $file_names = Storage::disk($source_disk)->allfiles($source_path);
-
-            $dataset_path_tm = 'dump/'. $study_id .'/' .$source_path;
-            $exists = Storage::disk('s3')->exists($dataset_path_tm);
-
-            if($exists){
-
-
-            }
-            else{
-            // $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
-              $bike_save = New Datasets;
-              $bike_save ->study_id = $study_id;
-              $bike_save ->dataset_name = $filename_tm;
-              $bike_save ->task_related = $task_name;
-              $bike_save ->created_date = $date->format("Y-m-d");
-              $bike_save ->dataset_url = $file_url ;
-
-              $bike_save ->user_id = $user_id;
-              $bike_save ->dateset_path = 'dump/' . $study_id ;
-
-              $bike_save -> save();
-
-
-
-              $filePath=public_path().'/files/'.$imageName;
-
-
-              $zip = zip_open($filePath);
-
-              if ($zip) {
-                while ($zip_entry = zip_read($zip)) {
-                  // echo"<br>";
-                  // echo "Name:               " . zip_entry_name($zip_entry) . "\n";
-                  // echo "Actual Filesize:    " . zip_entry_filesize($zip_entry) . "\n";
-                  // echo "Compressed Size:    " . zip_entry_compressedsize($zip_entry) . "\n";
-                  // echo "Compression Method: " . zip_entry_compressionmethod($zip_entry) . "\n";
-
-                  if((int)zip_entry_filesize($zip_entry) > 0){
-
-                    $type = 'file';
-
-                    $c_file_name = basename(zip_entry_name($zip_entry)).PHP_EOL;
-
-                    $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
-
-                    $check_path_folder = dirname(zip_entry_name($zip_entry));
-
-                    // echo "File Name: " . $c_file_name . "\n";
-                    //
-                    // echo "Path: " . $check_path_folder . "\n";
-
-                    if ($check_path_folder != "") {
-                      // code...
-                      $localFile = File::get(public_path().'/files/'.zip_entry_name($zip_entry));
-                    //  dump/S-1551306856758-LEGIip/DataSet2/folder5
-
-                      $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
-
-                      $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'private');
-
-                      $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.$study_id.'/'.zip_entry_name($zip_entry);
-                      // echo "---------------------- "."file url".$file_ul_tm. '<br>';
-                      //
-                      // dd($c_file_name  .' ' .$modified_path . ' '.str_replace("dump/".Session::get("current_study_id")."/","",public_path().'/files/'.$source_path));
-
-
-
-
-                      $imageUpload = new FileUpload();
-                      $imageUpload->filename = $c_file_name;
-                      // $imageUpload->data_id = $request->data_id;
-                      $imageUpload->path = 'dump/'.$study_id.'/'.$check_path_folder;
-                      $imageUpload->dateset_id = $filename_tm;
-                      $imageUpload->study_id = $study_id;
-                      $imageUpload->file_url = $file_ul_tm;
-                      //"http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$source_path;
-                      // $imageUpload->file_size = (float) zip_entry_filesize($zip_entry);
-
-                      $imageUpload->type = "file";
-                      $imageUpload ->user_id = $user_id;
-                      $imageUpload->save();
-                    }
-
-
-                  }
-                  else{
-                    $type = 'folder';
-
-                    if (substr(rtrim(zip_entry_name($zip_entry)), -1) == "/") {
-                      // Do stuff
-
-                      $modified_path = substr(zip_entry_name($zip_entry), 0, strlen(zip_entry_name($zip_entry))-1);
-
-
-                    }
-
-
-
-                    $c_file_name = basename($modified_path).PHP_EOL;
-
-                    $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
-
-                    $check_path_folder = dirname($modified_path);
-
-                    $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
-
-
-                    // echo "Folder Name: " . $c_file_name . "\n";
-                    //
-                    // echo "Path: " . $check_path_folder . "\n";
-
-                    if ($check_path_folder != "" && ($filename_tm !=$c_file_name) ) {
-                      // code...
-
-                      $bike_save = New FileUpload;
-                      $bike_save ->study_id = $study_id;
-                      $bike_save ->dateset_id = $filename_tm;
-                      $bike_save ->type ="folder";
-                      $bike_save ->filename =$c_file_name;
-
-
-
-
-                      $bike_save ->user_id =  $user_id;
-                      $bike_save ->path =  $modified_path;
-
-                      $bike_save -> save();
-                    }
-
-                  }
-
-                  if (zip_entry_open($zip, $zip_entry, "r")) {
-                    //  echo "File Contents:\n";
-                    $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-                    //  echo "$buf\n";
-
-                    zip_entry_close($zip_entry);
-                  }
-                //  echo "\n";
-
-                }
-
-                zip_close($zip);
-
-              }
-
-
-            }
-
-            $path=public_path().'/files/'.$imageName;
-            //bytes
-
-            if (file_exists($path)) {
-                unlink($path);
-                Storage::disk('public')->deleteDirectory($filename_tm);
-            }
-
-            // $path=public_path().'/files/'.$filename_tm;
-            // //bytes
-            //
-            // if (file_exists($path)) {
-            //     unlink($path);
-            // }
-          }
-
-
-
-
-
-
-
-
-
-
-
-          /////////////////////////////////////////////
-          ////////////////////////////////////////////
-          ///////////////////////////////////////////////
-          //////////////////////////////////////////////
-          //////////////////////////////////////////////////
-          /////////////////////////////////////////////////
-          ///////////////////////////////////////////////////
-          ///////////////////////////////////////////////////
-          /////////////////////////////////////////////////////
-          $updateDetails=array(
-
-              'uploading' => '-1'
-
-            );
-
-            DB::table('file_upload_queues')
-            ->where('id', $image->id)
-            ->update($updateDetails);
-
-        }
-
-      }
-      
-      return view('test_file_up_queue');
-
-
-    }
-
-    public function dataset_file_upload_queue()
-    {
-
       // $bike_save = New authors;
       // $bike_save ->study_id = "1";
       // $bike_save ->author_name = "1";
@@ -906,10 +640,10 @@ class FileUploadController extends Controller
             // Zipper::make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
           //  dd("tm");
             $zipper = new \Chumper\Zipper\Zipper;
-            $zipper->make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
+            $zipper->make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id.'/'.$filename_tm ));
             $zipper->close();
             $source_disk = 'public';
-            $source_path =  $filename_tm;
+            $source_path =  $study_id.'/'.$filename_tm;
 
             $file_names = Storage::disk($source_disk)->allfiles($source_path);
 
@@ -921,6 +655,7 @@ class FileUploadController extends Controller
 
             }
             else{
+
             // $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
               $bike_save = New Datasets;
               $bike_save ->study_id = $study_id;
@@ -946,15 +681,75 @@ class FileUploadController extends Controller
 
               $zip = zip_open($filePath);
 
+
               if ($zip) {
                 while ($zip_entry = zip_read($zip)) {
-                  // echo"<br>";
-                  // echo "Name:               " . zip_entry_name($zip_entry) . "\n";
-                  // echo "Actual Filesize:    " . zip_entry_filesize($zip_entry) . "\n";
-                  // echo "Compressed Size:    " . zip_entry_compressedsize($zip_entry) . "\n";
-                  // echo "Compression Method: " . zip_entry_compressionmethod($zip_entry) . "\n";
+                  echo"<br>";
+                  echo "Name:               " . zip_entry_name($zip_entry) . "\n";
+                  echo "Actual Filesize:    " . zip_entry_filesize($zip_entry) . "\n";
+                  echo "Compressed Size:    " . zip_entry_compressedsize($zip_entry) . "\n";
+                  echo "Compression Method: " . zip_entry_compressionmethod($zip_entry) . "\n";
+                  echo"<br>";
+
 
                   if((int)zip_entry_filesize($zip_entry) > 0){
+
+                  
+
+             #
+
+                    $string = zip_entry_name($zip_entry);
+                    $folder_string = dirname($string);
+
+              //echo $folder_string;
+                //echo('<br>');
+                    $folder_array = explode("/",$folder_string);
+                    if($folder_string != "."){
+                          for($i=count($folder_array) -1; $i>=0;$i--){
+
+                              $folder_name = $folder_array[$i];
+                              $empty_string='dump/'.$study_id.'/'.$filename_tm.'/';
+                              // echo('<br>'.'----------S i--------------');
+                             // echo $i;
+                             // echo('<br>'.'----------E i--------------');
+                              for($j=0; $j < $i;$j++){
+                              //  echo('<br>'.'---------------------S j------------------');
+                    //echo $j;
+                              //echo('<br>'.'-------E j----------------------');
+                                $empty_string = $empty_string . $folder_array[$j] . '/';
+                              }
+
+                    //           echo($folder_name);
+                    //            echo('<br>');
+                    // echo (rtrim($empty_string, '/'));
+                    //         echo('<br>');
+
+                              if (FileUpload::where('study_id', '=', $study_id)->where('dateset_id', '=', $filename_tm)->where('type', '=', 'folder')->where('filename', '=', $folder_name)->where('path', '=', rtrim($empty_string, '/'))->where('user_id', '=', $user_id)->exists()) {
+                              }
+                              else{
+                                $bike_save = New FileUpload;
+                                $bike_save ->study_id = $study_id;
+                                $bike_save ->dateset_id = $filename_tm;
+                                $bike_save ->type ="folder";
+                                $bike_save ->filename =$folder_name;
+
+
+
+
+                                $bike_save ->user_id =  $user_id;
+                                $bike_save ->path =  rtrim($empty_string, '/');
+                                $bike_save->save();
+
+
+                              }
+   // user found
+
+
+
+
+                          }
+                    }
+
 
                     $type = 'file';
 
@@ -962,7 +757,7 @@ class FileUploadController extends Controller
 
                     $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
 
-                    $check_path_folder = dirname(zip_entry_name($zip_entry));
+                    $check_path_folder = $filename_tm.'/'.dirname(zip_entry_name($zip_entry));
 
                     // echo "File Name: " . $c_file_name . "\n";
                     //
@@ -970,7 +765,7 @@ class FileUploadController extends Controller
 
                     if ($check_path_folder != "") {
                       // code...
-                      $localFile = File::get(public_path().'/files/'.$study_id.'/'.zip_entry_name($zip_entry));
+                      $localFile = File::get(public_path().'/files/'.$study_id.'/'.$filename_tm.'/'.zip_entry_name($zip_entry));
                     //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
                       $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
@@ -996,7 +791,8 @@ class FileUploadController extends Controller
                         $imageUpload = new FileUpload();
                         $imageUpload->filename = $c_file_name;
                         // $imageUpload->data_id = $request->data_id;
-                        $imageUpload->path = 'dump/'.$study_id.'/'.$check_path_folder;
+                        $imageUpload->path = rtrim('dump/'.$study_id.'/'.$check_path_folder, './');
+                        
                         $imageUpload->dateset_id = $filename_tm;
                         $imageUpload->study_id = $study_id;
                         $imageUpload->file_url = $file_ul_tm;
@@ -1033,83 +829,509 @@ class FileUploadController extends Controller
 
                   }
                   else{
-                    $type = 'folder';
-                    $dont_upload_it = "0";
+                   //  $type = 'folder';
+                   //  $dont_upload_it = "0";
 
-                    if (substr(rtrim(zip_entry_name($zip_entry)), -1) == "/") {
-                      // Do stuff
+                   //  if (substr(rtrim(zip_entry_name($zip_entry)), -1) == "/") {
+                   //    // Do stuff
 
-                      $modified_path = substr(zip_entry_name($zip_entry), 0, strlen(zip_entry_name($zip_entry))-1);
+                   //    $modified_path = substr(zip_entry_name($zip_entry), 0, strlen(zip_entry_name($zip_entry))-1);
 
 
+                   //  }
+
+
+
+                   //  $c_file_name = basename($modified_path).PHP_EOL;
+
+                   //  $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
+
+                   //  $check_path_folder = dirname($modified_path);
+
+                   //  $modified_path = 'dump/'.$study_id.'/'.$filename_tm.'/'.$check_path_folder;
+
+                   // # dd($modified_path);
+
+
+                   //  // echo "Folder Name: " . $c_file_name . "\n";
+                   //  //
+                   //  // echo "Path: " . $check_path_folder . "\n";
+
+                   //  if ($check_path_folder != "" && ($filename_tm !=$c_file_name) ) {
+                   //    // code...
+                   //    if($first_folder_check == "0"){
+                   //      $first_folder_check = "1";
+
+                   //      if(substr($modified_path, -1) == "."){
+                        
+                   //        $filename_tm = $c_file_name;
+                   //        $updateDetails=array(
+                   //          'dataset_name' => $filename_tm
+                   //        );
+                   //         DB::table('datasets')
+                   //        ->where('id', $dataset_id )
+                   //        ->update($updateDetails);
+                   //        $dont_upload_it = "1";
+
+                   //        if (Datasets::where('study_id', '=', $study_id)->where('dataset_name', '=', $filename_tm)->exists()) {
+                   //           // user found
+                   //            //DB::table('datasets')->where('id',  $dataset_id )->delete();
+                   //        }
+                   //         #DB::table('datasets')->where('id',  $dataset_id )->delete();
+                   //      }
+                       
+                   //    }
+                   //    if (FileUpload::where('study_id', '=',$study_id)->where('dateset_id', '=',$filename_tm)->where('type', '=','folder')->where('filename', '=',$c_file_name)->where('user_id', '=',$user_id)->where('path', '=',$modified_path)->exists()) {
+                   //       // user found
+                   //    }
+                   //    else{
+                   //      if( $dont_upload_it == "0"){
+                   //        $bike_save = New FileUpload;
+                   //        $bike_save ->study_id = $study_id;
+                   //        $bike_save ->dateset_id = $filename_tm;
+                   //        $bike_save ->type ="folder";
+                   //        $bike_save ->filename =$c_file_name;
+
+
+
+
+                   //        $bike_save ->user_id =  $user_id;
+                   //        $bike_save ->path =  rtrim('.',$modified_path);
+                          
+
+                   //        $bike_save -> save();
+                   //        $dont_upload_it = "0";
+
+                   //      }
+
+
+                   //    }
+
+
+                   //  }
+
+                  }
+
+                  if (zip_entry_open($zip, $zip_entry, "r")) {
+                    //  echo "File Contents:\n";
+                    $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                    //  echo "$buf\n";
+
+                    zip_entry_close($zip_entry);
+                  }
+                //  echo "\n";
+
+                }
+
+                zip_close($zip);
+
+              }
+
+
+            }
+
+            $path=public_path().'/files/'.$study_id.'/'.$imageName;
+            //bytes
+
+            if (file_exists($path)) {
+
+              
+
+                
+               // Storage::disk('public')->deleteDirectory($filename_tm);
+                // File::deleteDirectory(public_path('/files/'.$study_id.'/'.$filename_tm));
+                if (file_upload_queue::where('study_id', '=', $study_id)->where('uploading_done', '=', '0')->exists()) {
+                   // user found
+                }
+                else{
+
+                  
+                  
+                  Storage::disk('public')->deleteDirectory($study_id);
+                  
+                }
+                unlink($path);
+                Storage::disk('public')->deleteDirectory($study_id.'/'.$filename_tm);
+                
+            }
+
+            // $path=public_path().'/files/'.$filename_tm;
+            // //bytes
+            //
+            // if (file_exists($path)) {
+            //     unlink($path);
+            // }
+          }
+
+
+
+
+
+
+
+
+
+
+
+          /////////////////////////////////////////////
+          ////////////////////////////////////////////
+          ///////////////////////////////////////////////
+          //////////////////////////////////////////////
+          //////////////////////////////////////////////////
+          /////////////////////////////////////////////////
+          ///////////////////////////////////////////////////
+          ///////////////////////////////////////////////////
+          /////////////////////////////////////////////////////
+          $updateDetails=array(
+
+              'uploading' => '-1',
+              'uploading_done' => '1'
+
+            );
+
+            DB::table('file_upload_queues')
+            ->where('id', $image->id)
+            ->update($updateDetails);
+
+        }
+
+      }
+      
+      return view('test_file_up_queue');
+
+
+    }
+
+    public function dataset_file_upload_queue()
+    {
+
+      $date = Carbon::now();
+
+      if (file_upload_queue::where('uploading_done', '=', "0")->where('file_type', '=', "dataset")->exists()) {
+         
+        if (file_upload_queue::where('uploading', '=', "1")->where('file_type', '=', "dataset")->exists()) {
+         
+
+        
+        }
+
+        else{
+
+          $image = DB::table('file_upload_queues')->where('file_type', '=', "dataset")->where('uploading_done', '=', "0")->first();
+          // $image = DB::table('authors')->first();
+          // dd($image->author_name);
+          $study_id = $image->study_id;
+          $imageName = $image->file_name_with_ext;
+          $ext = $image->file_ext;
+          $filename_tm = $image->file_name;
+
+          $file_url = $image->file_url;
+          $user_id = $image->user_id;
+          $task_name= $image->task_name;
+          $file_size= $image->file_size;
+
+
+
+            $updateDetails=array(
+
+              'uploading' => '1'
+
+            );
+
+            DB::table('file_upload_queues')
+            ->where('id', $image->id)
+            ->update($updateDetails);
+
+          ///////////////////////////////////////////
+          ///////////////////////////////////////////
+          ///////////////////////////////////////////
+          ////////////////////////////////////////////////
+          ////////////////////////////////////////////
+          /////////////////////////////////////
+          //////////////////////////////////////////
+          //////////////////////////////////////////////
+
+          if($ext == "zip"){
+
+
+
+
+            // Zipper::make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id));
+          //  dd("tm");
+            $zipper = new \Chumper\Zipper\Zipper;
+            $zipper->make(public_path('/files/'.$study_id.'/'.$imageName))->extractTo(public_path('/files/'.$study_id.'/'.$filename_tm ));
+            $zipper->close();
+            $source_disk = 'public';
+            $source_path =  $study_id.'/'.$filename_tm;
+
+            $file_names = Storage::disk($source_disk)->allfiles($source_path);
+
+            $dataset_path_tm = 'dump/'. $study_id .'/' .$source_path;
+            $exists = Storage::disk('s3')->exists($dataset_path_tm);
+
+            if($exists){
+
+
+            }
+            else{
+          $dataset_given_name= explode(".",$file_url);
+
+         
+            // $zip = new Filesystem(new ZipArchiveAdapter(public_path('/files/archive_'.Auth::user()->id.'.zip')));
+              $bike_save = New Datasets;
+              $bike_save ->study_id = $study_id;
+              $bike_save ->dataset_name = $filename_tm;
+              $bike_save ->task_related = $task_name;
+              $bike_save ->created_date = $date->format("Y-m-d");
+              $bike_save ->dataset_url = $file_url ;
+              $bike_save ->file_size = $file_size;
+              $bike_save ->dateset_id = $dataset_given_name[0];
+              $bike_save ->user_id = $user_id;
+              $bike_save ->dateset_path = 'dump/' . $study_id ;
+
+
+
+              $bike_save -> save();
+
+              $dataset_id = $bike_save ->id;
+              $first_folder_check = "0";
+            
+
+
+
+              $filePath=public_path().'/files/'.$study_id.'/'.$imageName;
+
+
+              $zip = zip_open($filePath);
+
+
+              if ($zip) {
+                while ($zip_entry = zip_read($zip)) {
+                  echo"<br>";
+                  echo "Name:               " . zip_entry_name($zip_entry) . "\n";
+                  echo "Actual Filesize:    " . zip_entry_filesize($zip_entry) . "\n";
+                  echo "Compressed Size:    " . zip_entry_compressedsize($zip_entry) . "\n";
+                  echo "Compression Method: " . zip_entry_compressionmethod($zip_entry) . "\n";
+                  echo"<br>";
+
+
+                  if((int)zip_entry_filesize($zip_entry) > 0){
+
+                  
+
+             #
+
+                    $string = zip_entry_name($zip_entry);
+                    $folder_string = dirname($string);
+
+              //echo $folder_string;
+                //echo('<br>');
+                    $folder_array = explode("/",$folder_string);
+                    if($folder_string != "."){
+                          for($i=count($folder_array) -1; $i>=0;$i--){
+
+                              $folder_name = $folder_array[$i];
+                              $empty_string='dump/'.$study_id.'/'.$filename_tm.'/';
+                              // echo('<br>'.'----------S i--------------');
+                             // echo $i;
+                             // echo('<br>'.'----------E i--------------');
+                              for($j=0; $j < $i;$j++){
+                              //  echo('<br>'.'---------------------S j------------------');
+                    //echo $j;
+                              //echo('<br>'.'-------E j----------------------');
+                                $empty_string = $empty_string . $folder_array[$j] . '/';
+                              }
+
+                    //           echo($folder_name);
+                    //            echo('<br>');
+                    // echo (rtrim($empty_string, '/'));
+                    //         echo('<br>');
+
+                              if (FileUpload::where('study_id', '=', $study_id)->where('dateset_id', '=', $filename_tm)->where('type', '=', 'folder')->where('filename', '=', $folder_name)->where('path', '=', rtrim($empty_string, '/'))->where('user_id', '=', $user_id)->exists()) {
+                              }
+                              else{
+                                $bike_save = New FileUpload;
+                                $bike_save ->study_id = $study_id;
+                                $bike_save ->dateset_id = $filename_tm;
+                                $bike_save ->type ="folder";
+                                $bike_save ->filename =$folder_name;
+
+
+
+
+                                $bike_save ->user_id =  $user_id;
+                                $bike_save ->path =  rtrim($empty_string, '/');
+                                $bike_save->save();
+
+
+                              }
+   // user found
+
+
+
+
+                          }
                     }
 
 
+                    $type = 'file';
 
-                    $c_file_name = basename($modified_path).PHP_EOL;
+                    $c_file_name = basename(zip_entry_name($zip_entry)).PHP_EOL;
 
                     $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
 
-                    $check_path_folder = dirname($modified_path);
+                    $check_path_folder = $filename_tm.'/'.dirname(zip_entry_name($zip_entry));
 
-                    $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
-
-
-                    // echo "Folder Name: " . $c_file_name . "\n";
+                    // echo "File Name: " . $c_file_name . "\n";
                     //
                     // echo "Path: " . $check_path_folder . "\n";
 
-                    if ($check_path_folder != "" && ($filename_tm !=$c_file_name) ) {
+                    if ($check_path_folder != "") {
                       // code...
-                      if($first_folder_check == "0"){
-                        $first_folder_check = "1";
+                      $localFile = File::get(public_path().'/files/'.$study_id.'/'.$filename_tm.'/'.zip_entry_name($zip_entry));
+                    //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
-                        if(substr($modified_path, -1) == "."){
-                        
-                          $filename_tm = $c_file_name;
-                          $updateDetails=array(
-                            'dataset_name' => $filename_tm
-                          );
-                           DB::table('datasets')
-                          ->where('id', $dataset_id )
-                          ->update($updateDetails);
-                          $dont_upload_it = "1";
+                      $modified_path = 'dump/'.$study_id.'/'.$check_path_folder;
+                      $exists = Storage::disk('s3')->exists($modified_path.'/'.$c_file_name);
+                      if($exists){
 
-                          if (Datasets::where('study_id', '=', $study_id)->where('dataset_name', '=', $filename_tm)->exists()) {
-                             // user found
-                              //DB::table('datasets')->where('id',  $dataset_id )->delete();
-                          }
-                           #DB::table('datasets')->where('id',  $dataset_id )->delete();
-                        }
-                       
                       }
-                      if (FileUpload::where('study_id', '=',$study_id)->where('dateset_id', '=',$filename_tm)->where('type', '=','folder')->where('filename', '=',$c_file_name)->where('user_id', '=',$user_id)->where('path', '=',$modified_path)->exists()) {
+                      else{
+                        $tm = Storage::disk('s3')->put($modified_path.'/'.$c_file_name,$localFile, 'private');
+                      }
+                      
+
+                      $file_ul_tm  = 'http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/dump/'.$study_id.'/'.zip_entry_name($zip_entry);
+                      // echo "---------------------- "."file url".$file_ul_tm. '<br>';
+                      //
+                      // dd($c_file_name  .' ' .$modified_path . ' '.str_replace("dump/".Session::get("current_study_id")."/","",public_path().'/files/'.$source_path));
+
+                      if (FileUpload::where('filename', '=', $c_file_name)->where('path', '=', 'dump/'.$study_id.'/'.$check_path_folder)->where('dateset_id', '=',  $filename_tm)->where('study_id', '=',  $study_id)->where('type', '=',  "file")->where('user_id', '=',  $user_id)->exists()) {
                          // user found
                       }
                       else{
-                        if( $dont_upload_it == "0"){
-                          $bike_save = New FileUpload;
-                          $bike_save ->study_id = $study_id;
-                          $bike_save ->dateset_id = $filename_tm;
-                          $bike_save ->type ="folder";
-                          $bike_save ->filename =$c_file_name;
 
+                        $imageUpload = new FileUpload();
+                        $imageUpload->filename = $c_file_name;
+                        // $imageUpload->data_id = $request->data_id;
+                        $imageUpload->path = rtrim('dump/'.$study_id.'/'.$check_path_folder, './');
+                        
+                        $imageUpload->dateset_id = $filename_tm;
+                        $imageUpload->study_id = $study_id;
+                        $imageUpload->file_url = $file_ul_tm;
+                        //"http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$source_path;
+                        // $imageUpload->file_size = (float) zip_entry_filesize($zip_entry);
 
+                        $imageUpload->type = "file";
+                        $imageUpload ->user_id = $user_id;
+                        $imageUpload->save();
+                        $currently_upload_id= $imageUpload ->id;
+                        
+                        $s3 = \Storage::disk('s3');
+                        $client = $s3->getDriver()->getAdapter()->getClient();
+                        $expiry = "+10000 minutes";
 
+                        $command = $client->getCommand('GetObject', [
+                            'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+                            'Key'    => 'dump/'.$study_id.'/'.$check_path_folder.'/'.$c_file_name
+                        ]);
 
-                          $bike_save ->user_id =  $user_id;
-                          $bike_save ->path =  $modified_path;
+                        $request_tm = $client->createPresignedRequest($command, $expiry);
+                        $path_s3 = (string) $request_tm->getUri();
+                        $file_ul_tm = $path_s3;
 
-                          $bike_save -> save();
-                          $dont_upload_it = "0";
-
-                        }
-
-
+                         $updateDetails=array(
+                            'file_url' => $file_ul_tm
+                          );
+                         DB::table('file_uploads')
+                        ->where('id', $currently_upload_id)
+                        ->update($updateDetails);
                       }
-
-
                     }
+
+
+                  }
+                  else{
+                   //  $type = 'folder';
+                   //  $dont_upload_it = "0";
+
+                   //  if (substr(rtrim(zip_entry_name($zip_entry)), -1) == "/") {
+                   //    // Do stuff
+
+                   //    $modified_path = substr(zip_entry_name($zip_entry), 0, strlen(zip_entry_name($zip_entry))-1);
+
+
+                   //  }
+
+
+
+                   //  $c_file_name = basename($modified_path).PHP_EOL;
+
+                   //  $c_file_name = trim(preg_replace('/\s+/', ' ', $c_file_name));
+
+                   //  $check_path_folder = dirname($modified_path);
+
+                   //  $modified_path = 'dump/'.$study_id.'/'.$filename_tm.'/'.$check_path_folder;
+
+                   // # dd($modified_path);
+
+
+                   //  // echo "Folder Name: " . $c_file_name . "\n";
+                   //  //
+                   //  // echo "Path: " . $check_path_folder . "\n";
+
+                   //  if ($check_path_folder != "" && ($filename_tm !=$c_file_name) ) {
+                   //    // code...
+                   //    if($first_folder_check == "0"){
+                   //      $first_folder_check = "1";
+
+                   //      if(substr($modified_path, -1) == "."){
+                        
+                   //        $filename_tm = $c_file_name;
+                   //        $updateDetails=array(
+                   //          'dataset_name' => $filename_tm
+                   //        );
+                   //         DB::table('datasets')
+                   //        ->where('id', $dataset_id )
+                   //        ->update($updateDetails);
+                   //        $dont_upload_it = "1";
+
+                   //        if (Datasets::where('study_id', '=', $study_id)->where('dataset_name', '=', $filename_tm)->exists()) {
+                   //           // user found
+                   //            //DB::table('datasets')->where('id',  $dataset_id )->delete();
+                   //        }
+                   //         #DB::table('datasets')->where('id',  $dataset_id )->delete();
+                   //      }
+                       
+                   //    }
+                   //    if (FileUpload::where('study_id', '=',$study_id)->where('dateset_id', '=',$filename_tm)->where('type', '=','folder')->where('filename', '=',$c_file_name)->where('user_id', '=',$user_id)->where('path', '=',$modified_path)->exists()) {
+                   //       // user found
+                   //    }
+                   //    else{
+                   //      if( $dont_upload_it == "0"){
+                   //        $bike_save = New FileUpload;
+                   //        $bike_save ->study_id = $study_id;
+                   //        $bike_save ->dateset_id = $filename_tm;
+                   //        $bike_save ->type ="folder";
+                   //        $bike_save ->filename =$c_file_name;
+
+
+
+
+                   //        $bike_save ->user_id =  $user_id;
+                   //        $bike_save ->path =  rtrim('.',$modified_path);
+                          
+
+                   //        $bike_save -> save();
+                   //        $dont_upload_it = "0";
+
+                   //      }
+
+
+                   //    }
+
+
+                   //  }
 
                   }
 
@@ -1199,6 +1421,41 @@ class FileUploadController extends Controller
       }
     }
 
+  public function change_dataset_name(Request $request)
+    {
+
+      
+
+
+       $updateDetails=array(
+
+              'dateset_id' => $request->new_dataset_name
+
+            );
+       if ((Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dateset_id', '=', $request->new_dataset_name )->exists()) || (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_url', '=', $request->new_dataset_name.'zip')->where('file_type', '=', 'dataset' )->where('uploading_done', '=', '0' )->exists())) {
+       }
+       else{
+            DB::table('datasets')
+            ->where('study_id',  Session::get("current_study_id") )->where('dataset_name',  $request->data_id )
+            ->update($updateDetails);
+       }
+
+
+
+
+            return Redirect::to('/contents');
+    }
+
+    public function delete_dataset(Request $request)
+    {
+      
+      DB::table('datasets')->where('study_id',  Session::get("current_study_id") )->where('dataset_name',  $request->dataset_name )->delete();
+      DB::table('file_uploads')->where('study_id',  Session::get("current_study_id") )->where('dateset_id',  $request->dataset_name )->delete();
+      DB::table('file_upload_queues')->where('study_id',  Session::get("current_study_id") )->where('file_name',  $request->dataset_name )->where('file_type',  'dataset' )->delete();
+      Storage::disk('s3')->deleteDirectory('dump/'.Session::get("current_study_id").'/'. $request->dataset_name);
+
+    }
+
   
 
    
@@ -1250,7 +1507,7 @@ class FileUploadController extends Controller
 
       $image = $request->file('zipfile');
 
-      $imageName = $image->getClientOriginalName() ;
+      $zip_file_real_name = $imageName = $image->getClientOriginalName() ;
       try{
          $file_size = filesize($image);
         }
@@ -1262,31 +1519,56 @@ class FileUploadController extends Controller
 
       // $tm = Storage::disk('s3')->put('dump/'.Session::get("current_study_id").'/'.$imageName, $image, 'private');
 
-
+        $microtime_dataset_name = "D-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
        // dd($tm);
         $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
+       // dd($imageName);
+
       //Storage::disk('public')->put($imageName, $image );
-      if ((Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dataset_name', '=', $filename_tm )->exists()) || (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_name', '=', $filename_tm )->where('file_type', '=', 'dataset' )->where('uploading_done', '=', '0' )->exists())) {
+      if ((Datasets::where('study_id', '=', Session::get("current_study_id"))->where('dateset_id', '=', $filename_tm )->exists()) || (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_url', '=', $imageName )->where('file_type', '=', 'dataset' )->where('uploading_done', '=', '0' )->exists())) {
    // user found
         Session::flash('message', "Same dataset name exists in your study");
       } 
       else{
 
-
+        
         $image->move(public_path('files/'.Session::get("current_study_id")),$imageName);
 
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
         $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
+      // $zip-> Zipper::make(public_path().'/files/' . Session::get("current_study_id") .'/'. $imageName)->extractTo(public_path().'/files/' . Session::get("current_study_id") );
+         Zipper::make(public_path().'/files/' . Session::get("current_study_id") .'/'. $imageName)->extractTo(public_path().'/files/' . Session::get("current_study_id") .'/'. $microtime_dataset_name);
+
+      // dd($$zip);
+
+
+      $files = $directories = $directories = Storage::disk('public')->directories(Session::get("current_study_id") .'/'. $microtime_dataset_name );
+
+      $file = basename($files[0]);
+      rename (public_path().'/files/' . Session::get("current_study_id") .'/'. $microtime_dataset_name .'/' . $file, public_path().'/files/' . Session::get("current_study_id") .'/'. $microtime_dataset_name .'/' .$microtime_dataset_name);
+
+     
+      # File::move(public_path().'/files/' . Session::get("current_study_id") .'/'. 'tm/', public_path().'/files/' . Session::get("current_study_id"));
+// dd($file);
+      $files = glob( public_path().'/files/' . Session::get("current_study_id") .'/'. $microtime_dataset_name.'/'. $microtime_dataset_name);
+      \Zipper::make( public_path().'/files/' . Session::get("current_study_id") .'/'. $microtime_dataset_name.'.'.$ext)->add($files)->close();
+
+   
+
+      Storage::disk('public')->deleteDirectory(Session::get("current_study_id") .'/'. $microtime_dataset_name );
+      Storage::disk('public')->delete(Session::get("current_study_id") .'/'. $imageName);
+
+
 
         $bike_save = New file_upload_queue;
         $bike_save ->study_id = Session::get("current_study_id");
-        $bike_save ->file_name_with_ext = $imageName;
+        $bike_save ->file_name_with_ext = $microtime_dataset_name.'.'.$ext;
         $bike_save ->file_ext = $ext;
-        $bike_save ->file_name = $filename_tm ;
+        $bike_save ->file_name = $microtime_dataset_name ;
         $bike_save ->file_type = "dataset";
-        $bike_save ->file_url = "" ;
+        $bike_save ->file_url =  $zip_file_real_name ;
         $bike_save ->file_size = $file_size ;
 
         $bike_save ->user_id = Auth::user()->id;
@@ -1763,7 +2045,7 @@ class FileUploadController extends Controller
     public function fileStore(Request $request)
     {
 
-    	// dd($request->all());
+      // dd($request->all());
          $image = $request->file('file');
          // dd($image);
         $imageName = $image->getClientOriginalName() ;
@@ -1918,8 +2200,8 @@ class FileUploadController extends Controller
     public function zipcreate(Request $request)
     {
 
-    	// Issues https://github.com/Chumper/Zipper/issues/118
-    	// https://stackoverflow.com/questions/38104348/install-php-zip-on-php-5-6-on-ubuntu
+      // Issues https://github.com/Chumper/Zipper/issues/118
+      // https://stackoverflow.com/questions/38104348/install-php-zip-on-php-5-6-on-ubuntu
         // $files = glob(public_path('files/files1'));
         // \Zipper::make(public_path('test.zip'))->add($files)->close();
 
