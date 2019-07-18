@@ -76,7 +76,10 @@
  -->
 
           @if (Auth::check())
-            <li class="menu-item"><a style="text-decoration:none" href="{{ route('logout') }}"
+            <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Account</a>
+               <div class="dropdown-content">
+            <a style="text-decoration:none" href="{{ url('/edit_account') }}">Edit Account</a>
+            <a style="text-decoration:none" href="{{ route('logout') }}"
               onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
               Logout

@@ -88,6 +88,9 @@ Route::get('/permanently_delete_data', 'StudyController@permanently_delete_data'
 Route::get('/set_breadcrumb_path', 'StudyController@set_breadcrumb_path')->name("set_breadcrumb_path");
 Route::get('/delete_dataset', 'FileUploadController@delete_dataset')->name('Delete Dataset')->middleware('login_check');
 
+Route::get('/edit_account', 'StudyController@edit_account')->name('Edit Account')->middleware('login_check');
+Route::post('/post_edit_account', 'StudyController@post_edit_account')->name('Edit Account')->middleware('login_check');
+
 $router->get('/smart_search_zip_creation/{files_string}',[
     'uses' => 'FileUploadController@smart_search_zip_creation',
     'as'   => 'switch'

@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->call('App\Http\Controllers\FileUploadController@update_signed_url')
         ->daily();
         $schedule->call('App\Http\Controllers\StudyController@permanently_delete_data')
-        ->daily();
+        ->hourly();
     }
 
     /**

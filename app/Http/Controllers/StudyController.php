@@ -21,6 +21,7 @@ use App\file_upload_queue;
 use File;
 use App\news;
 use App\tasks;
+use App\User;
 use App\Licence;
 use Zipper;
 
@@ -100,6 +101,41 @@ class StudyController extends Controller
         //return response()->json(['success'=>$imageName]);
         //return view('studies/create_study', ["studyid"=>$microtime]);
     }
+
+    public function edit_account(Request $request)
+    {
+
+      $p_users = User::where('id','=', Auth::user()->id)->get();
+
+    
+
+      return view('/edit_account', ["p_users"=>$p_users]);
+    }
+
+    public function post_edit_account(Request $request)
+    {
+
+  
+
+          $updateDetails=array(
+
+              'name' => $request->name,
+               'institution_name' => $request->institution_name,
+                'designation' => $request->designation,
+                 'phone_number' => $request->phone_number,
+           
+            );
+
+            DB::table('users')
+            ->where('id',  Auth::user()->id )
+            ->update($updateDetails);
+Session::flash('message', "Updated");
+          
+          return Redirect::to('/edit_account');
+
+     
+
+    }    
 
     public function search_home_with_param(Request $request)
     {
