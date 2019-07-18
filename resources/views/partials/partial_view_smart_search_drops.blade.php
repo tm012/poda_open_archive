@@ -118,7 +118,7 @@
 									<li><a style="text-decoration:none; color:black;" href="">Licenses</a></li> -->
 									<li><a style="text-decoration:none; color:black;"  data-toggle="modal" data-target="#myModalInstructions" href="">How to Upload?</a></li>
 									<li><a style="text-decoration:none; color:black;"  data-toggle="modal" data-target="#myModalKeyFile" href="">What is a Key File?</a></li>
-									<li> <a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/" target="_blank">Donate</a></li>
+									<li> <a style="text-decoration:none; color:black;" href="https://www.superiorideas.org/" target="_blank">Where to Donate?</a></li>
 								</ul>
 							</div>
 						</div>
