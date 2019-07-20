@@ -195,8 +195,8 @@ $array_basenames = array_reverse($array_basenames);
       @if($value->type =="folder")
         <tr id="ClickableRow{{$value->id}}">
           <td><i class="fa fa-folder" aria-hidden="true"></i><td/>
-          <td>{{$value->filename}}</td>
-          <td>{{$value->created_at}}</td>
+          <td  class="context-menu">{{$value->filename}}</td>
+          <td class="context-menu">{{$value->created_at}}</td>
 
 
 
@@ -211,9 +211,9 @@ $array_basenames = array_reverse($array_basenames);
         @if(Auth::check())
           <td><a  target="_blank" href="{{$value->file_url}}">{{$value->filename}}</a></td>
         @else
-           <td>{{$value->filename}}</td>
+           <td class="context-menu">{{$value->filename}}</td>
         @endif
-        <td>{{$value->created_at}}</td>
+        <td class="context-menu">{{$value->created_at}}</td>
 
 
 
@@ -257,7 +257,7 @@ $array_basenames = array_reverse($array_basenames);
               
                 <div align="center" class="form-group">
                   <label for="l_zip_file">Key file</label>
-                  <input type="file" required  class="form-control" name="zipfile" id="zipfile">
+                  <input type="file" required  class="custom-file-input" name="zipfile" id="zipfile">
                 </div>
 
                 <button type="submit" class="btn btn-outline-success">Submit</button>
@@ -280,7 +280,7 @@ $array_basenames = array_reverse($array_basenames);
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Input Name</h4>
+          <h4 class="modal-title">Input Name *</h4>
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -293,7 +293,7 @@ $array_basenames = array_reverse($array_basenames);
                <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
 
                <input name="data_id" type="hidden" value="{{$current_dataset_name}}"/>
-                <input name="new_dataset_name" class="form-control" placeholder="New Dataset Name" />
+                <input required name="new_dataset_name" class="form-control" placeholder="New Dataset Name" />
 
                <br>
 

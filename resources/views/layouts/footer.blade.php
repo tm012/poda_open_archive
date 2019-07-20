@@ -5,17 +5,17 @@
 						<div class="col-md-3">
 							<div class="widget">
 								<h3 class="widget-title">Our address</h3>
-								<strong>Meese Center 203</strong>
+								<!-- <strong>Meese Center 203</strong> -->
 								<address>Cognitive and Learning Sciences, Michigan Technological University, Houghton. MI-49931</address>
-								<a href="tel:+1 800 931 812">+1 906-487-1159</a> <br>
-								<a href="mailto:office@companyname.com">shanem@mtu.edu</a>
+								<!-- <a href="tel:+1 800 931 812">+1 906-487-1159</a> <br> -->
+								<a href="mailto:poda.manager@gmail.com">Email: PODA Manager</a>
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<div class="widget">
 								<h3 class="widget-title">Guidelines</h3>
 
-								<ul class="arrow-list" ">
+								<ul class="arrow-list" >
 									<!-- <li><a style="text-decoration:none; color:black;" href="">Help</a></li> 
 									<li><a style="text-decoration:none;color:black;" href="">FAQ</a></li> -->
 							<!-- 		<li><a style="text-decoration:none; color:black;" href="">Quick-Start Guide</a></li> 
@@ -27,13 +27,54 @@
 							</div>
 						</div>
 
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="widget">
 								<h3 class="widget-title">Partners</h3>
 								<ul class="arrow-list">
-									<li><a style="text-decoration:none; color:black;" target="_blank" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a></li> 
-									<li><a style="text-decoration:none; color:black;" target="_blank" href="http://icc.mtu.edu/hcc/">ICC</a></li>
-									<li><a style="text-decoration:none; color:black;" target="_blank" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas </a></li> 
+
+									<li>
+										<div class='container2-img-a-tag'>
+												<div>
+													<img style='margin-top:10px!important;'src='https://www.mtu.edu/mtu_resources/images/download-central/logos/husky-icon/gold.png' class='iconDetails-img-a-tag'>
+												</div>	
+											<div style='margin-left:60px;'>
+											<a class="image-a-tag" style="text-decoration:none; color:black;" target="_blank" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a>
+
+											</div>
+										</div>
+
+
+									</li>
+									<li>
+										<div class='container2-img-a-tag'>
+												<div>
+													<img  src='http://icc.mtu.edu/wp-content/uploads/2018/02/ICC_Logo_Small.png' class='iconDetails-img-a-tag'>
+												</div>	
+											<div style='margin-left:60px;'>
+											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:12px!important;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a>
+
+											</div>
+										</div>
+
+
+									</li>
+
+									<li>
+										<div class='container2-img-a-tag'>
+												<div>
+													<img src='<?= asset('images/superior_ideas.jpeg') ?>' class='iconDetails-img-a-tag'>
+												</div>	
+											<div style='margin-left:60px;'>
+											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:10px!important;" target="_blank" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas</a>
+
+											</div>
+										</div>
+
+
+									</li>
+
+									<!-- <li><a style="text-decoration:none; color:black;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a></li>
+									<li><a style="text-decoration:none; color:black;" target="_blank" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas </a></li> --> 
 								
 							
 								</ul>

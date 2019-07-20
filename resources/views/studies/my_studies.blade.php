@@ -35,16 +35,16 @@
       <tr id="ClickableRow{{$value->id}}">
         <td><i class="fa fa-sticky-note" aria-hidden="true"></i><td/>
         <td style="display:none;">{{$value->study_id}}</td>
-        <td>{{$value->study_name}}</td>
+        <td class="context-menu">{{$value->study_name}}</td>
 
         @if($value->access_status == "1")
-		      <td>public</td>
+		      <td class="context-menu">public</td>
     		@else
-    		    <td>private</td>
+    		    <td class="context-menu">private</td>
     		@endif
 
 
-        <td>{{$value->created_at}}</td>
+        <td class="context-menu">{{$value->created_at}}</td>
       </tr>
 	@endforeach
     </tbody>

@@ -92,7 +92,7 @@
     </div>
 
     <div class="form-group">
-      <label for="l_studyname">Contact Info</label>
+      <label for="l_studyname">Contact Info (Email & other contact info)</label>
       <input type="text" class="form-control style_width" autocomplete="off" id="contact_info" name="contact_info" placeholder="Enter Contact Info">
     </div>
 
@@ -158,7 +158,7 @@
 
      $.datetimepicker.setLocale('en');
            $('#datetimepicker').datepicker({
-            'format': 'dd-mm-yy'
+            'format': 'mm-dd-yyyy'
            });
       //     $('#datetimepicker').datetimepicker('destroy');
       // $('#datetimepicker').datetimepicker({

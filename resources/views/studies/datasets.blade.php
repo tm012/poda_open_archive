@@ -162,16 +162,16 @@
   	@foreach($my_datasets as $my_study=>$value)
         <tr id="ClickableRow{{$value->id}}">
           <td><i class="fa fa-database" aria-hidden="true"></i><td/>
-          <td>{{$value->dateset_id}}</td> 
-          <td style="display:none;">{{$value->dataset_name}}</td>
+          <td class="context-menu">{{$value->dateset_id}}</td> 
+          <td style="display:none; ">{{$value->dataset_name}}</td>
 
-          <td>{{$value->task_related}}</td>
-          <td>{{$value->file_size}}</td>
-
-
+          <td class="context-menu">{{$value->task_related}}</td>
+          <td class="context-menu">{{$value->file_size}}</td>
 
 
-          <td>{{$value->created_at}}</td>
+
+
+          <td class="context-menu">{{$value->created_at}}</td>
         </tr>
   	@endforeach
       </tbody>
@@ -300,7 +300,7 @@
                 </div>
                 <div align="center" class="form-group">
                   <label for="l_zip_file">Zip file</label>
-                  <input type="file" required  class="form-control" name="zipfile" id="zipfile">
+                  <input type="file" required  class=" custom-file-input" name="zipfile" id="zipfile">
                 </div>
 
                 <button type="submit" class="btn btn-outline-success">Submit</button>

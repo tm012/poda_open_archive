@@ -8,7 +8,13 @@
           <small class="site-description">Data Hive for PEBL</small>
         </div>
       </a>
+      @php
+          if(Auth::check()){
+            $str = Auth::user()->name;
+            $array_name = explode(" ",$str);
+          }
 
+      @endphp
       <nav class="main-navigation">
         <button class="menu-toggle"><i class="fa fa-bars"></i></button>
         <ul class="menu">
@@ -41,7 +47,7 @@
              <div class="dropdown-content">
                 <a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a>
                 <a style="text-decoration:none" href="{{ url('studies/create_study') }}">Create Study</a>
-                <a style="text-decoration:none" href="{{ url('studies/my_studies') }}">My Studies</a>
+               
               
 
 
@@ -76,9 +82,10 @@
  -->
 
           @if (Auth::check())
-            <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Account</a>
+            <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">{{$array_name[0]}}</a>
                <div class="dropdown-content">
             <a style="text-decoration:none" href="{{ url('/edit_account') }}">Edit Account</a>
+             <a style="text-decoration:none" href="{{ url('studies/my_studies') }}">My Studies</a>
             <a style="text-decoration:none" href="{{ route('logout') }}"
               onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
