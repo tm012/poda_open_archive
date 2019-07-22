@@ -51,7 +51,7 @@
 													<img  src='<?= secure_asset('images/icc_logo.png') ?>' class='iconDetails-img-a-tag'>
 												</div>	
 											<div style='margin-left:60px;'>
-											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:2px!important;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a>
+											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:10px!important;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a>
 
 											</div>
 										</div>
