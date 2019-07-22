@@ -139,7 +139,7 @@
 									<li>
 										<div class='container2-img-a-tag'>
 												<div>
-													<img style='margin-top:10px!important;'src='https://www.mtu.edu/mtu_resources/images/download-central/logos/husky-icon/gold.png' class='iconDetails-img-a-tag'>
+													<img style='margin-top:15px!important;'src='<?= secure_asset('images/mtu_logo.png') ?>' class='iconDetails-img-a-tag'>
 												</div>	
 											<div style='margin-left:60px;'>
 											<a class="image-a-tag" style="text-decoration:none; color:black;" target="_blank" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a>
@@ -152,10 +152,10 @@
 									<li>
 										<div class='container2-img-a-tag'>
 												<div>
-													<img  src='http://icc.mtu.edu/wp-content/uploads/2018/02/ICC_Logo_Small.png' class='iconDetails-img-a-tag'>
+													<img  src='<?= secure_asset('images/icc_logo.png') ?>' class='iconDetails-img-a-tag'>
 												</div>	
 											<div style='margin-left:60px;'>
-											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:12px!important;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a>
+											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:2px!important;" target="_blank" href="http://icc.mtu.edu/hcc/">Institute of Computing & Cybersystems</a>
 
 											</div>
 										</div>
@@ -166,7 +166,7 @@
 									<li>
 										<div class='container2-img-a-tag'>
 												<div>
-													<img src='<?= asset('images/superior_ideas.jpeg') ?>' class='iconDetails-img-a-tag'>
+													<img src='<?= secure_asset('images/superior_ideas.jpeg') ?>' class='iconDetails-img-a-tag'>
 												</div>	
 											<div style='margin-left:60px;'>
 											<a class="image-a-tag" style="text-decoration:none; color:black; margin-top:10px!important;" target="_blank" href="https://www.superiorideas.org/projects/open-source-psychology-software">Superior Ideas</a>
