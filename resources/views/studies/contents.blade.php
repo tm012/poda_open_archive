@@ -81,15 +81,15 @@ $array_basenames = array_reverse($array_basenames);
   <div class="row">
     <div align="right" class="col-sm-12">
 @if(Auth::check())
- <a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
+ <a style="text-decoration:none; color:black;"   href="/datasets">{{ $study_name}}/</a>
 @else
 
-<a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
+<a style="text-decoration:none; color:black;"   href="/datasets">{{ $study_name}}/</a>
 @endif
 
 
 
- <!--  <a style="text-decoration:none; color:black;"   href="/datesets">{{ Session::get("current_dataset_name")}}/</a> -->
+ <!--  <a style="text-decoration:none; color:black;"   href="/datasets">{{ Session::get("current_dataset_name")}}/</a> -->
 @for ($i = 1; $i <count($array_paths); $i++)
   @if ($string_upto_dataset_real == $array_paths[$i]) 
 
@@ -132,7 +132,7 @@ $array_basenames = array_reverse($array_basenames);
          
           @if($data_mine == "1" )
             <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Change Dataset Name</button>
-            <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button>
+           <!--  <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Key File as CSV</button> -->
             <button  class="btn btn-outline-danger " data-toggle="modal" data-target="#myModal_3"   type="button" >Delete this Dataset</button>
           @endif
 
@@ -198,12 +198,14 @@ $array_basenames = array_reverse($array_basenames);
           <td  class="context-menu">{{$value->filename}}</td>
           <td class="context-menu">{{$value->created_at}}</td>
 
+          
+
 
 
 
 
         </tr>
-      @else
+      @elseif($value->type =="file")
 
       <tr>
         <td><i class="fa fa-file" aria-hidden="true"></i><td/>
@@ -426,7 +428,7 @@ function ajax_call_to_delete_dataset(dataset_name) {
       console.log("Success");
       alert("Dataset Deleted");
       console.log(data);
-      window.location.href = "/datesets";
+      window.location.href = "/datasets";
 
 
     //
@@ -616,7 +618,7 @@ $( ".back_button" ).click(function() {
                window.location.href = "/contents";
              }
              else{
-               window.location.href = "/datesets";
+               window.location.href = "/datasets";
              }
           }
        }

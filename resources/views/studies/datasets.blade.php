@@ -26,15 +26,15 @@
   <div class="row">
     <div align="right" class="col-sm-12">
       @if(Auth::check())
-       <a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
+       <a style="text-decoration:none; color:black;"   href="/datasets">{{ $study_name}}/</a>
       @else
 
-      <a style="text-decoration:none; color:black;"   href="/datesets">{{ $study_name}}/</a>
+      <a style="text-decoration:none; color:black;"   href="/datasets">{{ $study_name}}/</a>
       @endif
 
 </div></div></div>
 
-<!--   <a style="text-decoration:none; color:black;"   href="/datesets">{{ Session::get("current_dataset_name")}}/</a> -->
+<!--   <a style="text-decoration:none; color:black;"   href="/datasets">{{ Session::get("current_dataset_name")}}/</a> -->
 <div align="center" class="container">
   <div class="row">
     <div align="left" class="col-sm-5">
@@ -70,6 +70,14 @@
          <button  class=" btn btn-outline-warning" onclick="window.location='{{ url("studies/edit_study") }}'" type="button" >Edit Study</button>
          <button  class=" btn btn-outline-danger" data-toggle="modal" data-target="#myModal_3" type="button" >Delete Study</button>
           <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2" type="button" >Upload Dataset as Zip</button>
+          <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_2_key_file_csv" type="button" >Upload Key File as CSV</button>
+          @if(DB::table('datasets')->where('study_id',  Session::get("current_study_id"))->exists())
+            <button  class=" btn btn-outline-info" onclick="window.location='{{ url("studies/dataset_key") }}'" type="button" >Connect/Disconnect Dataset with Key files </button>
+          @endif
+          @if(DB::table('file_uploads')->where('type',  'key')->where('study_id',  Session::get("current_study_id"))->exists())
+            <button  class=" btn btn-outline-info" onclick="window.location='{{ url("studies/keys") }}'" type="button" >Keys </button>
+          @endif
+
         @else
           <button  class=" btn btn-outline-info" data-toggle="modal" data-target="#myModal_4" type="button" >Study info</button>
         @endif
@@ -151,7 +159,7 @@
           <th>Dataset Name</th>
           <th>Related Task</th>
           <th>Folder Size (Bytes)</th>
-
+          <th>Keys</th>
 
           <th>Created At</th>
 
@@ -168,8 +176,26 @@
           <td class="context-menu">{{$value->task_related}}</td>
           <td class="context-menu">{{$value->file_size}}</td>
 
+         <!--  <td style="pointer-events: none;" class="context-menu"><button  style="pointer-events: auto;" class="btn btn-link" data-toggle="modal" data-target="#myModal_2" type="button" >keys</button></td>
+ -->
 
+          @php
+            $string_keys = "";
+            $keys =  DB::table('relation_study_id_key')->where('dataset_id',  $value->dataset_name)->get();
 
+            
+            foreach ($keys as $key=>$value1){ 
+              $c_key_name = DB::table('file_upload_queues')->where('task_name',$value1->key_id)->where('file_type','key')->value('file_name_with_ext');
+
+              $string_keys = $string_keys . $c_key_name . ', ';
+
+            }
+
+            $string_keys = rtrim($string_keys, ', ');
+          
+          @endphp
+
+          <td class="context-menu">{{$string_keys}}</td>
 
           <td class="context-menu">{{$value->created_at}}</td>
         </tr>
@@ -179,6 +205,49 @@
 
     <div align="center" class="container">
       {{ $my_datasets->links('vendor.pagination.bootstrap-4') }}
+    </div>
+  </div>
+
+    <div class="modal fade" id="myModal_2_key_file_csv">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload Key File as CSV</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="upload_portion">
+          <div class="modal-body" align="center">
+            <form method="post" action="{{url('upload_key_file')}}" enctype="multipart/form-data"
+                        >
+               <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+
+               <input name="data_id" type="hidden" value="0"/>
+
+                <input name="path" type="hidden" value="{{Session::get("current_path")}}"/>
+
+              
+                <div align="center" class="form-group">
+                  <label for="l_zip_file">Key file</label>
+                  <input type="file" required  class="custom-file-input" name="zipfile" id="zipfile">
+                </div>
+
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+
+               </form>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -494,7 +563,7 @@ $( ".btn-feature" ).click(function() {
 
 
 
-      window.location.href = "datesets";
+      window.location.href = "datasets";
 
 
     //
@@ -586,7 +655,7 @@ function ajax_call_to_add_new_dataset(dataset_name,task_name) {
       console.log(data);
 
 
-      window.location.href = "/datesets";
+      window.location.href = "/datasets";
 
 
     //
@@ -650,6 +719,7 @@ function ajax_call_go_to_files(dataset_name) {
 $('#resultTable tr').click(function (event) {
      // alert($(this).attr('id')); //trying to alert id of the clicked row
      var cls = "#" + $(this).attr('id') ;
+     
      // alert($("#resultTable").find(cls).html());
      // $(cls).find("td:first").css('color', 'green');
      //alert($(cls).find("td:nth-child(3)").text());
@@ -713,7 +783,7 @@ $( ".back_button" ).click(function() {
 
              }
              else{
-               window.location.href = "/datesets";
+               window.location.href = "/datasets";
              }
           }
        }

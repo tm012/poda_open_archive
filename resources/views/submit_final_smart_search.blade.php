@@ -337,7 +337,7 @@ $( ".back_button" ).click(function() {
                window.location.href = "/contents";
              }
              else{
-               window.location.href = "/datesets";
+               window.location.href = "/datasets";
              }
           }
        }

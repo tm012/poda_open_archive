@@ -24,12 +24,80 @@ use App\tasks;
 use App\User;
 use App\Licence;
 use Zipper;
+use App\relation_study_id_key;
 
 
 
 class StudyController extends Controller
 {
     //
+
+  public function delete_key_file(Request $request)
+  {
+
+    //dd($request->key_id);
+    DB::table('col_names_key')->where('data_id',  $request->key_id)->delete();
+    DB::table('col_row_key')->where('data_id',  $request->key_id)->delete();
+    DB::table('file_uploads')->where('dateset_id',  $request->key_id)->where('type',  'key')->delete();
+    DB::table('file_upload_queues')->where('task_name',  $request->key_id)->where('file_type',  'key')->delete();
+
+    Storage::disk('s3')->deleteDirectory('dump/'.Session::get("current_study_id") . '/'. $request->key_id);
+   // return Redirect::to('datasets');
+  }
+
+  public function keys(Request $request)
+  {
+      $keys = DB::table('file_uploads')->where('type',  'key')->where('study_id',  Session::get("current_study_id"))->get();
+
+      return view('studies/keys', ["keys"=>$keys]); 
+  }
+
+  public function submit_post_key_dataset(Request $request)
+  {
+   
+    for ($x = 0; $x < count($request->keys); $x++) {
+        echo $request->keys[0];
+
+        if ( $request->check_boxs1[$x] == "1") {
+          # code...
+          if (DB::table('relation_study_id_key')->where('key_id',  $request->keys[$x])->where('dataset_id',  $request->dataset_name)->exists()) {
+              
+           }  
+           else{
+
+            $bike_save = New relation_study_id_key;
+            $bike_save ->key_id =  $request->keys[$x];
+            $bike_save ->dataset_id =  $request->dataset_name;
+         
+            $bike_save -> save();
+           }            
+
+        }
+        else{
+
+
+          DB::table('relation_study_id_key')->where('key_id',  $request->keys[$x])->where('dataset_id',  $request->dataset_name)->delete();
+           
+
+        }
+    } 
+
+    // dd($request->all());
+    return Redirect::to('studies/dataset_key');
+  }
+
+    public function dataset_key(){
+      #return view('/dataset_key', ["my_studies"=>$my_studies]);
+
+
+      
+      
+
+      $datasets = DB::table('datasets')->where('study_id',  Session::get("current_study_id"))->get();
+      $keys = DB::table('file_uploads')->where('type',  'key')->where('study_id',  Session::get("current_study_id"))->get();
+
+      return view('studies/dataset_key', ["datasets"=>$datasets,"keys"=>$keys]);
+    }
 
     public function search_home(Request $request)
     {
@@ -532,7 +600,7 @@ Session::flash('message', "Updated");
             DB::table('studies')
             ->where('study_id', Session::get("current_study_id"))
             ->update($updateDetails);
-            return Redirect::to('/datesets');
+            return Redirect::to('/datasets');
     }
 
 
@@ -954,7 +1022,28 @@ Session::flash('message', "Updated");
             // return view('partial_cart.sub_category_admin',['exists'=>  '0','service_id'=>  $service_id]);
         return view('partials.partial_view_smart_search_drops',['status'=>  $status,'data_id'=>  $data_id]);
     }
+    public function partial_view_get_keys_dataset(Request $request){
+            $status = $request->status;
 
+            $array_dataset_id=array();
+
+            $d =  DB::table('relation_study_id_key')->where('dataset_id',  $status)->get();
+
+            foreach ($d as $ds=>$value){ 
+            // Code Here
+              array_push($array_dataset_id,$value->key_id);
+            }
+
+
+
+             $keys = DB::table('file_uploads')->where('type',  'key')->where('study_id',  Session::get("current_study_id"))->get();
+             #$connected_keys = 
+
+
+
+            // return view('partial_cart.sub_category_admin',['exists'=>  '0','service_id'=>  $service_id]);
+        return view('partials.partial_view_get_keys_dataset',['keys'=>  $keys,'dataset_id'=>  $status,'array_dataset_id'=>  $array_dataset_id]);
+    }
     public function submit_final_smart_search(Request $request)
     {
       // dd(count($request->col_nos));

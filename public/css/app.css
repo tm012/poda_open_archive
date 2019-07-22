@@ -49,12 +49,17 @@ width:40px;
   width:100%;
   height:auto;
   padding:1%;
+   margin: auto;
+
 }
 
 .image-a-tag {
     margin:0px;
     
 }
+
+
+
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)

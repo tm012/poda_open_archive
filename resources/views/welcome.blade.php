@@ -223,7 +223,7 @@ function ajax_call_go_to_dataset(study_id) {
     success: function (data) {
       console.log("Success");
       console.log(data);
-      window.location.href = "/datesets";
+      window.location.href = "/datasets";
 
 
     //

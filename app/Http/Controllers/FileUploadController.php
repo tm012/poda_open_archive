@@ -21,6 +21,8 @@ use App\col_names_key;
 use App\col_row_key;
 use App\file_upload_queue;
 use App\authors;
+use App\relation_study_id_key;
+
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter;
 class FileUploadController extends Controller
@@ -112,26 +114,26 @@ class FileUploadController extends Controller
           //////////////////////////////////////////
           //////////////////////////////////////////////
 
-          $current_dataset_name = $task_name;
+          $data_id = $current_dataset_name = $task_name; //current_dataset_name is actuaklly key_id
 
           #DB::table('datasets')->where('study_id', $study_id)->value('dataset_name');
-          $data_id=Datasets::where('study_id',  $study_id)->where('dataset_name', $current_dataset_name)->value('id');
+          // $data_id=Datasets::where('study_id',  $study_id)->where('dataset_name', $current_dataset_name)->value('id');
 
 
-          $path=FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('path');
+          // $path=FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('path');
 
-          if ($path !="") {
-            # code...
+          // if ($path !="") {
+          //   # code...
 
-            $filename_key  =FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('filename');
+          //   $filename_key  =FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->value('filename');
 
-            $file_path_storage = $path.'/'.$filename_key ;
+          //   $file_path_storage = $path.'/'.$filename_key ;
 
-            Storage::disk('s3')->delete($file_path_storage);
-            DB::table('col_names_key')->where('data_id', '=', $data_id)->delete();
-            DB::table('col_row_key')->where('data_id', '=', $data_id)->delete();
-            FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->delete();
-          }
+          //   Storage::disk('s3')->delete($file_path_storage);
+          //   DB::table('col_names_key')->where('data_id', '=', $data_id)->delete();
+          //   DB::table('col_row_key')->where('data_id', '=', $data_id)->delete();
+          //   FileUpload::where('study_id',  $study_id)->where('dateset_id', $current_dataset_name)->where('type', "key")->delete();
+          // }
 
           
 
@@ -256,6 +258,7 @@ class FileUploadController extends Controller
               $imageUpload->file_url = $file_ul_tm;
               //"http://challenge.cls.mtu.edu/challenge.cls.mtu.edu/poda_storage/" .$source_path;
               // $imageUpload->file_size = (float) zip_entry_filesize($zip_entry);
+              $imageUpload->path = 'dump/'.$study_id.'/'.$current_dataset_name;
 
               $imageUpload->type = "key";
               $imageUpload ->user_id = $user_id;
@@ -266,7 +269,8 @@ class FileUploadController extends Controller
               $localFile = File::get(public_path().'/files/keys/'.$study_id.'/'.$current_dataset_name .'/'.$imageName);
                         //  dump/S-1551306856758-LEGIip/DataSet2/folder5
 
-              $modified_path = $file_url;
+              $modified_path = 'dump/'.$study_id.'/'.$current_dataset_name ;
+              #$file_url;
 
               $tm = Storage::disk('s3')->put($modified_path.'/'.$imageName,$localFile, 'private');
 
@@ -276,7 +280,7 @@ class FileUploadController extends Controller
 
               $command = $client->getCommand('GetObject', [
                   'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
-                  'Key'    => $file_url.'/'.$imageName
+                  'Key'    => 'dump/'.$study_id.'/'.$current_dataset_name.'/'.$imageName
               ]);
 
               $request_tm = $client->createPresignedRequest($command, $expiry);
@@ -372,18 +376,21 @@ class FileUploadController extends Controller
       ///////////////////////////
       /////////////////////////////
       /////////////////////////////////
-     if (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_type', '=', 'key' )->where('uploading_done', '=', '0' )->exists()) {
-        Session::flash('message', "A key file is uploading");
+     // if (file_upload_queue::where('study_id', '=', Session::get("current_study_id"))->where('file_type', '=', 'key' )->where('uploading_done', '=', '0' )->exists()) {
+     //    Session::flash('message', "A key file is uploading");
 
-        return Redirect::to('/datesets');
+     //    return Redirect::to('/datasets');
 
 
-     }
+     // }
 
-      else {
+      #else {
+
+        $key_id = $microtime_dataset_name = "key-" . (string) round(microtime(true) * 1000) . "-" . str_random(6);
+
         $image = $request->file('zipfile');
         $imageName = $image->getClientOriginalName() ;
-        $image->move(public_path('files/keys/'.Session::get("current_study_id").'/'.Session::get("current_dataset_name")),$imageName);
+        $image->move(public_path('files/keys/'.Session::get("current_study_id").'/'.$key_id ),$imageName);
         $ext = pathinfo($imageName, PATHINFO_EXTENSION);
         $filename_tm = pathinfo($imageName, PATHINFO_FILENAME);
 
@@ -396,15 +403,15 @@ class FileUploadController extends Controller
         $bike_save ->file_url = $request->path;
 
         $bike_save ->user_id = Auth::user()->id;
-        $bike_save ->task_name =Session::get("current_dataset_name");
+        $bike_save ->task_name =$key_id ;
 
         
 
         $bike_save -> save();
         Session::flash('message', "We are uploading the file(s), check back later");
 
-        return Redirect::to('/datesets');
-      }
+        return Redirect::to('/datasets');
+     # }
 
 
       ///////////////////////////////////
@@ -1949,7 +1956,7 @@ class FileUploadController extends Controller
     Session::flash('message', "We are uploading the file(s), check back later");
   }
 
-    return Redirect::to('/datesets');
+    return Redirect::to('/datasets');
 
     }
 

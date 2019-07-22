@@ -54,7 +54,7 @@ Route::get('/approval_rejection_study', 'StudyController@approval_rejection_stud
 Route::get('studies/my_studies', 'StudyController@my_studies')->name('my studies')->middleware('login_check');
 Route::get('studies/approval_requests', 'StudyController@approval_requests')->name('Approval requests')->middleware('login_check');
 
-Route::get('/datesets', 'StudyController@datasets')->name('my studies');
+Route::get('/datasets', 'StudyController@datasets')->name('my studies');
 Route::get('/go_to_study_page', 'StudyController@go_to_study_page')->name('ajax call study page');
 Route::get('/create_dataset', 'StudyController@create_dataset')->name('create dataset');
 
@@ -87,14 +87,24 @@ Route::get('/permanently_delete_data', 'StudyController@permanently_delete_data'
 // Route::get('/smart_search_zip_creation', 'FileUploadController@smart_search_zip_creation')->name("smart_search_zip_creation");
 Route::get('/set_breadcrumb_path', 'StudyController@set_breadcrumb_path')->name("set_breadcrumb_path");
 Route::get('/delete_dataset', 'FileUploadController@delete_dataset')->name('Delete Dataset')->middleware('login_check');
+Route::get('studies/dataset_key', 'StudyController@dataset_key')->name('Datset_Key_Connector')->middleware('login_check');
 
 Route::get('/edit_account', 'StudyController@edit_account')->name('Edit Account')->middleware('login_check');
 Route::post('/post_edit_account', 'StudyController@post_edit_account')->name('Edit Account')->middleware('login_check');
+Route::post('/submit_post_key_dataset', 'StudyController@submit_post_key_dataset')->name('submit post key dataset')->middleware('login_check');
+
+
+Route::get('studies/keys', 'StudyController@keys')->name('Keys')->middleware('login_check');
+
+
+Route::get('/delete_key_file', 'StudyController@delete_key_file')->name('Delete key file')->middleware('login_check');
 
 $router->get('/smart_search_zip_creation/{files_string}',[
     'uses' => 'FileUploadController@smart_search_zip_creation',
     'as'   => 'switch'
 ]);
+Route::get('/partial_view_get_keys_dataset', 'StudyController@partial_view_get_keys_dataset')->name('partial view get keys dataset')->middleware('login_check');
+
 
 // https://stackoverflow.com/questions/34810479/how-to-pass-value-inside-href-to-laravel-controller
 

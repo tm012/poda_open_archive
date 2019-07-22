@@ -46,7 +46,7 @@
             <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">Study</a>
              <div class="dropdown-content">
                 <a style="text-decoration:none" href="{{ url('/welcome') }}">Study List</a>
-                <a style="text-decoration:none" href="{{ url('studies/create_study') }}">Create Study</a>
+                
                
               
 
@@ -85,6 +85,7 @@
             <li class="menu-item dropdown "><a class="" style="text-decoration:none" href="">{{$array_name[0]}}</a>
                <div class="dropdown-content">
             <a style="text-decoration:none" href="{{ url('/edit_account') }}">Edit Account</a>
+            <a style="text-decoration:none" href="{{ url('studies/create_study') }}">Create Study</a>
              <a style="text-decoration:none" href="{{ url('studies/my_studies') }}">My Studies</a>
             <a style="text-decoration:none" href="{{ route('logout') }}"
               onclick="event.preventDefault();

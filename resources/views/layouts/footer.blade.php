@@ -34,8 +34,8 @@
 
 									<li>
 										<div class='container2-img-a-tag'>
-												<div>
-													<img style='margin-top:10px!important;'src='https://www.mtu.edu/mtu_resources/images/download-central/logos/husky-icon/gold.png' class='iconDetails-img-a-tag'>
+												<div align="center" >
+													<img style='margin-top:10px!important;' src='https://www.mtu.edu/mtu_resources/images/download-central/logos/husky-icon/gold.png' class='iconDetails-img-a-tag'>
 												</div>	
 											<div style='margin-left:60px;'>
 											<a class="image-a-tag" style="text-decoration:none; color:black;" target="_blank" href="https://www.mtu.edu/cls/">Michigan Technological University's Department. of Cognitive and Learning Sciences</a>
@@ -157,7 +157,7 @@ $year  = date("Y");
         
         <!-- Modal body -->
         <div class="modal-body" >
-          Key file is a spreadsheet which links each participant's code with demographic information, experimental condition etc. You can put any number of custom columns but use the first column for indexing and second column for file names. 
+          Key file is a spreadsheet which links each participant's code with demographic information, experimental condition etc. You can put any number of custom columns but use the first column for indexing and second column for file names. Don't use this two columns for any other use. <a href="https://drive.google.com/file/d/1LtyXkbjWJsx1-SJTuUzAFaZ03q3mehYa/view?usp=sharing" target="_blank">Please See This Key File For Example.</a>
         </div>
         
         <!-- Modal footer -->

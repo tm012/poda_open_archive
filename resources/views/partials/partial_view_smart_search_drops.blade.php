@@ -262,7 +262,7 @@ $year  = date("Y");
         
         <!-- Modal body -->
         <div class="modal-body" >
-          Key file is a spreadsheet which links each participant's code with demographic information, experimental condition etc. You can put any number of custom columns but use the first column for indexing and second column for file names.   
+          Key file is a spreadsheet which links each participant's code with demographic information, experimental condition etc. You can put any number of custom columns but use the first column for indexing and second column for file names. Don't use this two columns for any other use. <a href="https://drive.google.com/file/d/1LtyXkbjWJsx1-SJTuUzAFaZ03q3mehYa/view?usp=sharing" target="_blank">Please See This Key File For Example.</a>   
         </div>
         
         <!-- Modal footer -->
