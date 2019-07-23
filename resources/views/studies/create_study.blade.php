@@ -15,12 +15,12 @@
       <input type="text" class="form-control style_width" autocomplete="off" id="studyname" name="study_name" required="true" placeholder="Enter Study Name">
     </div>
   <div class="form-group">
-      <label for="l_authorname">Study Description/Abstract </label>
+      <label for="l_authorname">Study Description/Abstract *</label>
       
     </div>
    
     <div class="form-group">
-      <textarea class="form-control" onkeyup="countChar(this)" maxlength="5000" rows = "5" name = "study_description" required="false"></textarea>
+      <textarea class="form-control" onkeyup="countChar(this)" maxlength="5000" rows = "5" name = "study_description" required="true"></textarea>
       <div id="charNum"> </div>
    
     </div>

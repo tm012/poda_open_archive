@@ -25,6 +25,9 @@ use App\User;
 use App\Licence;
 use Zipper;
 use App\relation_study_id_key;
+use App\Mail\NewStudyAlert;
+use App\Mail\NewUserAcceptedRejectedAlert;
+use App\Mail\NewUserRequestAlert;
 
 
 
@@ -657,7 +660,10 @@ Session::flash('message', "Updated");
             $bike_save -> save();
             $fileContents= 'TM';
 
+
             Storage::disk('s3')->put('dump/'.$request->study_id.'/1', $fileContents);
+
+            \Mail::to('poda.manager@gmail.com')->send(new NewStudyAlert('New Study'));
             //Storage::disk('s3')->delete('dump/'.$request->study_id.'/1');
             return Redirect::to('studies/my_studies');
     }
@@ -777,7 +783,8 @@ Session::flash('message', "Updated");
     }
     public function user_approval_rejection(Request $request){
 
-
+      $user_email = DB::table('users')->where('id',  $request->user_id)->value('email');
+      $user_name  = DB::table('users')->where('id',  $request->user_id)->value('name');
       if($request->status == "1"){
 
                 $updateDetails=array(
@@ -785,6 +792,7 @@ Session::flash('message', "Updated");
                   'user_approval_status' => "1"
            
                 );
+        \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Approved'));
       }
       elseif ($request->status == "0") {
         # code...
@@ -794,6 +802,8 @@ Session::flash('message', "Updated");
                   'user_approval_status' => "-1"
  
                 );
+
+        \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
       }
       else{
           $updateDetails=array(
@@ -801,7 +811,7 @@ Session::flash('message', "Updated");
                   'user_approval_status' => "0"
            
                 );
-
+        \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
       }
 
 

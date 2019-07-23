@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use DB;
+use App\Mail\NewStudyAlert;
+use App\Mail\NewUserAcceptedRejectedAlert;
+use App\Mail\NewUserRequestAlert;
 
 class RegisterController extends Controller
 {
@@ -70,6 +73,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {    
         //dd($data);
+         \Mail::to('poda.manager@gmail.com')->send(new NewUserRequestAlert('New User'));
         
         return User::create([
             'name' => $data['name'],
