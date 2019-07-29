@@ -67,6 +67,7 @@
                     <a style="text-decoration:none" href="{{ url('admin/news_list') }}">News</a>
 
                     <a style="text-decoration:none" href="{{ url('studies/tasks') }}">Tasks</a>
+                    <a style="text-decoration:none" href="{{ url('admin/user_list') }}">User List</a>
                   @endif
            
 

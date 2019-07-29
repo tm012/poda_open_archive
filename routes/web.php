@@ -66,7 +66,7 @@ Route::get('/back_pressed', 'StudyController@back_pressed')->name('back pressed'
 Route::get('/check_for_filename', 'FileUploadController@check_for_filename')->name('ajax call to check file name');
 Route::get('/reg_result', 'StudyController@reg_result')->name('reg_result');
 
-Route::get('/users_waiting', 'StudyController@users_waiting')->name('users_waiting')->middleware('login_check');
+Route::get('/users_waiting', 'StudyController@users_waiting')->name('users_waiting')->middleware('admin_check');
 Route::get('/user_approval_rejection', 'StudyController@user_approval_rejection')->name('user_approval_rejection')->middleware('login_check');
 
 
@@ -126,12 +126,20 @@ Route::get('admin/add_news', 'AdminController@add_news')->name("add_news")->midd
 Route::post('/post_news', 'AdminController@post_news')->name("post_news")->middleware('admin_check');
 Route::get('admin/delete_news', 'AdminController@delete_news')->name("delete_news")->middleware('admin_check');
 Route::get('admin/news_list', 'AdminController@news_list')->name("news_list")->middleware('admin_check');
+Route::get('admin/user_list', 'AdminController@user_list')->name('user_list')->middleware('admin_check');
 
+//Route::get('studies/user_studies', 'StudyController@user_studies')->name('my studies')->middleware('admin_check');
+
+
+$router->get('studies/user_studies/{c_user_id}',[
+    'uses' => 'StudyController@user_studies',
+    'as'   => 'user_studies_user_id'
+])->middleware('admin_check');
 
 $router->get('/admin/edit_news/{news_id}',[
     'uses' => 'AdminController@edit_news',
     'as'   => 'switch_edit_news'
-]);
+])->middleware('admin_check');
 
 Route::post('/post_edit_news', 'AdminController@post_edit_news')->name("post_edit_news")->middleware('admin_check');
 

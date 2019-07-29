@@ -81,6 +81,14 @@ class AdminController extends Controller
     $news = DB::table('news')->where('id', $news_id)->get();
     return view('admin/edit_news', ["news"=>$news]);
   }
+
+  public function user_list(Request $request){
+
+     $users = DB::table('users')->where('user_approval_status',  "1")->paginate(10);
+
+      return view('admin/user_list', ["users"=>$users]);
+
+  }
   public function post_edit_news(Request $request){
     
     $id = $request->id;

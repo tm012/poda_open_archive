@@ -379,6 +379,20 @@ Session::flash('message', "Updated");
 
 
     }
+
+
+    public function user_studies(Request $request,$c_user_id)
+    {
+
+        //return response()->json(['success'=>$imageName]);
+
+     // dd($c_user_id);
+
+        $my_studies = Studies::where('user_id', $c_user_id)->where('archived_status',  "0")->paginate(10);
+        return view('studies/user_studies', ["my_studies"=>$my_studies]);
+
+
+    }
     public function approval_requests()
     {
 
@@ -785,6 +799,7 @@ Session::flash('message', "Updated");
 
       $user_email = DB::table('users')->where('id',  $request->user_id)->value('email');
       $user_name  = DB::table('users')->where('id',  $request->user_id)->value('name');
+      $where_to_return ="";
       if($request->status == "1"){
 
                 $updateDetails=array(
@@ -792,6 +807,7 @@ Session::flash('message', "Updated");
                   'user_approval_status' => "1"
            
                 );
+        $where_to_return="waiting";
         \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Approved'));
       }
       elseif ($request->status == "0") {
@@ -803,7 +819,17 @@ Session::flash('message', "Updated");
  
                 );
 
-        \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
+        if($request->situation == "Rejected"){
+
+          \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
+          $where_to_return="waiting";
+
+        }
+        elseif ($request->situation == "Removed") {
+          # code...
+          \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Removed'));
+          $where_to_return="list";
+        }
       }
       else{
           $updateDetails=array(
@@ -811,7 +837,16 @@ Session::flash('message', "Updated");
                   'user_approval_status' => "0"
            
                 );
-        \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
+        if($request->situation == "Rejected"){
+
+          \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Rejected'));
+          $where_to_return="waiting";
+        }
+        elseif ($request->situation == "Removed") {
+          # code...
+          \Mail::to($user_email)->send(new NewUserAcceptedRejectedAlert($user_name,$user_email,'Removed'));
+          $where_to_return="list";
+        }
       }
 
 
@@ -821,7 +856,7 @@ Session::flash('message', "Updated");
                 ->where('id', $request->user_id)
                 ->update($updateDetails);
 
-      return "1";
+      return $where_to_return;
     }
     public function back_pressed()
     {

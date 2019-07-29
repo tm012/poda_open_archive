@@ -40,13 +40,18 @@
         <td>{{$value->designation}}</td>
         <td>{{$value->phone_number}}</td>
 
+
+
+
       
 
 
         <td>{{$value->created_at}}</td>
 
-        <td><button type="button" value='{{$value->id}}' class="btn btn-outline-success btn_approve">Approve</button></td>
-        <td><button type="button" value='{{$value->id}}' class="btn btn-outline-danger btn_reject">Reject</button></td>
+       <td> <a href="{!! route('user_studies_user_id', ['c_user_id'=>$value->id]) !!}">Studies</a></td>
+
+       <!--  <td><button type="button" value='{{$value->id}}' class="btn btn-outline-success btn_approve">Approve</button></td> -->
+        <td><button type="button" value='{{$value->id}}' class="btn btn-outline-danger btn_reject">Ban</button></td>
       </tr>
 	@endforeach
     </tbody>
@@ -105,7 +110,7 @@ function ajax_update_user_status(user_id,status) {
     data: {
       user_id: user_id,
       status: status,
-      situation: 'Rejected',
+      situation: 'Removed',
       submit_check_1: "submit_check_1"
 
 
@@ -115,15 +120,13 @@ function ajax_update_user_status(user_id,status) {
     success: function (data) {
       console.log("Success");
       console.log(data);
-
       if(data =="waiting"){
          window.location.href = "/users_waiting";
       }
       else{
 
-         window.location.href = "admin/user_list";
+         window.location.href = "user_list";
       }
-     
 
 
     //
