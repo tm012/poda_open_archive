@@ -1,0 +1,172 @@
+/* admin service page css start */
+
+.table-responsive{
+  border: 1px solid #dee2e6;
+}
+#serviceTable .table-responsive{
+  border: 1px solid #dee2e6;
+}
+#serviceTable .table{
+  margin-bottom: 0;
+}
+#serviceTable .thead-font{
+  font-size: 15px;
+  font-style: oblique;
+}
+
+#serviceListTable .thead-font{
+  font-size: 15px;
+  font-style: oblique;
+}
+#serviceListTable .table-responsive{
+  border: 1px solid #dee2e6;
+}
+#serviceListTable .table{
+  margin-bottom: 0;
+}
+/* admin service page css end */
+
+/* admin sub-service page css start */
+#subServicesViewPage .select-service{
+  font-size: 12px;
+  font-style: oblique;
+}
+#subServicesViewPage select{
+  padding: 10px;
+}
+#serviceOption .form-control1{
+  padding: 10px;
+  font-size: 13px;
+}
+#subServicesViewPage label.form-label {
+    padding-left: 20px;
+    color: #333;
+    font-size: 20px;
+}
+
+/* admin sub-service page css end */
+
+/* admin service sub-category page css start */
+
+#service-sub-category .table-responsive{
+  border: 1px solid #dee2e6;
+}
+#service-sub-category .table{
+  margin-bottom: 0;
+}
+#service-sub-category .thead-font{
+  font-size: 15px;
+  font-style: oblique;
+}
+
+/* admin service sub-category page css end */
+
+/* admin-->discount page css start */
+#discountTable .table-responsive{
+  border: 1px solid #dee2e6;
+}
+#discountTable .discount-thead-title{
+  font-size: 15px;
+  font-style: oblique;
+}
+#discountTable .table{
+  margin-bottom: 0;
+}
+#discountTable .btn-default{
+  color: #000;
+  background-color: #fff;
+  border-color: #6E79BA;
+}
+#discountTable .btn-default:hover{
+  background-color: #4CAED9;
+  border-color: #6E79BA;
+}
+ #discountTable .btn-danger1{
+   background-color: #CF5C32;
+   border-color: #CF5C32;
+   color: #fff;
+ }
+ #discountTable .btn-danger1:hover{
+   background-color: #007BFF;
+ }
+
+ #discountListTable .table-responsive{
+     border: 1px solid #dee2e6;
+   }
+   #discountListTable .table{
+       margin-bottom: 0;
+     }
+  #discountListTable .discount-thead-title{
+      font-size: 15px;
+      font-style: oblique;
+    }
+/* admin-->discount page css end */
+
+
+@media (min-width: 992px){
+    .typo-line{
+        padding-left: 140px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .typo-line .category{
+        transform: translateY(-50%);
+        top: 50%;
+        left: 0px;
+        position: absolute;
+    }
+}
+
+.all-icons [class*="pe-"]{
+    font-size: 40px;
+}
+.all-icons input{
+    border: 0;
+}
+.all-icons .font-icon-detail{
+    text-align: center;
+    padding: 45px 0px 30px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+.all-icons .font-icon-detail input{
+    margin: 25px auto 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+    color: #aaa;
+    font-size: 13px;
+}
+
+#map{
+    position:relative;
+    width:100%;
+    height: calc(100% - 60px);
+}
+
+.places-buttons .btn{
+    margin-bottom: 30px
+}
+.sidebar .nav > li.active-pro{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
+.sidebar .nav > li.active-pro a{
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+.table-upgrade td:nth-child(2),
+.table-upgrade td:nth-child(3){
+    text-align: center;
+}
+
+@media all and (max-width: 991px)  {
+    .sidebar .nav > li.active-pro{
+        position: initial;
+    }
+}
